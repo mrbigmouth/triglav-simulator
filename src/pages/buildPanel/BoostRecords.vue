@@ -3,7 +3,7 @@
     <div
       class="col-6"
       style="font-size: 0.8rem;">
-      強化藥水使用策略：
+      強化藥水使用紀錄：
     </div>
     <div class="col-6">
       <q-btn-toggle
@@ -31,14 +31,15 @@
             label: '自定義',
             value: 'custom',
           },
-        ]" />
+        ]"
+        @click="onClickBtns" />
     </div>
     <q-dialog
       v-model="showCustomDialog"
       persistent>
       <q-card>
         <q-bar>
-          <div>自定義強化藥水使用策略</div>
+          <div>自定義強化藥水使用紀錄</div>
 
           <q-space />
 
@@ -92,14 +93,14 @@
 </template>
 
 <script>
-import computedBuildValueForVModel from 'src/mixins/computedBuildValueForVModel';
+import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBuildStore';
 
 export default {
-  name: 'BoostStrategy',
+  name: 'BoostRecords',
   components: {
   },
   mixins: [
-    computedBuildValueForVModel,
+    computedPropertiesForBuildStore,
   ],
   data() {
     return {
@@ -144,9 +145,15 @@ export default {
         }
         case 'custom':
         default: {
-          this.showCustomDialog = true;
           break;
         }
+      }
+    },
+  },
+  methods: {
+    onClickBtns() {
+      if (this.boostStrategy === 'custom') {
+        this.showCustomDialog = true;
       }
     },
   },

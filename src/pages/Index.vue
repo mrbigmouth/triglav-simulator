@@ -1,10 +1,10 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-page-container>
-      <q-page class="full-width row wrap justify-center items-start content-start">
+      <q-page class="row wrap justify-center items-start content-start">
         <div
           class="q-gutter-y-md"
-          style="min-width: 100%; max-width: 50rem;">
+          style="min-width: 50%; max-width: 50rem;">
           <q-card>
             <q-tabs
               v-model="tab"

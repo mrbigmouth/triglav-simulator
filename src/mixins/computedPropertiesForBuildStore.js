@@ -1,6 +1,8 @@
+import { mapGetters } from 'vuex';
+
 export const computedBuildValueForVModel = {
   computed: {
-    ...generateComputedProperties(
+    ...generateComputedPropertiesForVModel(
       'characterClass',
       'exp',
       'kills',
@@ -22,11 +24,14 @@ export const computedBuildValueForVModel = {
       'puppet2',
       'puppet3',
     ),
+    ...mapGetters('build', [
+      'getItemValue',
+    ]),
   },
 };
 export default computedBuildValueForVModel;
 
-function generateComputedProperties(...argList) {
+function generateComputedPropertiesForVModel(...argList) {
   const result = {};
 
   argList.forEach((key) => {
