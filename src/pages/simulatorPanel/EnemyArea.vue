@@ -7,42 +7,59 @@
     expand-icon-class="text-white"
     default-opened
     dense>
-    <div class="text-center q-pa-sm">
-      <q-btn
-        class="q-mx-sm"
-        icon="queue_play_next"
-        color="primary"
-        label="新增敵方模擬"
-        @click="showSelectEnemyDialog = true;" />
-      <q-btn
-        v-if="displayEnemyList.length > 0"
-        class="q-mx-sm"
-        icon="delete_forever"
-        color="negative"
-        label="移除所有模擬"
-        @click="displayEnemyList = [];" />
+    <div class="q-pa-sm">
+      <div class="row q-col-gutter-sm">
+        <div
+          v-for="(enemyData, index) in simulatorEnemyList"
+          :key="index"
+          class="col-xs-12 col-md-6">
+          <simulator :enemy-data="enemyData" />
+        </div>
+      </div>
+      <div class="text-center q-pa-sm">
+        <q-btn
+          class="q-mx-sm"
+          icon="queue_play_next"
+          color="primary"
+          label="新增敵方模擬"
+          @click="showSelectEnemyDialog = true;" />
+        <q-btn
+          v-if="simulatorEnemyList.length > 0"
+          class="q-mx-sm"
+          icon="delete_forever"
+          color="negative"
+          label="移除所有模擬"
+          @click="simulatorEnemyList.splice(0);" />
+      </div>
     </div>
     <select-enemy-dialog
       :is-show.sync="showSelectEnemyDialog"
-      :display-enemy-list.sync="displayEnemyList" />
+      :display-enemy-list="simulatorEnemyList"
+      @addEnemy="onAddEnemy" />
   </q-expansion-item>
 </template>
 
 <script>
+import Simulator from './Simulator';
 import SelectEnemyDialog from './SelectEnemyDialog';
 
+const simulatorEnemyList = [];
 export default {
   name: 'EnemyArea',
   components: {
+    Simulator,
     SelectEnemyDialog,
   },
   data() {
     return {
       showSelectEnemyDialog: false,
-      displayEnemyList: [],
+      simulatorEnemyList,
     };
   },
   methods: {
+    onAddEnemy(enemyData) {
+      simulatorEnemyList.push(enemyData);
+    },
   },
 };
 

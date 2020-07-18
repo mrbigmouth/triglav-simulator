@@ -16,16 +16,22 @@
           v-close-popup />
       </q-bar>
       <q-card-section>
-        <template v-for="enemyData in displayEnemyList">
+        <q-btn
+          color="positive"
+          class="full-width"
+          label="加入以下全部"
+          @click="onAddAll" />
+        <q-separator />
+        <template v-for="(enemyData, index) in displayEnemyList">
           <div
-            :key="enemyData.id"
+            :key="index"
             class="row q-col-gutter-sm">
             <div>
               <img :src="enemyData.img" />
             </div>
             <div class="col">
               <q-input
-                v-model="$t('enemyData.i18n')"
+                v-model="enemyData.name"
                 label="名稱"
                 type="text"
                 dense />
@@ -63,8 +69,9 @@
                 v-model.number="enemyData.vit"
                 label="體力"
                 type="number"
-                min="0"
+                min="1"
                 step="1"
+                hide-hint
                 dense />
               <q-input
                 v-model.number="enemyData.dr"
@@ -95,12 +102,11 @@
                 color="positive"
                 size="sm"
                 title="加入模擬"
-                dense />
+                dense
+                @click="onAddEnemy(enemyData)" />
             </div>
           </div>
-          <q-separator
-            :key="`separator_${enemyData.id}`"
-            style="margin: 0.5rem;" />
+          <q-separator :key="`separator_${index}`" />
         </template>
       </q-card-section>
     </q-card>
@@ -118,14 +124,20 @@ export default {
       default: false,
     },
   },
-  mixins: [
-  ],
   data() {
     return {
       filter: [],
       enemyList: enemy.slice().map((enemyData) => {
         return {
-          ...enemyData,
+          name: this.$t('enemy.' + enemyData.i18n),
+          img: enemyData.img,
+          minAd: enemyData.minAd,
+          maxAd: enemyData.maxAd,
+          def: enemyData.def,
+          dex: enemyData.dex,
+          vit: enemyData.vit,
+          voh: enemyData.voh,
+          dr: enemyData.dr,
         };
       }),
     };
@@ -144,9 +156,13 @@ export default {
     },
   },
   methods: {
-    onSelectItem(itemIndex) {
-      this[this.itemSlot] = itemIndex;
-      this.proxyIsShow = false;
+    onAddAll() {
+      this.displayEnemyList.forEach((enemyData) => {
+        this.$emit('addEnemy', enemyData);
+      });
+    },
+    onAddEnemy(enemyData) {
+      this.$emit('addEnemy', enemyData);
     },
   },
 };
@@ -157,5 +173,9 @@ export default {
   img {
     width: 40px;
     height: 40px;
+  }
+
+  hr {
+    margin: 0 0.5rem;
   }
 </style>

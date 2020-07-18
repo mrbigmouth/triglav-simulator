@@ -204,8 +204,6 @@ import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBui
 
 export default {
   name: 'CharacterNumberArea',
-  components: {
-  },
   mixins: [
     computedPropertiesForBuildStore,
   ],

@@ -5,7 +5,7 @@
       style="min-width: 15rem;">
       <character-number-area />
     </div>
-    <div class="col-xs-12 col-sm-grow">
+    <div class="col">
       <enemy-area />
     </div>
   </div>

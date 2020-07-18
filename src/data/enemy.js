@@ -1,4 +1,4 @@
-export const enemy = [
+export default [
   {
     i18n: 'goblin',
     location: [
@@ -118,8 +118,3 @@ export const enemy = [
     xp: 4,
   },
 ];
-export default enemy;
-
-enemy.forEach((enemyData, index) => {
-  enemyData.id = index;
-});

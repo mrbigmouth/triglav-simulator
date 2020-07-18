@@ -62,7 +62,7 @@
                 <build-panel />
               </q-tab-panel>
               <q-tab-panel name="simulator">
-                <simulator-panel />
+                <simulator-panel  />
               </q-tab-panel>
             </q-tab-panels>
           </q-card>

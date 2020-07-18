@@ -52,49 +52,24 @@ export default {
     totalMinAd,
     totalMaxAd,
     expectDmgPerHit(state) {
-      return getExpectDmgPerHit(state, 0);
-    },
-    getExpectDmgPerHit(state) {
-      return (enemyDef = 0) => {
-        return getExpectDmgPerHit(state, enemyDef);
-      };
+      return getExpectDmgPerHit(state);
     },
     expectHealingPerHit(state) {
-      return getExpectHealingPerHit(state, 0);
-    },
-    getExpectHealingPerHit(state) {
-      return (enemyDef = 0) => {
-        return getExpectHealingPerHit(state, 0);
-      };
+      return getExpectHealingPerHit(state);
     },
     totalDoubleStrikeChance(state) {
       return totalDoubleStrikeChance(state);
     },
     expectDps(state) {
-      return getExpectDps(state, 0);
-    },
-    getExpectDps(state) {
-      return (enemyDef = 0) => {
-        return getExpectDps(state, enemyDef);
-      };
+      return getExpectDps(state);
     },
     totalSAMinAd,
     totalSAMaxAd,
     expectSADmgPerHit(state) {
-      return getExpectSADmgPerHit(state, 0);
-    },
-    getExpectSADmgPerHit(state) {
-      return (enemyDef = 0) => {
-        return getExpectSADmgPerHit(state, enemyDef);
-      };
+      return getExpectSADmgPerHit(state);
     },
     expectSAHealingPerHit(state) {
-      return getExpectSAHealingPerHit(state, 0);
-    },
-    getExpectSAHealingPerHit(state) {
-      return (enemyDef = 0) => {
-        return getExpectSAHealingPerHit(state, enemyDef);
-      };
+      return getExpectSAHealingPerHit(state);
     },
     saHitsPerSecond,
     getSpecialDescription(state) {
@@ -380,16 +355,15 @@ function totalMaxAd(state) {
   return getCharacterValue(state, 'maxAd') + str;
 }
 
-function getExpectDmgPerHit(state, enemyDef) {
-  const minusAd = Math.max(0, enemyDef - getCharacterValue(state, 'dex'));
-  const minAd = Math.max(0, totalMinAd(state) - minusAd);
-  const maxAd = Math.max(0, totalMaxAd(state) - minusAd);
+function getExpectDmgPerHit(state) {
+  const minAd = Math.max(0, totalMinAd(state));
+  const maxAd = Math.max(0, totalMaxAd(state));
 
   return (minAd + maxAd) / 2;
 }
 
-function getExpectHealingPerHit(state, enemyDef = 0) {
-  return Math.round(getExpectDmgPerHit(state, enemyDef) * getCharacterValue(state, 'voh') / 100);
+function getExpectHealingPerHit(state) {
+  return Math.round(getExpectDmgPerHit(state) * getCharacterValue(state, 'voh') / 100);
 }
 
 function hitsPerSecond(state) {
@@ -441,8 +415,8 @@ function totalDoubleStrikeChance(state) {
   return (100 - notDoubleStrikeChancePerHit);
 }
 
-function getExpectDps(state, enemyDef = 0) {
-  const expectDmgPerHit = getExpectDmgPerHit(state, enemyDef);
+function getExpectDps(state) {
+  const expectDmgPerHit = getExpectDmgPerHit(state);
   const hitsPerSecondAdjust = hitsPerSecond(state);
   const doubleStrikeAdjust = totalDoubleStrikeChance(state) + 100;
 
@@ -477,16 +451,15 @@ function totalSAMaxAd(state) {
   }
 }
 
-function getExpectSADmgPerHit(state, enemyDef) {
-  const minusAd = Math.max(0, enemyDef - getCharacterValue(state, 'dex'));
-  const minAd = Math.max(0, totalSAMinAd(state) - minusAd);
-  const maxAd = Math.max(0, totalSAMaxAd(state) - minusAd);
+function getExpectSADmgPerHit(state) {
+  const minAd = Math.max(0, totalSAMinAd(state));
+  const maxAd = Math.max(0, totalSAMaxAd(state));
 
   return (minAd + maxAd) / 2;
 }
 
-function getExpectSAHealingPerHit(state, enemyDef = 0) {
-  return Math.round(getExpectSADmgPerHit(state, enemyDef) * getCharacterValue(state, 'voh') / 100);
+function getExpectSAHealingPerHit(state) {
+  return Math.round(getExpectSADmgPerHit(state) * getCharacterValue(state, 'voh') / 100);
 }
 
 function saHitsPerSecond(state) {
