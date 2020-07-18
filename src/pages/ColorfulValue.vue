@@ -1,6 +1,6 @@
 <template>
   <span :class="colorClass">
-    {{ prefix }}{{ value }}{{ suffix }}
+    {{ value }}{{ suffix }}
   </span>
 </template>
 
@@ -8,9 +8,9 @@
 export default {
   name: 'ColorfulValue',
   props: {
-    prefix: {
-      type: String,
-      default: '',
+    reverseColor: {
+      type: Boolean,
+      default: false,
     },
     value: {
       type: Number,
@@ -26,6 +26,9 @@ export default {
       const value = this.value;
       if (value === 0) {
         return '';
+      }
+      else if (this.reverseColor) {
+        return value > 0 ? 'bad' : 'good';
       }
       else {
         return value > 0 ? 'good' : 'bad';

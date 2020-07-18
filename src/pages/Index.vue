@@ -4,7 +4,7 @@
       <q-page class="row wrap justify-center items-start content-start">
         <div
           class="q-gutter-y-md"
-          style="min-width: 50%; max-width: 50rem;">
+          style="min-width: 100%; max-width: 70rem;">
           <q-card>
             <q-tabs
               v-model="tab"
@@ -33,17 +33,22 @@
                 <q-list>
                   <q-item clickable>
                     <q-item-section align="right">
+                      日本語
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section align="right">
+                      English
+                    </q-item-section>
+                  </q-item>
+                  <q-item clickable>
+                    <q-item-section align="right">
                       繁體中文
                     </q-item-section>
                   </q-item>
                   <q-item clickable>
                     <q-item-section align="right">
                       简体中文
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable>
-                    <q-item-section align="right">
-                      English
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -57,7 +62,7 @@
                 <build-panel />
               </q-tab-panel>
               <q-tab-panel name="simulator">
-                simulator
+                <simulator-panel />
               </q-tab-panel>
             </q-tab-panels>
           </q-card>
@@ -69,11 +74,13 @@
 
 <script>
 import BuildPanel from './buildPanel/BuildPanel';
+import SimulatorPanel from './simulatorPanel/SimulatorPanel';
 
 export default {
   name: 'PageIndex',
   components: {
     BuildPanel,
+    SimulatorPanel,
   },
   data() {
     return {

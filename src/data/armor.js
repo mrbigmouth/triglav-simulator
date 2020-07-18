@@ -38,14 +38,14 @@ export default [
       axe: 6,
       dagger: 4,
     },
-    sad: -3,
+    sad: 3,
     voh: {
       sword: -2,
       axe: -3,
       dagger: -1,
     },
     special: {
-      type: 'doublestrike',
+      type: 'doubleStrike',
       value: {
         sword: 20,
         axe: 25,

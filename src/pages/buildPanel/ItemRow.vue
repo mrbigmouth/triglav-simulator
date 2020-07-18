@@ -3,12 +3,7 @@
     :title="itemData.i18n"
     @click="$emit('click')">
     <tr>
-      <td
-        class="lt-md"
-        rowspan="3">
-        <img :src="itemData.img" />
-      </td>
-      <td class="gt-sm">
+      <td>
         <img :src="itemData.img" />
       </td>
       <td>
@@ -17,61 +12,47 @@
         <colorful-value :value="getValue('maxAd')" />
       </td>
       <td>
-        <colorful-value :value="getValue('ar')" />
-      </td>
-      <td>
         <colorful-value :value="getValue('str')" />
       </td>
       <td>
         <colorful-value :value="getValue('dex')" />
       </td>
       <td>
+        <colorful-value :value="getValue('def')" />
+      </td>
+      <td>
         <colorful-value :value="getValue('vit')" />
       </td>
-      <td class="gt-sm">
+      <td>
         <colorful-value :value="getValue('ws')" />
       </td>
-      <td class="gt-sm">
-        <colorful-value
-          previx="-"
-          :value="getValue('sad')" />
+      <td>
+        <colorful-value :value="getValue('ar')" />
       </td>
-      <td class="gt-sm">
+      <td>
+        <colorful-value
+          :value="getValue('sad')"
+          reverse-color />
+      </td>
+      <td>
         <colorful-value :value="getValue('voh')" />
       </td>
-      <td class="gt-sm">
+      <td>
         <colorful-value
           :value="getValue('dr')"
           suffix="%" />
       </td>
-      <td class="gt-sm">
+      <td>
         <colorful-value
           :value="getValue('xpg')"
           suffix="%" />
       </td>
     </tr>
-    <tr class="lt-md">
-      <td hidden />
-      <td>
-        <colorful-value :value="getValue('ws')" />
-      </td>
-      <td>
-        <colorful-value
-          previx="-"
-          :value="getValue('sad')" />
-      </td>
-      <td>
-        <colorful-value :value="getValue('voh')" />
-      </td>
-      <td>
-        <colorful-value
-          :value="getValue('dr')"
-          suffix="%" />
-      </td>
-      <td>
-        <colorful-value
-          :value="getValue('xpg')"
-          suffix="%" />
+    <tr v-if="itemData.special">
+      <td
+        class="special"
+        colspan="12">
+        {{ getSpecialDescription(getValue('special')) }}
       </td>
     </tr>
   </tbody>
@@ -79,7 +60,7 @@
 
 <script>
 import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBuildStore';
-import ColorfulValue from './ColorfulValue';
+import ColorfulValue from '../ColorfulValue';
 import item from 'src/data/item';
 
 export default {
@@ -115,7 +96,16 @@ export default {
 </script>
 
 <style lang="stylus">
-  tbody {
-    cursor: pointer;
+div.wrapper {
+  table {
+    tbody {
+      cursor: pointer;
+
+      td.special {
+        text-align: left;
+        color: #9fd900;
+      }
+    }
   }
+}
 </style>

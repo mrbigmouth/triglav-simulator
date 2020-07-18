@@ -31,7 +31,7 @@
         v-model.number="exp"
         label="經驗值"
         type="number"
-        min="1"
+        min="0"
         step="1" />
     </div>
     <div class="col-xs-12 col-sm-6">
@@ -39,7 +39,7 @@
         v-model.number="kills"
         label="擊殺數"
         type="number"
-        min="1"
+        min="0"
         step="1" />
     </div>
     <div class="col-xs-12 col-sm-6">
@@ -121,8 +121,8 @@
     </div>
     <select-item-dialog
       :is-show.sync="selectItemDialogProps.isShow"
-      :item-type.sync="selectItemDialogProps.itemType"
-      :item-slot.sync="selectItemDialogProps.itemSlot" />
+      :item-type="selectItemDialogProps.itemType"
+      :item-slot="selectItemDialogProps.itemSlot" />
   </form>
 </template>
 
