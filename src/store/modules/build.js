@@ -24,6 +24,19 @@ export default {
       puppet1: 0,
       puppet2: 0,
       puppet3: 0,
+      temporaryBuff: {
+        str: 0,
+        vit: 0,
+        def: 0,
+        dex: 0,
+        voh: 0,
+        dr: 0,
+        sad: 0,
+        sa: 0,
+        doubleStrike: 0,
+        extraAttack: 0,
+        specialExtraAttack: 0,
+      },
     };
   },
   mutations: {
@@ -34,44 +47,490 @@ export default {
       }
       state[key] = value;
     },
+    adjustTemporaryBuff(state, { key, value }) {
+      state.temporaryBuff[key] += value;
+    },
   },
   getters: {
-    getCharacterValue(state) {
+    parseScaleValue(state) {
+      return (value = []) => {
+        const scaleKey = value[0] || 'exp';
+        const maxRequired = value[1] || 0;
+        const maxValue = value[2] || 0;
+        const minValue = value[3] || 0;
+        const scaleByNumber = Math.min(state[scaleKey], maxRequired);
+        const scaleResult = Math.round(maxValue * scaleByNumber / maxRequired * 10) / 10;
+
+        return minValue + scaleResult;
+      };
+    },
+    parseItemValue(state, getters) {
+      return (value) => {
+        if (!value) {
+          return 0;
+        }
+        else if (typeof value === 'number') {
+          return value;
+        }
+        else if (Array.isArray(value)) {
+          return getters.parseItemValue(getters.parseScaleValue(value));
+        }
+        else if (typeof value === 'object') {
+          if (value.type) {
+            const speicalData = {
+              ...value,
+              value: getters.parseItemValue(value.value),
+            };
+
+            return speicalData;
+          }
+          else {
+            return getters.parseItemValue(value[state.characterClass]);
+          }
+        }
+      };
+    },
+    getItemValue(state, getters) {
+      return (itemData, key) => {
+        if (!key) {
+          return {
+            minAd: getters.getItemValue(itemData, 'minAd'),
+            maxAd: getters.getItemValue(itemData, 'maxAd'),
+            as: getters.getItemValue(itemData, 'as'),
+            str: getters.getItemValue(itemData, 'str'),
+            dex: getters.getItemValue(itemData, 'dex'),
+            def: getters.getItemValue(itemData, 'def'),
+            vit: getters.getItemValue(itemData, 'vit'),
+            ws: getters.getItemValue(itemData, 'ws'),
+            ar: getters.getItemValue(itemData, 'ar'),
+            sad: getters.getItemValue(itemData, 'sad'),
+            voh: getters.getItemValue(itemData, 'voh'),
+            dr: getters.getItemValue(itemData, 'dr'),
+            xpg: getters.getItemValue(itemData, 'xpg'),
+            special: getters.getItemValue(itemData, 'special'),
+          };
+        }
+
+        return getters.parseItemValue(itemData[key]);
+      };
+    },
+    getSlotValue(state, getters) {
+      return (slot, key) => {
+        const itemIndex = state[slot];
+        let itemType = slot;
+        switch (slot) {
+          case 'weapon1': {
+            switch (state.characterClass) {
+              case 'sword': {
+                itemType = 'sword';
+                break;
+              }
+              case 'axe': {
+                itemType = 'axe';
+                break;
+              }
+              case 'dagger': {
+                itemType = 'dagger';
+                break;
+              }
+            }
+            break;
+          }
+          case 'weapon2': {
+            switch (state.characterClass) {
+              case 'sword': {
+                itemType = 'shield';
+                break;
+              }
+              case 'axe': {
+                itemType = 'mantle';
+                break;
+              }
+              case 'dagger': {
+                itemType = 'dagger';
+                break;
+              }
+            }
+            break;
+          }
+          case 'ring1':
+          case 'ring2': {
+            itemType = 'ring';
+            break;
+          }
+          case 'puppet1':
+          case 'puppet2':
+          case 'puppet3': {
+            itemType = 'puppet';
+            break;
+          }
+        }
+        const itemList = item[itemType];
+        const itemData = itemList[itemIndex];
+
+        return getters.getItemValue(itemData, key);
+      };
+    },
+    getTotalItemValue(state, getters) {
       return (key) => {
-        const characterValue = getCharacterValue(state, key);
+        return slotList.reduce((sum, slot) => {
+          return sum + getters.getSlotValue(slot, key);
+        }, 0);
+      };
+    },
+    getCharacterBasicValue(state) {
+      return (key) => {
+        switch (key) {
+          case 'vit': {
+            return basicVitalityByClass[state.characterClass];
+          }
+          case 'str': {
+            return basicStrengthByClass[state.characterClass];
+          }
+          case 'dex': {
+            return basicDexteriryByClass[state.characterClass];
+          }
+          case 'as': {
+            return basicAttackSpeedByClass[state.characterClass];
+          }
+          case 'ws': {
+            return basicWalkSpeedByClass[state.characterClass];
+          }
+          case 'ar': {
+            return basicAttackRangeByClass[state.characterClass];
+          }
+          default: {
+            return 0;
+          }
+        }
+      };
+    },
+    getBoostValue(state) {
+      return (key) => {
+        switch (key) {
+          case 'vit': {
+            return (state.boostAllRecords + state.boostVitalityRecords) * boostVitalityByClass[state.characterClass];
+          }
+          case 'str': {
+            return (state.boostAllRecords + state.boostStrengthRecords) * boostStrengthByClass[state.characterClass];
+          }
+          case 'dex': {
+            return (state.boostAllRecords + state.boostDexteriryRecords) * boostDexteriryByClass[state.characterClass];
+          }
+          case 'def': {
+            return (state.boostAllRecords + state.boostDefenseRecords);
+          }
+          default: {
+            return 0;
+          }
+        }
+      };
+    },
+    getCharacterValue(state, getters) {
+      return (key) => {
+        const characterValue = (
+          getters.getTotalItemValue(key) +
+          getters.getCharacterBasicValue(key) +
+          getters.getBoostValue(key) +
+          (state.temporaryBuff[key] || 0)
+        );
 
         return Math.max(0, characterValue);
       };
     },
-    getItemValue(state) {
-      return (itemData, key) => {
-        return getItemValue(state, itemData, key);
+    playerMinAd(state, getters) {
+      return getters.getCharacterValue('minAd') + Math.round(getters.playerStr / 2);
+    },
+    playerMaxAd(state, getters) {
+      return getters.getCharacterValue('maxAd') + getters.playerStr;
+    },
+    playerStr(state, getters) {
+      return getters.getCharacterValue('str');
+    },
+    playerDex(state, getters) {
+      return getters.getCharacterValue('dex');
+    },
+    playerDef(state, getters) {
+      return getters.getCharacterValue('def');
+    },
+    playerVit(state, getters) {
+      return getters.getCharacterValue('vit');
+    },
+    playerWs(state, getters) {
+      return getters.getCharacterValue('ws');
+    },
+    playerAr(state, getters) {
+      return getters.getCharacterValue('ar');
+    },
+    playerAs(state, getters) {
+      return getters.getCharacterValue('as');
+    },
+    playerSad(state, getters) {
+      return getters.getCharacterValue('sad');
+    },
+    playerSaDelay(state, getters) {
+      return Math.max(0, 30 - getters.playerSad);
+    },
+    playerVoh(state, getters) {
+      return getters.getCharacterValue('voh');
+    },
+    playerDr(state, getters) {
+      return getters.getCharacterValue('dr');
+    },
+    playerXpg(state, getters) {
+      return getters.getCharacterValue('xpg');
+    },
+    playerDoubleStrike(state, getters) {
+      const doublestrikeList = [];
+      slotList.forEach((slot) => {
+        const specialData = getters.getSlotValue(slot, 'special');
+        if (specialData.type === 'doubleStrike') {
+          doublestrikeList.push(specialData.value);
+        }
+      });
+
+      const notDoubleStrikeChancePerHit = doublestrikeList.reduce((sum, doubleStrikeChance) => {
+        return sum * (100 - doubleStrikeChance);
+      }, 100) / Math.pow(100, doublestrikeList.length);
+
+      return (100 - notDoubleStrikeChancePerHit);
+    },
+    playerSpecialAbilityList(state, getters) {
+      const result = [];
+      slotList.forEach((slot) => {
+        const speicalData = getters.getSlotValue(slot, 'special');
+        if (speicalData && speicalData.type !== 'doubleStrike') {
+          result.push(speicalData);
+        }
+      });
+
+      return result;
+    },
+    getExpectDamagePerHit() {
+      return ({
+        minAd,
+        maxAd,
+        attackerDex,
+        defenderDef,
+        doubleStrike,
+        extraAttack,
+      }) => {
+        const effectiveDef = Math.max(0, defenderDef - attackerDex);
+        const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDef);
+        const doubleStrikeAdjust = (doubleStrike + 100);
+        const extraAttackAdjust = (extraAttack + 100);
+
+        return Math.round(expectDamagePerHit * doubleStrikeAdjust * extraAttackAdjust / 10000);
       };
     },
-    hitsPerSecond,
-    totalMinAd,
-    totalMaxAd,
-    expectDmgPerHit(state) {
-      return getExpectDmgPerHit(state);
+    playerExpectDamagePerHit(state, getters) {
+      return getters.getExpectDamagePerHit({
+        minAd: getters.playerMinAd,
+        maxAd: getters.playerMaxAd,
+        attackerDex: getters.playerDex,
+        defenderDef: 0,
+        doubleStrike: getters.playerDoubleStrike,
+        extraAttack: state.temporaryBuff.extraAttack,
+      });
     },
-    expectHealingPerHit(state) {
-      return getExpectHealingPerHit(state);
+    getPlayerExpectDamagePerHit(state, getters) {
+      return (enemyDef) => {
+        return getters.getExpectDamagePerHit({
+          minAd: getters.playerMinAd,
+          maxAd: getters.playerMaxAd,
+          attackerDex: getters.playerDex,
+          defenderDef: enemyDef,
+          doubleStrike: getters.playerDoubleStrike,
+          extraAttack: state.temporaryBuff.extraAttack,
+        });
+      };
     },
-    totalDoubleStrikeChance(state) {
-      return totalDoubleStrikeChance(state);
+    getExpectFeedbackPerHit() {
+      return ({
+        minAd,
+        maxAd,
+        attackerDex,
+        attackerDef,
+        defenderDex,
+        defenderDef,
+        doubleStrike,
+        extraAttack,
+        attackerVoh,
+        defenderDr,
+      }) => {
+        const effectiveDefenderDef = Math.max(0, defenderDef - attackerDex);
+        const effectiveAttackerDef = Math.max(0, defenderDex - attackerDef);
+        const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDefenderDef);
+        const doubleStrikeAdjust = (doubleStrike + 100);
+        const damagePerHitNoExtraAttack = Math.round(expectDamagePerHit * doubleStrikeAdjust / 100);
+        const healingPerHit = Math.round(damagePerHitNoExtraAttack * attackerVoh / 100);
+        const extraAttackAdjust = (extraAttack + 100);
+        const damagePerHit = Math.round(expectDamagePerHit * doubleStrikeAdjust * extraAttackAdjust / 10000);
+        const damageReflect = Math.round(damagePerHit * defenderDr / 100) - effectiveAttackerDef;
+
+        return healingPerHit - damageReflect;
+      };
     },
-    expectDps(state) {
-      return getExpectDps(state);
+    playerExpectFeedbackPerHit(state, getters) {
+      return getters.getExpectFeedbackPerHit({
+        minAd: getters.playerMinAd,
+        maxAd: getters.playerMaxAd,
+        attackerDex: getters.playerDex,
+        attackerDef: getters.playerDef,
+        defenderDex: 0,
+        defenderDef: 0,
+        doubleStrike: getters.playerDoubleStrike,
+        extraAttack: state.temporaryBuff.extraAttack,
+        attackerVoh: getters.playerVoh,
+        defenderDr: 0,
+      });
     },
-    totalSAMinAd,
-    totalSAMaxAd,
-    expectSADmgPerHit(state) {
-      return getExpectSADmgPerHit(state);
+    getPlayerExpectFeedbackPerHit(state, getters) {
+      return ({ enemyDex, enemyDef, enemyDr }) => {
+        return getters.getExpectFeedbackPerHit({
+          minAd: getters.playerMinAd,
+          maxAd: getters.playerMaxAd,
+          attackerDex: getters.playerDex,
+          attackerDef: getters.playerDef,
+          defenderDex: enemyDex,
+          defenderDef: enemyDef,
+          doubleStrike: getters.playerDoubleStrike,
+          extraAttack: state.temporaryBuff.extraAttack,
+          attackerVoh: getters.playerVoh,
+          defenderDr: enemyDr,
+        });
+      };
     },
-    expectSAHealingPerHit(state) {
-      return getExpectSAHealingPerHit(state);
+    getHitsPerSecondByAs() {
+      return (as) => {
+        if (as >= 10) {
+          return Math.round(30 / as * 1000) / 1000;
+        }
+        else if (as <= 2) {
+          return 8.064;
+        }
+        else if (as <= 3) {
+          return 6.669 + (3 - as) * (8.064 - 6.669);
+        }
+        else if (as <= 4) {
+          return 5.998 + (4 - as) * (6.669 - 5.998);
+        }
+        else if (as <= 5) {
+          return 5.332 + (5 - as) * (5.998 - 5.332);
+        }
+        else if (as <= 6) {
+          return 4.801 + (6 - as) * (5.332 - 4.801);
+        }
+        else if (as <= 7) {
+          return 4.136 + (7 - as) * (4.801 - 4.136);
+        }
+        else if (as <= 8) {
+          return 3.738 + (8 - as) * (4.136 - 3.738);
+        }
+        else if (as <= 9) {
+          return 3.311 + (9 - as) * (3.738 - 3.311);
+        }
+        else {
+          return 3 + (10 - as) * (3.311 - 3);
+        }
+      };
     },
-    saHitsPerSecond,
+    playerHitsPerSecond(state, getters) {
+      return getters.getHitsPerSecondByAs(getters.playerAs);
+    },
+    getDamagePerSecond(state, getters) {
+      return ({
+        minAd,
+        maxAd,
+        attackerDex,
+        defenderDef,
+        doubleStrike,
+        extraAttack,
+        hitsPerSecond,
+      }) => {
+        const damagePerHit = getters.getExpectDamagePerHit({
+          minAd,
+          maxAd,
+          attackerDex,
+          defenderDef,
+          doubleStrike,
+          extraAttack,
+        });
+
+        return damagePerHit * hitsPerSecond;
+      };
+    },
+    playerDamagePerSecond(state, getters) {
+      return getters.playerExpectDamagePerHit * getters.playerHitsPerSecond;
+    },
+    playerSaMinAd(state, getters) {
+      return getters.playerMinAd * saMultiperByClass[state.characterClass];
+    },
+    playerSaMaxAd(state, getters) {
+      return getters.playerMaxAd * saMultiperByClass[state.characterClass];
+    },
+    playerSaExpectDamage(state, getters) {
+      return getters.getExpectDamagePerHit({
+        minAd: getters.playerSaMinAd,
+        maxAd: getters.playerSaMaxAd,
+        attackerDex: getters.playerDex,
+        defenderDef: 0,
+        doubleStrike: 0,
+        extraAttack: state.temporaryBuff.specialExtraAttack,
+      });
+    },
+    getPlayerSaExpectDamage(state, getters) {
+      return (enemyDef) => {
+        return getters.getExpectDamagePerHit({
+          minAd: getters.playerSaMinAd,
+          maxAd: getters.playerSaMaxAd,
+          attackerDex: getters.playerDex,
+          defenderDef: 0,
+          doubleStrike: 0,
+          extraAttack: state.temporaryBuff.specialExtraAttack,
+        });
+      };
+    },
+    playerSaExpectFeedbackPerHit(state, getters) {
+      return getters.getExpectFeedbackPerHit({
+        minAd: getters.playerSaMinAd,
+        maxAd: getters.playerSaMaxAd,
+        attackerDex: getters.playerDex,
+        attackerDef: getters.playerDef,
+        defenderDex: 0,
+        defenderDef: 0,
+        doubleStrike: 0,
+        extraAttack: state.temporaryBuff.specialExtraAttack,
+        attackerVoh: getters.playerVoh,
+        defenderDr: 0,
+      });
+    },
+    getPlayerSaExpectFeedbackPerHit(state, getters) {
+      return ({ enemyDex, enemyDef, enemyDr }) => {
+        return getters.getExpectFeedbackPerHit({
+          minAd: getters.playerSaMinAd,
+          maxAd: getters.playerSaMaxAd,
+          attackerDex: getters.playerDex,
+          attackerDef: getters.playerDef,
+          defenderDex: enemyDex,
+          defenderDef: enemyDef,
+          doubleStrike: 0,
+          extraAttack: state.temporaryBuff.specialExtraAttack,
+          attackerVoh: getters.playerVoh,
+          defenderDr: enemyDr,
+        });
+      };
+    },
+    playerSaHitsPerSecond(state, getters) {
+      const hitsPerSecond = getters.playerHitsPerSecond;
+      const saDelay = getters.playerSaDelay;
+      if (saDelay > 0) {
+        return Math.min(hitsPerSecond, Math.max(Math.floor(1 / saDelay), 1));
+      }
+      else {
+        return hitsPerSecond;
+      }
+    },
     getSpecialDescription(state) {
       return (specialData) => {
         switch (specialData.type) {
@@ -84,30 +543,8 @@ export default {
         }
       };
     },
-    totalSADelay(state) {
-      return Math.max(0, 30 - getCharacterValue(state, 'sad'));
-    },
-    specialAbilityList(state) {
-      const result = [];
-      slotList.forEach((slot) => {
-        const speicalData = getSlotValue(state, slot, 'special');
-        if (speicalData && speicalData.type !== 'doubleStrike') {
-          result.push(speicalData);
-        }
-      });
-
-      return result;
-    },
   },
 };
-
-function getCharacterValue(state, key) {
-  return (
-    getTotalItemValue(state, key) +
-    getCharacterBasicValue(state, key) +
-    getBoostValue(state, key)
-  );
-}
 
 const slotList = [
   'weapon1',
@@ -122,126 +559,6 @@ const slotList = [
   'puppet1',
   'puppet3',
 ];
-function getTotalItemValue(state, key) {
-  return slotList.reduce((sum, slot) => {
-    return sum + getSlotValue(state, slot, key);
-  }, 0);
-}
-
-function getSlotValue(state, slot, key) {
-  const itemIndex = state[slot];
-  let itemType = slot;
-  switch (slot) {
-    case 'weapon1': {
-      switch (state.characterClass) {
-        case 'sword': {
-          itemType = 'sword';
-          break;
-        }
-        case 'axe': {
-          itemType = 'axe';
-          break;
-        }
-        case 'dagger': {
-          itemType = 'dagger';
-          break;
-        }
-      }
-      break;
-    }
-    case 'weapon2': {
-      switch (state.characterClass) {
-        case 'sword': {
-          itemType = 'shield';
-          break;
-        }
-        case 'axe': {
-          itemType = 'mantle';
-          break;
-        }
-        case 'dagger': {
-          itemType = 'dagger';
-          break;
-        }
-      }
-      break;
-    }
-    case 'ring1':
-    case 'ring2': {
-      itemType = 'ring';
-      break;
-    }
-    case 'puppet1':
-    case 'puppet2':
-    case 'puppet3': {
-      itemType = 'puppet';
-      break;
-    }
-  }
-  const itemList = item[itemType];
-  const itemData = itemList[itemIndex];
-
-  return getItemValue(state, itemData, key);
-}
-
-function getItemValue(state, itemData, key) {
-  if (!key) {
-    return {
-      minAd: getItemValue(state, itemData, 'minAd'),
-      maxAd: getItemValue(state, itemData, 'maxAd'),
-      as: getItemValue(state, itemData, 'as'),
-      str: getItemValue(state, itemData, 'str'),
-      dex: getItemValue(state, itemData, 'dex'),
-      def: getItemValue(state, itemData, 'def'),
-      vit: getItemValue(state, itemData, 'vit'),
-      ws: getItemValue(state, itemData, 'ws'),
-      ar: getItemValue(state, itemData, 'ar'),
-      sad: getItemValue(state, itemData, 'sad'),
-      voh: getItemValue(state, itemData, 'voh'),
-      dr: getItemValue(state, itemData, 'dr'),
-      xpg: getItemValue(state, itemData, 'xpg'),
-      special: getItemValue(state, itemData, 'special'),
-    };
-  }
-
-  return parseItemValue(state, itemData[key]);
-}
-
-function parseItemValue(state, value) {
-  if (typeof value === 'undefined') {
-    return 0;
-  }
-  else if (typeof value === 'number') {
-    return value;
-  }
-  else if (Array.isArray(value)) {
-    return parseItemValue(state, parseScaleValue(state, value));
-  }
-  else if (typeof value === 'object') {
-    if (value.type) {
-      const speicalData = {
-        ...value,
-        value: parseItemValue(state, value.value),
-      };
-
-      return speicalData;
-    }
-    else {
-      return parseItemValue(state, value[state.characterClass]);
-    }
-  }
-}
-
-function parseScaleValue(state, value = []) {
-  const scaleKey = value[0] || 'exp';
-  const maxRequired = value[1] || 0;
-  const maxValue = value[2] || 0;
-  const minValue = value[3] || 0;
-  const scaleByNumber = Math.min(state[scaleKey], maxRequired);
-  const scaleResult = Math.round(maxValue * scaleByNumber / maxRequired * 10) / 10;
-
-  return minValue + scaleResult;
-}
 
 const basicAttackSpeedByClass = {
   sword: 18,
@@ -266,32 +583,6 @@ const basicAttackRangeByClass = {
   axe: 48,
   dagger: 40,
 };
-
-function getCharacterBasicValue(state, key) {
-  switch (key) {
-    case 'vit': {
-      return basicVitalityByClass[state.characterClass];
-    }
-    case 'str': {
-      return basicStrengthByClass[state.characterClass];
-    }
-    case 'dex': {
-      return basicDexteriryByClass[state.characterClass];
-    }
-    case 'as': {
-      return basicAttackSpeedByClass[state.characterClass];
-    }
-    case 'ws': {
-      return basicWalkSpeedByClass[state.characterClass];
-    }
-    case 'ar': {
-      return basicAttackRangeByClass[state.characterClass];
-    }
-    default: {
-      return 0;
-    }
-  }
-}
 
 const boostVitalityByClass = {
   sword: 12,
@@ -323,151 +614,8 @@ const boostDexteriryByClass = {
   dagger: 3,
 };
 
-function getBoostValue(state, key) {
-  switch (key) {
-    case 'vit': {
-      return (state.boostAllRecords + state.boostVitalityRecords) * boostVitalityByClass[state.characterClass];
-    }
-    case 'str': {
-      return (state.boostAllRecords + state.boostStrengthRecords) * boostStrengthByClass[state.characterClass];
-    }
-    case 'dex': {
-      return (state.boostAllRecords + state.boostDexteriryRecords) * boostDexteriryByClass[state.characterClass];
-    }
-    case 'def': {
-      return (state.boostAllRecords + state.boostDefenseRecords);
-    }
-    default: {
-      return 0;
-    }
-  }
-}
-
-function totalMinAd(state) {
-  const str = getCharacterValue(state, 'str');
-
-  return getCharacterValue(state, 'minAd') + Math.round(str / 2);
-}
-
-function totalMaxAd(state) {
-  const str = getCharacterValue(state, 'str');
-
-  return getCharacterValue(state, 'maxAd') + str;
-}
-
-function getExpectDmgPerHit(state) {
-  const minAd = Math.max(0, totalMinAd(state));
-  const maxAd = Math.max(0, totalMaxAd(state));
-
-  return (minAd + maxAd) / 2;
-}
-
-function getExpectHealingPerHit(state) {
-  return Math.round(getExpectDmgPerHit(state) * getCharacterValue(state, 'voh') / 100);
-}
-
-function hitsPerSecond(state) {
-  const as = getCharacterValue(state, 'as');
-  if (as >= 10) {
-    return Math.round(30 / as * 1000) / 1000;
-  }
-  else if (as <= 2) {
-    return 8.064;
-  }
-  switch (as) {
-    case 3: {
-      return 6.669;
-    }
-    case 4: {
-      return 5.998;
-    }
-    case 5: {
-      return 5.332;
-    }
-    case 6: {
-      return 4.801;
-    }
-    case 7: {
-      return 4.136;
-    }
-    case 8: {
-      return 3.738;
-    }
-    case 9: {
-      return 3.311;
-    }
-  }
-}
-
-function totalDoubleStrikeChance(state) {
-  const doublestrikeList = [];
-  slotList.forEach((slot) => {
-    const specialData = getSlotValue(state, slot, 'special');
-    if (specialData.type === 'doubleStrike') {
-      doublestrikeList.push(specialData.value);
-    }
-  });
-
-  const notDoubleStrikeChancePerHit = doublestrikeList.reduce((sum, doubleStrikeChance) => {
-    return sum * (100 - doubleStrikeChance);
-  }, 100) / Math.pow(100, doublestrikeList.length);
-
-  return (100 - notDoubleStrikeChancePerHit);
-}
-
-function getExpectDps(state) {
-  const expectDmgPerHit = getExpectDmgPerHit(state);
-  const hitsPerSecondAdjust = hitsPerSecond(state);
-  const doubleStrikeAdjust = totalDoubleStrikeChance(state) + 100;
-
-  return Math.round(expectDmgPerHit * hitsPerSecondAdjust * doubleStrikeAdjust) / 100;
-}
-
-function totalSAMinAd(state) {
-  switch (state.characterClass) {
-    case 'sword': {
-      return totalMinAd(state) * 1.5;
-    }
-    case 'axe': {
-      return totalMinAd(state) * 3;
-    }
-    case 'dagger': {
-      return totalMinAd(state) * 2;
-    }
-  }
-}
-
-function totalSAMaxAd(state) {
-  switch (state.characterClass) {
-    case 'sword': {
-      return totalMaxAd(state) * 1.5;
-    }
-    case 'axe': {
-      return totalMaxAd(state) * 3;
-    }
-    case 'dagger': {
-      return totalMaxAd(state) * 2;
-    }
-  }
-}
-
-function getExpectSADmgPerHit(state) {
-  const minAd = Math.max(0, totalSAMinAd(state));
-  const maxAd = Math.max(0, totalSAMaxAd(state));
-
-  return (minAd + maxAd) / 2;
-}
-
-function getExpectSAHealingPerHit(state) {
-  return Math.round(getExpectSADmgPerHit(state) * getCharacterValue(state, 'voh') / 100);
-}
-
-function saHitsPerSecond(state) {
-  const sad = getCharacterValue(state, 'sad');
-  if (sad > 0) {
-    return Math.max(Math.floor(1 / sad), 1);
-  }
-  else {
-    return hitsPerSecond(state);
-  }
-}
+const saMultiperByClass = {
+  sword: 1.5,
+  axe: 3,
+  dagger: 2,
+};

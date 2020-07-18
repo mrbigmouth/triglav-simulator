@@ -121,26 +121,26 @@ export default {
         }
         case 'strength': {
           this.boostAllRecords = 2;
-          this.boostVitalityRecords = 1;
-          this.boostStrengthRecords = 13;
+          this.boostVitalityRecords = 4;
+          this.boostStrengthRecords = 10;
           this.boostDexteriryRecords = 1;
           this.boostDefenseRecords = 1;
           break;
         }
         case 'dexteriry': {
           this.boostAllRecords = 2;
-          this.boostVitalityRecords = 1;
+          this.boostVitalityRecords = 4;
           this.boostStrengthRecords = 1;
-          this.boostDexteriryRecords = 13;
+          this.boostDexteriryRecords = 10;
           this.boostDefenseRecords = 1;
           break;
         }
         case 'defense': {
           this.boostAllRecords = 2;
-          this.boostVitalityRecords = 1;
+          this.boostVitalityRecords = 4;
           this.boostStrengthRecords = 1;
           this.boostDexteriryRecords = 1;
-          this.boostDefenseRecords = 13;
+          this.boostDefenseRecords = 10;
           break;
         }
         case 'custom':

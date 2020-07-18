@@ -25,12 +25,6 @@ export default {
   mixins: [
     computedPropertiesForBuildStore,
   ],
-  data() {
-    return {
-    };
-  },
-  methods: {
-  },
 };
 
 </script>

@@ -32,7 +32,7 @@
         label="經驗值"
         type="number"
         min="0"
-        step="1" />
+        step="10000" />
     </div>
     <div class="col-xs-12 col-sm-6">
       <q-input
@@ -40,7 +40,7 @@
         label="擊殺數"
         type="number"
         min="0"
-        step="1" />
+        step="100" />
     </div>
     <div class="col-xs-12 col-sm-6">
       <boost-records />

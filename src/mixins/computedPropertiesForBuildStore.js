@@ -1,58 +1,14 @@
 import { mapGetters } from 'vuex';
+import build from 'src/store/modules/build';
 
-export const computedBuildValueForVModel = {
+export default {
   computed: {
-    ...generateComputedPropertiesForVModel(
-      'characterClass',
-      'exp',
-      'kills',
-      'boostAllRecords',
-      'boostVitalityRecords',
-      'boostStrengthRecords',
-      'boostDexteriryRecords',
-      'boostDefenseRecords',
-      'weapon1',
-      'weapon2',
-      'ring1',
-      'ring2',
-      'helm',
-      'armor',
-      'gloves',
-      'boots',
-      'freshy',
-      'puppet1',
-      'puppet2',
-      'puppet3',
-    ),
-    ...mapGetters('build', [
-      'getCharacterValue',
-      'getItemValue',
-      'totalMinAd',
-      'totalMaxAd',
-      'expectDmgPerHit',
-      'getExpectDmgPerHit',
-      'expectHealingPerHit',
-      'getExpectHealingPerHit',
-      'hitsPerSecond',
-      'totalDoubleStrikeChance',
-      'expectDps',
-      'getExpectDps',
-      'totalSAMinAd',
-      'totalSAMaxAd',
-      'expectSADmgPerHit',
-      'getExpectSADmgPerHit',
-      'expectSAHealingPerHit',
-      'getExpectSAHealingPerHit',
-      'saHitsPerSecond',
-      'getSpecialDescription',
-      'totalSADelay',
-      'specialAbilityList',
-    ]),
+    ...generateComputedPropertiesForVModel(Object.keys(build.state())),
+    ...mapGetters('build', Object.keys(build.getters)),
   },
 };
-export default computedBuildValueForVModel;
 
-function generateComputedPropertiesForVModel(...argList) {
+function generateComputedPropertiesForVModel(argList) {
   const result = {};
 
   argList.forEach((key) => {

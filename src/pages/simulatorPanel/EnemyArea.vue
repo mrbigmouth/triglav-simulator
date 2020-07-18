@@ -8,14 +8,14 @@
     default-opened
     dense>
     <div class="q-pa-sm">
-      <div class="row q-col-gutter-sm">
-        <div
+      <div class="row full-width wrap justify-around items-start">
+        <simulator
           v-for="(enemyData, index) in simulatorEnemyList"
           :key="index"
-          class="col-xs-12 col-md-6">
-          <simulator :enemy-data="enemyData" />
-        </div>
+          :enemy-data="enemyData"
+          :temporary-buff="temporaryBuff" />
       </div>
+      <div class="flex-break" />
       <div class="text-center q-pa-sm">
         <q-btn
           class="q-mx-sm"

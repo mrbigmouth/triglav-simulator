@@ -1,5 +1,6 @@
 <template>
   <q-card
+    style="max-width: 25rem; margin-top: 1rem;"
     flat
     bordered>
     <q-item>
@@ -17,149 +18,110 @@
         </q-item-label>
       </q-item-section>
     </q-item>
-    <q-separator />
-    <q-card-section>
-      <div>
-        敵方屬性–
-        傷害：{{ enemyData.minAd }}~{{ enemyData.maxAd }}，
-        敏捷：{{ enemyData.dex }}，
-        吸血：{{ enemyData.voh }}%，
-        防禦：{{ enemyData.def }}，
-        體力：{{ enemyData.vit }}，
-        反傷：{{ enemyData.dr }}%。
+    <q-separator style="margin-bottom: 0;" />
+    <q-expansion-item
+      label="普攻模擬結果"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      :default-opened="playerSad < 30"
+      dense>
+      <div class="row">
+        <div class="col-3 text-right">
+          <div>擊殺時間：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>3秒</div>
+        </div>
+        <div class="col-3 text-right">
+          <div>承受損傷：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>30(30%)</div>
+        </div>
       </div>
-      <div>
-        每次對其攻擊將造成
-        {{ attackDealMinAd }}
-        (
-        {{ getEnemyVitPercentage(attackDealMinAd) }}%
-        )
-        ~
-        {{ attackDealMaxAd }}
-        (
-        {{ getEnemyVitPercentage(attackDealMaxAd) }}%
-        )
-        點傷害，傷害期望值為
-        {{ attackDealExpectDmg }}
-        (
-        {{ getEnemyVitPercentage(attackDealExpectDmg) }}%
-        )
-        。
-        預計需要攻擊
-        {{ expectKillAttack }}
-        次方可擊殺，花費時間
-        {{ expectKillTime }}
-        秒。
+    </q-expansion-item>
+    <q-expansion-item
+      v-if="playerSad >= 30"
+      label="特攻模擬結果"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      default-opened
+      dense>
+      <div class="row">
+        <div class="col-3 text-right">
+          <div>擊殺時間：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>3秒</div>
+        </div>
+        <div class="col-3 text-right">
+          <div>承受損傷：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>30(30%)</div>
+        </div>
       </div>
-      <div>
-        每次對其攻擊將被反彈
-        {{ attackBeDamageReflectMin }}
-        (
-        {{ getPlayerVitPercentage(attackBeDamageReflectMin) }}%
-        )
-        ~
-        {{ attackBeDamageReflectMax }}
-        (
-        {{ getPlayerVitPercentage(attackBeDamageReflectMax) }}%
-        )
-        點傷害。傷害期望值為
-        {{ attackBeDamageReflectExpectDmg }}
-        (
-        {{ getPlayerVitPercentage(attackBeDamageReflectExpectDmg) }}%
-        )
-        。預期吸血量為
-        {{ attackHealingAmount }}
-        (
-        {{ getPlayerVitPercentage(attackHealingAmount) }}%
-        )。
+    </q-expansion-item>
+    <q-expansion-item
+      label="普攻計算"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      dense>
+      <div class="row">
+        <div class="col-3 text-right">
+          <div>每秒傷害：</div>
+          <div>每擊傷害：</div>
+          <div>敵百分比：</div>
+          <div>預期吸血量：</div>
+          <div>我百分比：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>
+            {{ attackDealDamagePerSecond }}
+          </div>
+          <div>
+            {{ attackDealMinAd }}
+            ~
+            {{ attackDealMaxAd }}
+          </div>
+          <div>
+            {{ getEnemyVitPercentage(attackDealMinAd) }}%
+            ~
+            {{ getEnemyVitPercentage(attackDealMaxAd) }}%
+          </div>
+          <div>
+            {{  }}
+          </div>
+        </div>
+        <div class="col-3 text-right">
+          <div>承受反擊：</div>
+          <div>期望值：</div>
+          <div>敵百分比：</div>
+          <div>每秒攻擊數：</div>
+          <div>雙擊機率：</div>
+        </div>
+        <div class="col-3 text-center">
+          <div>
+            {{ attackBeDamageReflectExpectDamagePerSecond }}
+          </div>
+          <div>
+            {{ attackDealExpectDmg }}
+          </div>
+          <div>
+            {{ getEnemyVitPercentage(attackDealExpectDmg) }}%
+          </div>
+          <div>
+            {{ playerHitsPerSecond }}
+          </div>
+          <div>
+            {{ playerDoubleStrike }}%
+          </div>
+        </div>
       </div>
-      <div>
-        每次對其特殊攻擊將造成
-        {{ saAttackDealMinAd }}
-        (
-        {{ getEnemyVitPercentage(saAttackDealMinAd) }}%
-        )
-        ~
-        {{ saAttackDealMaxAd }}
-        (
-        {{ getEnemyVitPercentage(saAttackDealMaxAd) }}%
-        )
-        點傷害，傷害期望值為
-        {{ saAttackDealExpectDmg }}
-        (
-        {{ getEnemyVitPercentage(saAttackDealExpectDmg) }}%
-        )
-        。
-        預計需要攻擊
-        {{ expectKillSAAttack }}
-        次方可擊殺，花費時間
-        {{ expectKillSATime }}
-        秒。
-      </div>
-      <div>
-        每次對其攻擊將被反彈
-        {{ saAttackBeDamageReflectMin }}
-        (
-        {{ getPlayerVitPercentage(saAttackBeDamageReflectMin) }}%
-        )
-        ~
-        {{ saAttackBeDamageReflectMax }}
-        (
-        {{ getPlayerVitPercentage(saAttackBeDamageReflectMax) }}%
-        )
-        點傷害。傷害期望值為
-        {{ saAttackBeDamageReflectExpectDmg }}
-        (
-        {{ getPlayerVitPercentage(saAttackBeDamageReflectExpectDmg) }}%
-        )
-        。預期吸血量為
-        {{ saAttackHealingAmount }}
-        (
-        {{ getPlayerVitPercentage(saAttackHealingAmount) }}%
-        )。
-      </div>
-      <div>
-        每次被其攻擊將被造成
-        {{ beAttackDealMinAd }}
-        (
-        {{ getPlayerVitPercentage(beAttackDealMinAd) }}%
-        )
-        ~
-        {{ beAttackDealMaxAd }}
-        (
-        {{ getPlayerVitPercentage(beAttackDealMaxAd) }}%
-        )
-        傷害。傷害期望值為
-        {{ beAttackDealExpectDmg }}
-        (
-        {{ getPlayerVitPercentage(beAttackDealExpectDmg) }}%
-        )
-        。
-      </div>
-      <div>
-        每次被其攻擊將反彈
-        {{ beAttackDamageReflectMin }}
-        (
-        {{ getEnemyVitPercentage(beAttackDamageReflectMin) }}%
-        )
-        ~
-        {{ beAttackDamageReflectMax }}
-        (
-        {{ getEnemyVitPercentage(beAttackDamageReflectMax) }}%
-        )
-        點傷害。傷害期望值為
-        {{ beAttackDamageReflectExpectDmg }}
-        (
-        {{ getEnemyVitPercentage(beAttackDamageReflectExpectDmg) }}%
-        )
-        。預期被吸血量為
-        {{ beAttackHealingAmount }}
-        (
-        {{ getEnemyVitPercentage(beAttackHealingAmount) }}%
-        )
-        。
-      </div>
-    </q-card-section>
+    </q-expansion-item>
   </q-card>
 </template>
 
@@ -185,38 +147,14 @@ export default {
     },
     getPlayerVitPercentage() {
       return (num) => {
-        return Math.round(num / this.playerVit * 1000) / 10;
+        return Math.round(num / this.getCharacterValue('def') * 1000) / 10;
       };
-    },
-    playerVit() {
-      return this.getCharacterValue('vit');
-    },
-    playerDef() {
-      return this.getCharacterValue('def');
-    },
-    playerDex() {
-      return this.getCharacterValue('dex');
-    },
-    playerVoh() {
-      return this.getCharacterValue('voh');
-    },
-    playerDr() {
-      return this.getCharacterValue('dr');
     },
     effectiveEnemyDef() {
       return Math.max(0, this.enemyData.def - this.playerDex);
     },
     effectivePlayerDef() {
       return Math.max(0, this.playerDef - this.enemyData.dex);
-    },
-    attackDealMinAd() {
-      return Math.max(0, this.totalMinAd - this.effectiveEnemyDef);
-    },
-    attackDealMaxAd() {
-      return Math.max(0, this.totalMaxAd - this.effectiveEnemyDef);
-    },
-    attackDealExpectDmg() {
-      return (this.attackDealMinAd + this.attackDealMaxAd) / 2;
     },
     expectKillAttack() {
       return Math.ceil(this.enemyData.vit / this.attackDealExpectDmg);
@@ -230,8 +168,11 @@ export default {
     attackBeDamageReflectMax() {
       return Math.max(0, Math.round(this.attackDealMinAd * this.enemyData.dr / 100) - this.effectivePlayerDef);
     },
-    attackBeDamageReflectExpectDmg() {
+    attackBeDamageReflectExpectDamage() {
       return Math.max(0, Math.round(this.attackDealExpectDmg * this.enemyData.dr / 100) - this.effectivePlayerDef);
+    },
+    attackBeDamageReflectExpectDamagePerSecond() {
+      return Math.round(this.attackBeDamageReflectExpectDamage * this.playerHitsPerSecond * this.playerDoubleStrike) / 100;
     },
     attackHealingAmount() {
       return Math.round(this.attackDealExpectDmg * this.playerVoh / 100);
