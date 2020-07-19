@@ -5,7 +5,7 @@ export default [
     img: 'items/ring_1.png',
   },
   {
-    i18n: 'trinityRed',
+    i18n: 'trinity',
     type: 'artifact',
     img: 'items/ring_trinity_red.png',
     voh: {

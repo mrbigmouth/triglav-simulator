@@ -14,6 +14,13 @@
           v-close-popup />
       </q-bar>
       <q-card-section>
+        <q-select
+          v-model="filterLocation"
+          label="請選擇區域"
+          :options="locationList"
+          emit-value
+          map-options />
+        <q-separator />
         <q-btn
           color="positive"
           class="full-width"
@@ -126,6 +133,7 @@
 </template>
 
 <script>
+import location from 'src/data/location';
 import enemy from 'src/data/enemy';
 import build from 'src/store/modules/build';
 const getHitsPerSecondByAs = build.getters.getHitsPerSecondByAs();
@@ -140,10 +148,17 @@ export default {
   },
   data() {
     return {
-      filter: [],
+      filterLocation: '',
+      locationList: location.map((location) => {
+        return {
+          label: this.$t('location.' + location),
+          value: location,
+        };
+      }),
       enemyList: enemy.slice().map((enemyData) => {
         return {
           name: this.$t('enemy.' + enemyData.i18n),
+          location: enemyData.location,
           img: enemyData.img || 'none.png',
           minAd: enemyData.minAd || 0,
           maxAd: enemyData.maxAd || 0,
@@ -168,7 +183,10 @@ export default {
       },
     },
     displayEnemyList() {
-      return this.enemyList;
+      const filterLocation = this.filterLocation;
+      return this.enemyList.filter((enemyData) => {
+        return enemyData.location.includes(filterLocation);
+      });
     },
   },
   methods: {
@@ -192,6 +210,7 @@ export default {
   }
 
   hr.q-separator {
+    min-width: 303px;
     margin: 0.5rem 0;
   }
 </style>

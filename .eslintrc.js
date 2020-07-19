@@ -62,6 +62,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
+    'quote-props': 'off',
     // allow console.log during development only
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // allow debugger during development only
@@ -86,10 +87,12 @@ module.exports = {
         math: 'always',
       },
     ],
-    'vue/html-closing-bracket-newline': ['warn', {
-      singleline: 'never',
-      multiline: 'never',
-    },
+    'vue/html-closing-bracket-newline': [
+      'warn',
+      {
+        singleline: 'never',
+        multiline: 'never',
+      },
     ],
   },
 };
