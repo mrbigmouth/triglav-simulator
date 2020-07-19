@@ -1,10 +1,11 @@
 <template>
-  <tbody
-    :title="itemData.i18n"
-    @click="$emit('click')">
+  <tbody @click="$emit('click')">
     <tr>
       <td>
         <img :src="itemData.img" />
+        <div>
+          {{ $t('item.' + itemData.i18n) }}
+        </div>
       </td>
       <td>
         <colorful-value :value="getValue('minAd')" />

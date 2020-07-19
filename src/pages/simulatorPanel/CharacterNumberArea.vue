@@ -13,33 +13,33 @@
           <div class="row">
             <span class="col attribute">每秒傷害：</span>
             <span class="col number">
-              {{ expectDps }}
+              {{ playerDamagePerSecond }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">期望傷害：</span>
             <span class="col number">
-              {{ expectDmgPerHit }}
+              {{ playerExpectDamagePerHit }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">最小傷害：</span>
             <span class="col number">
-              {{ totalMinAd }}
+              {{ playerMinAd }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">最大傷害：</span>
             <span class="col number">
-              {{ totalMinAd }}
+              {{ playerMaxAd }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">預期吸血量：</span>
             <span class="col number">
-              {{ expectHealingPerHit }}
+              {{ playerExpectFeedbackPerHit }}
               (
-              {{ vitPercentage(expectHealingPerHit) }}
+              {{ vitPercentage(playerExpectFeedbackPerHit) }}
               %
               )
             </span>
@@ -47,19 +47,19 @@
           <div class="row">
             <span class="col attribute">攻擊速度：</span>
             <span class="col number">
-              {{ getCharacterValue('as') }}
+              {{ playerAs }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">每秒攻擊數：</span>
             <span class="col number">
-              {{ hitsPerSecond }}
+              {{ playerHitsPerSecond }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">雙擊機率：</span>
             <span class="col number">
-              {{ totalDoubleStrikeChance }}
+              {{ playerDoubleStrike }}
               %
             </span>
           </div>
@@ -78,27 +78,27 @@
           <div class="row">
             <span class="col attribute">期望傷害：</span>
             <span class="col number">
-              {{ expectSADmgPerHit }}
+              {{ playerSaExpectDamage }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">最小傷害：</span>
             <span class="col number">
-              {{ totalSAMaxAd }}
+              {{ playerSaMinAd }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">最大傷害：</span>
             <span class="col number">
-              {{ totalSAMinAd }}
+              {{ playerSaMaxAd }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">預期吸血量：</span>
             <span class="col number">
-              {{ expectSAHealingPerHit }}
+              {{ playerSaExpectFeedbackPerHit }}
               (
-              {{ expectSAHealingPerHit }}
+              {{ vitPercentage(playerSaExpectFeedbackPerHit) }}
               %
               )
             </span>
@@ -106,13 +106,13 @@
           <div class="row">
             <span class="col attribute">特攻延遲：</span>
             <span class="col number">
-              {{ totalSADelay }}
+              {{ playerSad }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">傷害反彈：</span>
             <span class="col number">
-              {{ getCharacterValue('dr') }}
+              {{ playerDr }}
             </span>
           </div>
         </q-card-section>
@@ -130,43 +130,43 @@
           <div class="row">
             <span class="col attribute">力量：</span>
             <span class="col number">
-              {{ getCharacterValue('str') }}
+              {{ playerStr }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">敏捷：</span>
             <span class="col number">
-              {{ getCharacterValue('dex') }}
+              {{ playerDex }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">體力：</span>
             <span class="col number">
-              {{ getCharacterValue('vit') }}
+              {{ playerVit }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">防禦：</span>
             <span class="col number">
-              {{ getCharacterValue('def') }}
+              {{ playerDef }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">攻擊距離：</span>
             <span class="col number">
-              {{ getCharacterValue('ar') }}
+              {{ playerAr }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">移動速度：</span>
             <span class="col number">
-              {{ getCharacterValue('ws') }}
+              {{ playerWs }}
             </span>
           </div>
           <div class="row">
             <span class="col attribute">經驗加成：</span>
             <span class="col number">
-              {{ getCharacterValue('xpg') }}
+              {{ playerXpg }}
               %
             </span>
           </div>
@@ -182,9 +182,9 @@
       dense>
       <div class="card">
         <q-card-section>
-          <template v-if="specialAbilityList.length > 0">
+          <template v-if="playerSpecialAbilityList.length > 0">
             <div
-              v-for="(speicalData, index) in specialAbilityList"
+              v-for="(speicalData, index) in playerSpecialAbilityList"
               :key="index"
               style="color: #9fd900;">
               {{ getSpecialDescription(speicalData) }}

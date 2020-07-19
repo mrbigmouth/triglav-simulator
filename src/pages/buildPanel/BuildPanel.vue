@@ -5,7 +5,7 @@
     autocapitalize="off"
     autocomplete="off"
     spellcheck="false">
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-2 col-md-4 offset-lg-3 col-lg-3">
       <q-select
         v-model="characterClass"
         label="腳色職業"
@@ -26,23 +26,23 @@
         emit-value
         map-options />
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
       <q-input
         v-model.number="exp"
         label="經驗值"
         type="number"
         min="0"
-        step="1" />
+        step="10000" />
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-2 col-md-4 offset-lg-3 col-lg-3">
       <q-input
         v-model.number="kills"
         label="擊殺數"
         type="number"
         min="0"
-        step="1" />
+        step="100" />
     </div>
-    <div class="col-xs-12 col-sm-6">
+    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
       <boost-records />
     </div>
     <div class="col-xs-12">

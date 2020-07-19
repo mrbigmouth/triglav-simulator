@@ -4,11 +4,9 @@
     persistent
     full-height>
     <q-card>
-      <q-bar>
+      <q-bar style="position: sticky; top: 0;">
         <div>選擇模擬敵方</div>
-
         <q-space />
-
         <q-btn
           icon="close"
           dense
@@ -50,6 +48,13 @@
                 step="1"
                 dense />
               <q-input
+                v-model.number="enemyData.hitsPerSecond"
+                label="每秒攻擊數"
+                type="number"
+                min="0"
+                step="0.1"
+                dense />
+              <q-input
                 v-model.number="enemyData.dex"
                 label="敏捷"
                 type="number"
@@ -58,6 +63,28 @@
                 dense />
             </div>
             <div class="col">
+              <q-input
+                v-model.number="enemyData.voh"
+                label="吸血"
+                type="number"
+                min="0"
+                step="1"
+                dense>
+                <template v-slot:append>
+                  ％
+                </template>
+              </q-input>
+              <q-input
+                v-model.number="enemyData.dr"
+                label="反傷"
+                type="number"
+                min="0"
+                step="1"
+                dense>
+                <template v-slot:append>
+                  ％
+                </template>
+              </q-input>
               <q-input
                 v-model.number="enemyData.def"
                 label="防禦"
@@ -74,27 +101,12 @@
                 hide-hint
                 dense />
               <q-input
-                v-model.number="enemyData.dr"
-                label="反傷"
+                v-model.number="enemyData.healingPerSecond"
+                label="每秒回血"
                 type="number"
                 min="0"
                 step="1"
-                dense>
-                <template v-slot:append>
-                  ％
-                </template>
-              </q-input>
-              <q-input
-                v-model.number="enemyData.voh"
-                label="吸血"
-                type="number"
-                min="0"
-                step="1"
-                dense>
-                <template v-slot:append>
-                  ％
-                </template>
-              </q-input>
+                dense />
             </div>
             <div>
               <q-btn
@@ -115,6 +127,8 @@
 
 <script>
 import enemy from 'src/data/enemy';
+import build from 'src/store/modules/build';
+const getHitsPerSecondByAs = build.getters.getHitsPerSecondByAs();
 
 export default {
   name: 'SelectEnemyDialog',
@@ -130,14 +144,16 @@ export default {
       enemyList: enemy.slice().map((enemyData) => {
         return {
           name: this.$t('enemy.' + enemyData.i18n),
-          img: enemyData.img,
-          minAd: enemyData.minAd,
-          maxAd: enemyData.maxAd,
-          def: enemyData.def,
-          dex: enemyData.dex,
-          vit: enemyData.vit,
-          voh: enemyData.voh,
-          dr: enemyData.dr,
+          img: enemyData.img || 'none.png',
+          minAd: enemyData.minAd || 0,
+          maxAd: enemyData.maxAd || 0,
+          hitsPerSecond: enemyData.as ? getHitsPerSecondByAs(enemyData.as) : 0.5,
+          dex: enemyData.dex || 0,
+          def: enemyData.def || 0,
+          vit: enemyData.vit || 0,
+          voh: enemyData.voh || 0,
+          dr: enemyData.dr || 0,
+          healingPerSecond: enemyData.healingPerSecond || 0,
         };
       }),
     };
@@ -175,7 +191,7 @@ export default {
     height: 40px;
   }
 
-  hr {
-    margin: 0 0.5rem;
+  hr.q-separator {
+    margin: 0.5rem 0;
   }
 </style>

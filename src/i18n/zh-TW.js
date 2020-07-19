@@ -7,4 +7,11 @@ export default {
     goblinMage: '哥布林法師',
     roper: '觸手怪',
   },
+  item: {
+    none: '無裝備',
+    nightmare: '夜惡夢',
+    splendidArmor: '華麗盔甲',
+    hichirikiMeidou: '',
+    trinityRed: '',
+  },
 };
