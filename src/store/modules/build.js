@@ -34,8 +34,8 @@ export default {
         sad: 0,
         sa: 0,
         doubleStrike: 0,
-        extraAttack: 0,
-        specialExtraAttack: 0,
+        throwAttack: 0,
+        specialThrowAttack: 0,
       },
     };
   },
@@ -235,6 +235,10 @@ export default {
           (state.temporaryBuff[key] || 0)
         );
 
+        if (key === 'sad') {
+          return characterValue;
+        }
+
         return Math.max(0, characterValue);
       };
     },
@@ -266,10 +270,7 @@ export default {
       return getters.getCharacterValue('as');
     },
     playerSad(state, getters) {
-      return getters.getCharacterValue('sad');
-    },
-    playerSaDelay(state, getters) {
-      return Math.max(0, 30 - getters.playerSad);
+      return Math.max(0, 30 + getters.getCharacterValue('sad'));
     },
     playerVoh(state, getters) {
       return getters.getCharacterValue('voh');
@@ -313,14 +314,14 @@ export default {
         attackerDex,
         defenderDef,
         doubleStrike,
-        extraAttack,
+        throwAttack,
       }) => {
         const effectiveDef = Math.max(0, defenderDef - attackerDex);
         const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDef);
         const doubleStrikeAdjust = (doubleStrike + 100);
-        const extraAttackAdjust = (extraAttack + 100);
+        const throwAttackAdjust = (throwAttack + 100);
 
-        return Math.round(expectDamagePerHit * doubleStrikeAdjust * extraAttackAdjust / 10000);
+        return Math.round(expectDamagePerHit * doubleStrikeAdjust * throwAttackAdjust / 10000);
       };
     },
     playerExpectDamagePerHit(state, getters) {
@@ -330,7 +331,7 @@ export default {
         attackerDex: getters.playerDex,
         defenderDef: 0,
         doubleStrike: getters.playerDoubleStrike,
-        extraAttack: state.temporaryBuff.extraAttack,
+        throwAttack: state.temporaryBuff.throwAttack,
       });
     },
     getPlayerExpectDamagePerHit(state, getters) {
@@ -341,7 +342,7 @@ export default {
           attackerDex: getters.playerDex,
           defenderDef: enemyDef,
           doubleStrike: getters.playerDoubleStrike,
-          extraAttack: state.temporaryBuff.extraAttack,
+          throwAttack: state.temporaryBuff.throwAttack,
         });
       };
     },
@@ -354,7 +355,7 @@ export default {
         defenderDex,
         defenderDef,
         doubleStrike,
-        extraAttack,
+        throwAttack,
         attackerVoh,
         defenderDr,
       }) => {
@@ -362,11 +363,11 @@ export default {
         const effectiveAttackerDef = Math.max(0, defenderDex - attackerDef);
         const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDefenderDef);
         const doubleStrikeAdjust = (doubleStrike + 100);
-        const damagePerHitNoExtraAttack = Math.round(expectDamagePerHit * doubleStrikeAdjust / 100);
-        const healingPerHit = Math.round(damagePerHitNoExtraAttack * attackerVoh / 100);
-        const extraAttackAdjust = (extraAttack + 100);
-        const damagePerHit = Math.round(expectDamagePerHit * doubleStrikeAdjust * extraAttackAdjust / 10000);
-        const damageReflect = Math.round(damagePerHit * defenderDr / 100) - effectiveAttackerDef;
+        const damagePerHitNothrowAttack = Math.round(expectDamagePerHit * doubleStrikeAdjust / 100);
+        const healingPerHit = Math.round(damagePerHitNothrowAttack * attackerVoh / 100);
+        const throwAttackAdjust = (throwAttack + 100);
+        const damagePerHit = Math.round(expectDamagePerHit * doubleStrikeAdjust * throwAttackAdjust / 10000);
+        const damageReflect = Math.max(0, Math.round(damagePerHit * defenderDr / 100) - effectiveAttackerDef);
 
         return healingPerHit - damageReflect;
       };
@@ -380,7 +381,7 @@ export default {
         defenderDex: 0,
         defenderDef: 0,
         doubleStrike: getters.playerDoubleStrike,
-        extraAttack: state.temporaryBuff.extraAttack,
+        throwAttack: state.temporaryBuff.throwAttack,
         attackerVoh: getters.playerVoh,
         defenderDr: 0,
       });
@@ -395,7 +396,7 @@ export default {
           defenderDex: enemyDex,
           defenderDef: enemyDef,
           doubleStrike: getters.playerDoubleStrike,
-          extraAttack: state.temporaryBuff.extraAttack,
+          throwAttack: state.temporaryBuff.throwAttack,
           attackerVoh: getters.playerVoh,
           defenderDr: enemyDr,
         });
@@ -445,7 +446,7 @@ export default {
         attackerDex,
         defenderDef,
         doubleStrike,
-        extraAttack,
+        throwAttack,
         hitsPerSecond,
       }) => {
         const damagePerHit = getters.getExpectDamagePerHit({
@@ -454,7 +455,7 @@ export default {
           attackerDex,
           defenderDef,
           doubleStrike,
-          extraAttack,
+          throwAttack,
         });
 
         return damagePerHit * hitsPerSecond;
@@ -462,6 +463,19 @@ export default {
     },
     playerDamagePerSecond(state, getters) {
       return getters.playerExpectDamagePerHit * getters.playerHitsPerSecond;
+    },
+    getPlayerDamagePerSecond(state, getters) {
+      return (defenderDef) => {
+        return getters.getDamagePerSecond({
+          minAd: getters.playerMinAd,
+          maxAd: getters.playerMaxAd,
+          attackerDex: getters.playerDex,
+          defenderDef: defenderDef,
+          doubleStrike: getters.playerDoubleStrike,
+          throwAttack: state.temporaryBuff.throwAttack,
+          hitsPerSecond: getters.playerHitsPerSecond,
+        });
+      };
     },
     playerSaMinAd(state, getters) {
       return getters.playerMinAd * saMultiperByClass[state.characterClass];
@@ -476,7 +490,7 @@ export default {
         attackerDex: getters.playerDex,
         defenderDef: 0,
         doubleStrike: 0,
-        extraAttack: state.temporaryBuff.specialExtraAttack,
+        throwAttack: state.temporaryBuff.specialThrowAttack,
       });
     },
     getPlayerSaExpectDamage(state, getters) {
@@ -487,7 +501,7 @@ export default {
           attackerDex: getters.playerDex,
           defenderDef: 0,
           doubleStrike: 0,
-          extraAttack: state.temporaryBuff.specialExtraAttack,
+          throwAttack: state.temporaryBuff.specialThrowAttack,
         });
       };
     },
@@ -500,7 +514,7 @@ export default {
         defenderDex: 0,
         defenderDef: 0,
         doubleStrike: 0,
-        extraAttack: state.temporaryBuff.specialExtraAttack,
+        throwAttack: state.temporaryBuff.specialThrowAttack,
         attackerVoh: getters.playerVoh,
         defenderDr: 0,
       });
@@ -515,7 +529,7 @@ export default {
           defenderDex: enemyDex,
           defenderDef: enemyDef,
           doubleStrike: 0,
-          extraAttack: state.temporaryBuff.specialExtraAttack,
+          throwAttack: state.temporaryBuff.specialThrowAttack,
           attackerVoh: getters.playerVoh,
           defenderDr: enemyDr,
         });
@@ -523,9 +537,9 @@ export default {
     },
     playerSaHitsPerSecond(state, getters) {
       const hitsPerSecond = getters.playerHitsPerSecond;
-      const saDelay = getters.playerSaDelay;
-      if (saDelay > 0) {
-        return Math.min(hitsPerSecond, Math.max(Math.floor(1 / saDelay), 1));
+      const playerSad = getters.playerSad;
+      if (playerSad > 0) {
+        return Math.min(hitsPerSecond, Math.max(Math.floor(1 / playerSad), 1));
       }
       else {
         return hitsPerSecond;

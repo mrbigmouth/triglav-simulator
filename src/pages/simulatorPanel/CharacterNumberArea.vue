@@ -106,7 +106,7 @@
           <div class="row">
             <span class="col attribute">特攻延遲：</span>
             <span class="col number">
-              {{ playerSaDelay }}
+              {{ playerSad }}
             </span>
           </div>
           <div class="row">

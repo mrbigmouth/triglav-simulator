@@ -12,5 +12,6 @@ export default {
     nightmare: '夜惡夢',
     splendidArmor: '華麗盔甲',
     hichirikiMeidou: '',
+    trinityRed: '',
   },
 };

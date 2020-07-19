@@ -4,7 +4,7 @@
     persistent
     full-height>
     <q-card>
-      <q-bar>
+      <q-bar style="position: sticky; top: 0;">
         <div>選擇模擬敵方</div>
         <q-space />
         <q-btn
@@ -49,7 +49,7 @@
                 dense />
               <q-input
                 v-model.number="enemyData.hitsPerSecond"
-                label="每秒攻擊次數"
+                label="每秒攻擊數"
                 type="number"
                 min="0"
                 step="0.1"
@@ -63,6 +63,28 @@
                 dense />
             </div>
             <div class="col">
+              <q-input
+                v-model.number="enemyData.voh"
+                label="吸血"
+                type="number"
+                min="0"
+                step="1"
+                dense>
+                <template v-slot:append>
+                  ％
+                </template>
+              </q-input>
+              <q-input
+                v-model.number="enemyData.dr"
+                label="反傷"
+                type="number"
+                min="0"
+                step="1"
+                dense>
+                <template v-slot:append>
+                  ％
+                </template>
+              </q-input>
               <q-input
                 v-model.number="enemyData.def"
                 label="防禦"
@@ -78,28 +100,6 @@
                 step="1"
                 hide-hint
                 dense />
-              <q-input
-                v-model.number="enemyData.dr"
-                label="反傷"
-                type="number"
-                min="0"
-                step="1"
-                dense>
-                <template v-slot:append>
-                  ％
-                </template>
-              </q-input>
-              <q-input
-                v-model.number="enemyData.voh"
-                label="吸血"
-                type="number"
-                min="0"
-                step="1"
-                dense>
-                <template v-slot:append>
-                  ％
-                </template>
-              </q-input>
               <q-input
                 v-model.number="enemyData.healingPerSecond"
                 label="每秒回血"

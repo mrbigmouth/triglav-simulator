@@ -13,7 +13,7 @@
           v-for="(enemyData, index) in simulatorEnemyList"
           :key="index"
           :enemy-data="enemyData"
-          :temporary-buff="temporaryBuff" />
+          @delete="simulatorEnemyList.splice(index, 1);" />
       </div>
       <div class="flex-break" />
       <div class="text-center q-pa-sm">

@@ -1,6 +1,6 @@
 <template>
   <q-card
-    style="max-width: 25rem; margin-top: 1rem;"
+    style="width: 15rem; margin-top: 1rem;"
     flat
     bordered>
     <q-item>
@@ -17,109 +17,352 @@
           戰鬥模擬結果
         </q-item-label>
       </q-item-section>
+      <q-item-section side>
+        <q-btn
+          icon="delete_forever"
+          title="刪除此模擬"
+          color="negative"
+          flat
+          dense
+          @click.prevent="$emit('delete')" />
+      </q-item-section>
     </q-item>
     <q-separator style="margin-bottom: 0;" />
     <q-expansion-item
-      label="普攻模擬結果"
-      class="shadow-1 overflow-hidden"
-      header-class="bg-primary text-white"
-      expand-icon-class="text-white"
-      :default-opened="playerSad < 30"
-      dense>
-      <div class="row">
-        <div class="col-3 text-right">
-          <div>擊殺時間：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>3秒</div>
-        </div>
-        <div class="col-3 text-right">
-          <div>承受損傷：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>30(30%)</div>
-        </div>
-      </div>
-    </q-expansion-item>
-    <q-expansion-item
-      v-if="playerSad >= 30"
-      label="特攻模擬結果"
+      label="模擬結果"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       default-opened
       dense>
       <div class="row">
-        <div class="col-3 text-right">
-          <div>擊殺時間：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>3秒</div>
-        </div>
-        <div class="col-3 text-right">
-          <div>承受損傷：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>30(30%)</div>
-        </div>
+        <span class="col attribute">戰鬥時間：</span>
+        <span class="col number">
+          {{ simulatorResult.secondPass }}秒
+        </span>
+      </div>
+      <div
+        v-if="simulatorResult.enemyVit"
+        class="row">
+        <span class="col attribute">敵方殘餘：</span>
+        <span class="col number">
+          {{ simulatorResult.enemyVit }}
+          (
+          {{ getEnemyVitPercentage(simulatorResult.enemyVit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">承受損傷：</span>
+        <span class="col number">
+          {{ simulatorResult.playerLossVit }}
+          (
+          {{ getPlayerVitPercentage(simulatorResult.playerLossVit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">攻擊次數：</span>
+        <span class="col number">
+          {{ simulatorResult.playerHits }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">特攻次數：</span>
+        <span class="col number">
+          {{ simulatorResult.playerSaHits }}
+        </span>
       </div>
     </q-expansion-item>
     <q-expansion-item
-      label="普攻計算"
+      label="模擬歷程"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      default-opened
+      dense>
+      <template v-for="(record, index) in simulatorResult.recordList">
+        <div
+          :key="`time_${index}`"
+          class="row">
+          <span class="col attribute">時間：</span>
+          <span class="col number">
+            {{ record.time }}秒
+          </span>
+        </div>
+        <div
+          :key="`event_${index}`"
+          class="row">
+          <span class="col attribute">事件：</span>
+          <span class="col number">
+            {{ parseRecordAction(record.event) }}
+          </span>
+        </div>
+        <div
+          :key="`enemy_${index}`"
+          class="row">
+          <span class="col attribute">敵方殘血：</span>
+          <span class="col number">
+            {{ record.enemyVit }}
+            (
+            {{ getEnemyVitPercentage(record.enemyVit) }}
+            %)
+          </span>
+        </div>
+        <div
+          :key="`player_${index}`"
+          class="row">
+          <span class="col attribute">我方損傷：</span>
+          <span class="col number">
+            {{ record.playerLossVit }}
+            (
+            {{ getPlayerVitPercentage(record.playerLossVit) }}
+            %)
+          </span>
+        </div>
+        <q-separator :key="`separator_${index}`" />
+      </template>
+    </q-expansion-item>
+    <q-expansion-item
+      label="普攻數值"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <div class="row">
-        <div class="col-3 text-right">
-          <div>每秒傷害：</div>
-          <div>每擊傷害：</div>
-          <div>敵百分比：</div>
-          <div>預期吸血量：</div>
-          <div>我百分比：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>
-            {{ attackDealDamagePerSecond }}
-          </div>
-          <div>
-            {{ attackDealMinAd }}
-            ~
-            {{ attackDealMaxAd }}
-          </div>
-          <div>
-            {{ getEnemyVitPercentage(attackDealMinAd) }}%
-            ~
-            {{ getEnemyVitPercentage(attackDealMaxAd) }}%
-          </div>
-          <div>
-            {{  }}
-          </div>
-        </div>
-        <div class="col-3 text-right">
-          <div>承受反擊：</div>
-          <div>期望值：</div>
-          <div>敵百分比：</div>
-          <div>每秒攻擊數：</div>
-          <div>雙擊機率：</div>
-        </div>
-        <div class="col-3 text-center">
-          <div>
-            {{ attackBeDamageReflectExpectDamagePerSecond }}
-          </div>
-          <div>
-            {{ attackDealExpectDmg }}
-          </div>
-          <div>
-            {{ getEnemyVitPercentage(attackDealExpectDmg) }}%
-          </div>
-          <div>
-            {{ playerHitsPerSecond }}
-          </div>
-          <div>
-            {{ playerDoubleStrike }}%
-          </div>
-        </div>
+        <span class="col attribute">每秒傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerExpectDamagePerSecond }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerExpectDamagePerSecond) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">期望傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerExpectDamagePerHit }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerExpectDamagePerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最小傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerMinAd }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerMinAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最大傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerMaxAd }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerMaxAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">反饋生命：</span>
+        <span class="col number">
+          {{ simulatorPlayerExpectFeedbackPerHit }}
+          (
+          {{ getPlayerVitPercentage(simulatorPlayerExpectFeedbackPerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col number">
+          {{ playerHitsPerSecond }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">雙擊機率：</span>
+        <span class="col number">
+          {{ playerDoubleStrike }}%
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">投擲機率：</span>
+        <span class="col number">
+          {{ temporaryBuff.throwAttack }}%
+        </span>
+      </div>
+    </q-expansion-item>
+    <q-expansion-item
+      label="特攻數值"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      dense>
+      <div class="row">
+        <span class="col attribute">期望傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerSaExpectDamagePerHit }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerSaExpectDamagePerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最小傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerSaMinAd }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerSaMinAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最大傷害：</span>
+        <span class="col number">
+          {{ simulatorPlayerSaMaxAd }}
+          (
+          {{ getEnemyVitPercentage(simulatorPlayerSaMaxAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">反饋生命：</span>
+        <span class="col number">
+          {{ simulatorPlayerSaExpectFeedbackPerHit }}
+          (
+          {{ getPlayerVitPercentage(simulatorPlayerSaExpectFeedbackPerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">投擲機率：</span>
+        <span class="col number">
+          {{ temporaryBuff.specialThrowAttack }}%
+        </span>
+      </div>
+    </q-expansion-item>
+    <q-expansion-item
+      label="敵方攻擊"
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      dense>
+      <div class="row">
+        <span class="col attribute">每秒傷害：</span>
+        <span class="col number">
+          {{ simulatorEnemyExpectDamagePerSecond }}
+          (
+          {{ getPlayerVitPercentage(simulatorEnemyExpectDamagePerSecond) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">期望傷害：</span>
+        <span class="col number">
+          {{ simulatorEnemyExpectDamagePerHit }}
+          (
+          {{ getPlayerVitPercentage(simulatorEnemyExpectDamagePerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最小傷害：</span>
+        <span class="col number">
+          {{ simulatorEnemyMinAd }}
+          (
+          {{ getPlayerVitPercentage(simulatorEnemyMinAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最大傷害：</span>
+        <span class="col number">
+          {{ simulatorEnemyMaxAd }}
+          (
+          {{ getPlayerVitPercentage(simulatorEnemyMaxAd) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">反饋生命：</span>
+        <span class="col number">
+          {{ simulatorEnemyExpectFeedbackPerHit }}
+          (
+          {{ getEnemyVitPercentage(simulatorEnemyExpectFeedbackPerHit) }}
+          %)
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col number">
+          {{ enemyData.hitsPerSecond }}
+        </span>
+      </div>
+    </q-expansion-item>
+    <q-expansion-item
+      class="shadow-1 overflow-hidden"
+      header-class="bg-primary text-white"
+      expand-icon-class="text-white"
+      dense>
+      <template v-slot:header>
+        <q-item-section>
+          敵方數值
+        </q-item-section>
+      </template>
+      <div class="row">
+        <span class="col attribute">最小傷害：</span>
+        <span class="col number">
+          {{ enemyData.minAd }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">最大傷害：</span>
+        <span class="col number">
+          {{ enemyData.maxAd }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col number">
+          {{ enemyData.hitsPerSecond }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">敏捷：</span>
+        <span class="col number">
+          {{ enemyData.dex }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">吸血：</span>
+        <span class="col number">
+          {{ enemyData.voh }}%
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">反傷：</span>
+        <span class="col number">
+          {{ enemyData.dr }}%
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">防禦：</span>
+        <span class="col number">
+          {{ enemyData.def }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">體力：</span>
+        <span class="col number">
+          {{ enemyData.vit }}
+        </span>
+      </div>
+      <div class="row">
+        <span class="col attribute">每秒回血：</span>
+        <span class="col number">
+          {{ enemyData.healingPerSecond }}
+        </span>
       </div>
     </q-expansion-item>
   </q-card>
@@ -147,83 +390,198 @@ export default {
     },
     getPlayerVitPercentage() {
       return (num) => {
-        return Math.round(num / this.getCharacterValue('def') * 1000) / 10;
+        return Math.round(num / this.playerVit * 1000) / 10;
       };
-    },
-    effectiveEnemyDef() {
-      return Math.max(0, this.enemyData.def - this.playerDex);
     },
     effectivePlayerDef() {
       return Math.max(0, this.playerDef - this.enemyData.dex);
     },
-    expectKillAttack() {
-      return Math.ceil(this.enemyData.vit / this.attackDealExpectDmg);
+    effectiveEnemyDef() {
+      return Math.max(0, this.enemyData.def - this.playerDex);
     },
-    expectKillTime() {
-      return Math.round(this.expectKillAttack / this.hitsPerSecond * 100) / 100;
+    simulatorPlayerMinAd() {
+      return Math.max(0, this.playerMinAd - this.effectiveEnemyDef);
     },
-    attackBeDamageReflectMin() {
-      return Math.max(0, Math.round(this.attackDealMinAd * this.enemyData.dr / 100) - this.effectivePlayerDef);
+    simulatorPlayerMaxAd() {
+      return Math.max(0, this.playerMaxAd - this.effectiveEnemyDef);
     },
-    attackBeDamageReflectMax() {
-      return Math.max(0, Math.round(this.attackDealMinAd * this.enemyData.dr / 100) - this.effectivePlayerDef);
+    simulatorPlayerExpectDamagePerHit() {
+      return this.getPlayerExpectDamagePerHit(this.enemyData.def);
     },
-    attackBeDamageReflectExpectDamage() {
-      return Math.max(0, Math.round(this.attackDealExpectDmg * this.enemyData.dr / 100) - this.effectivePlayerDef);
+    simulatorPlayerExpectDamagePerSecond() {
+      return Math.round(this.getPlayerDamagePerSecond(this.enemyData.def) * 1000) / 1000;
     },
-    attackBeDamageReflectExpectDamagePerSecond() {
-      return Math.round(this.attackBeDamageReflectExpectDamage * this.playerHitsPerSecond * this.playerDoubleStrike) / 100;
+    simulatorPlayerExpectFeedbackPerHit() {
+      const enemyData = this.enemyData;
+
+      return this.getPlayerExpectFeedbackPerHit({
+        enemyDex: enemyData.dex,
+        enemyDef: enemyData.def,
+        enemyDr: enemyData.dr,
+      });
     },
-    attackHealingAmount() {
-      return Math.round(this.attackDealExpectDmg * this.playerVoh / 100);
+    simulatorPlayerSaMinAd() {
+      return Math.max(0, this.playerSaMinAd - this.effectiveEnemyDef);
     },
-    saAttackDealMinAd() {
-      return Math.max(0, this.totalSAMinAd - this.effectiveEnemyDef);
+    simulatorPlayerSaMaxAd() {
+      return Math.max(0, this.playerSaMaxAd - this.effectiveEnemyDef);
     },
-    saAttackDealMaxAd() {
-      return Math.max(0, this.totalSAMaxAd - this.effectiveEnemyDef);
+    simulatorPlayerSaExpectDamagePerHit() {
+      return this.getPlayerSaExpectDamage(this.enemyData.def);
     },
-    saAttackDealExpectDmg() {
-      return (this.saAttackDealMinAd + this.saAttackDealMaxAd) / 2;
+    simulatorPlayerSaExpectFeedbackPerHit() {
+      const enemyData = this.enemyData;
+
+      return this.getPlayerSaExpectFeedbackPerHit({
+        enemyDex: enemyData.dex,
+        enemyDef: enemyData.def,
+        enemyDr: enemyData.dr,
+      });
     },
-    expectKillSAAttack() {
-      return Math.ceil(this.enemyData.vit / this.saAttackDealExpectDmg);
-    },
-    expectKillSATime() {
-      return Math.round(this.expectKillSAAttack / this.saHitsPerSecond * 100) / 100;
-    },
-    saAttackBeDamageReflectMin() {
-      return Math.max(0, Math.round(this.saAttackDealMinAd * this.enemyData.dr / 100) - this.effectivePlayerDef);
-    },
-    saAttackBeDamageReflectMax() {
-      return Math.max(0, Math.round(this.saAttackDealMaxAd * this.enemyData.dr / 100) - this.effectivePlayerDef);
-    },
-    saAttackBeDamageReflectExpectDmg() {
-      return Math.max(0, Math.round(this.saAttackDealExpectDmg * this.enemyData.dr / 100) - this.effectivePlayerDef);
-    },
-    saAttackHealingAmount() {
-      return Math.round(this.saAttackDealExpectDmg * this.playerVoh / 100);
-    },
-    beAttackDealMinAd() {
+    simulatorEnemyMinAd() {
       return Math.max(0, this.enemyData.minAd - this.effectivePlayerDef);
     },
-    beAttackDealMaxAd() {
+    simulatorEnemyMaxAd() {
       return Math.max(0, this.enemyData.maxAd - this.effectivePlayerDef);
     },
-    beAttackDealExpectDmg() {
-      return (this.beAttackDealMinAd + this.beAttackDealMaxAd) / 2;
+    simulatorEnemyExpectDamagePerHit() {
+      const enemyData = this.enemyData;
+
+      return this.getExpectDamagePerHit({
+        minAd: enemyData.minAd,
+        maxAd: enemyData.maxAd,
+        attackerDex: enemyData.dex,
+        defenderDef: this.playerDef,
+        doubleStrike: 0,
+        throwAttack: 0,
+      });
     },
-    beAttackDamageReflectMin() {
-      return Math.max(0, Math.round(this.beAttackDealMinAd * this.playerDr / 100) - this.effectiveEnemyDef);
+    simulatorEnemyExpectDamagePerSecond() {
+      return Math.round(this.simulatorEnemyExpectDamagePerHit * this.enemyData.hitsPerSecond * 1000) / 1000;
     },
-    beAttackDamageReflectMax() {
-      return Math.max(0, Math.round(this.beAttackDealMaxAd * this.enemyData.dr / 100));
+    simulatorEnemyExpectFeedbackPerHit() {
+      const enemyData = this.enemyData;
+
+      return this.getExpectFeedbackPerHit({
+        minAd: enemyData.minAd,
+        maxAd: enemyData.maxAd,
+        attackerDex: enemyData.dex,
+        attackerDef: enemyData.def,
+        defenderDex: this.playerDex,
+        defenderDef: this.playerDef,
+        doubleStrike: 0,
+        throwAttack: 0,
+        attackerVoh: enemyData.voh,
+        defenderDr: this.playerDr,
+      });
     },
-    beAttackDamageReflectExpectDmg() {
-      return Math.max(0, Math.round(this.beAttackDealExpectDmg * this.enemyData.dr / 100));
+    simulatorResult() {
+      const enemyData = this.enemyData;
+      const playerHitCostTime = 1 / this.playerHitsPerSecond;
+      const playerSad = this.playerSad;
+      const enemyHitCostTime = 1 / enemyData.hitsPerSecond;
+      let nextPlayerAttackTime = playerHitCostTime;
+      let nextPlayerSaTime = Math.max(playerSad, playerHitCostTime);
+      let nextEnemyAttackTime = enemyHitCostTime;
+      let enemyVit = enemyData.vit;
+      let playerLossVit = 0;
+      let playerHitsRecord = 0;
+      let playerSaHitsRecord = 0;
+      let secondPass = 0;
+      let enemyHealingCount = 0;
+      const recordList = [];
+      while (enemyVit > 0) {
+        secondPass = nextPlayerAttackTime <= nextEnemyAttackTime ? nextPlayerAttackTime : nextEnemyAttackTime;
+        // enemy healing
+        while (enemyData.healingPerSecond > 0 && secondPass - enemyHealingCount > 1) {
+          enemyVit += enemyData.healingPerSecond;
+          enemyHealingCount += 1;
+          recordList.push({
+            time: enemyHealingCount,
+            event: 'enemyHealing',
+            enemyVit,
+            playerLossVit,
+          });
+        }
+        // player attack
+        if (nextPlayerAttackTime <= secondPass) {
+          // special attack
+          if (nextPlayerSaTime <= secondPass) {
+            playerSaHitsRecord += 1;
+            enemyVit -= this.simulatorPlayerSaExpectDamagePerHit;
+            playerLossVit -= this.simulatorPlayerSaExpectFeedbackPerHit;
+            nextPlayerSaTime += Math.max(playerSad, playerHitCostTime);
+            recordList.push({
+              time: Math.round(secondPass * 100) / 100,
+              event: 'specialAttack',
+              enemyVit,
+              playerLossVit,
+            });
+          }
+          // normal attack
+          else {
+            playerHitsRecord += 1;
+            enemyVit -= this.simulatorPlayerExpectDamagePerHit;
+            playerLossVit -= this.simulatorPlayerExpectFeedbackPerHit;
+            recordList.push({
+              time: Math.round(secondPass * 100) / 100,
+              event: 'normalAttack',
+              enemyVit,
+              playerLossVit,
+            });
+          }
+          nextPlayerAttackTime += playerHitCostTime;
+        }
+        // enemy attack
+        if (nextEnemyAttackTime <= secondPass) {
+          playerLossVit += this.simulatorEnemyExpectDamagePerHit;
+          enemyVit += this.simulatorEnemyExpectFeedbackPerHit;
+          nextEnemyAttackTime += enemyHitCostTime;
+          secondPass += enemyHitCostTime;
+          recordList.push({
+            time: Math.round(secondPass * 100) / 100,
+            event: 'enemyAttack',
+            enemyVit,
+            playerLossVit,
+          });
+        }
+        if (secondPass > 300) {
+          return {
+            playerHits: playerHitsRecord,
+            playerSaHits: playerSaHitsRecord,
+            secondPass: Math.round(secondPass * 1000) / 1000,
+            playerLossVit: Math.round(Math.max(0, playerLossVit)),
+            enemyVit: Math.round(enemyVit),
+            recordList,
+          };
+        }
+      }
+
+      return {
+        playerHits: playerHitsRecord,
+        playerSaHits: playerSaHitsRecord,
+        secondPass: Math.round(secondPass * 1000) / 1000,
+        playerLossVit: Math.round(Math.max(0, playerLossVit)),
+        recordList,
+      };
     },
-    beAttackHealingAmount() {
-      return Math.round(this.attackDealExpectDmg * this.enemyData.voh / 100);
+    parseRecordAction() {
+      return (event) => {
+        switch (event) {
+          case 'enemyHealing': {
+            return '敵方再生';
+          }
+          case 'normalAttack': {
+            return '我方攻擊';
+          }
+          case 'specialAttack': {
+            return '我方特攻';
+          }
+          case 'enemyAttack': {
+            return '敵方攻擊';
+          }
+        }
+      };
     },
   },
 };
@@ -231,5 +589,14 @@ export default {
 </script>
 
 <style lang="stylus">
-
+  .attribute {
+    display: inline-block;
+    padding-left: 5px;
+    min-width: 8rem;
+    text-align: right;
+  }
+  .number {
+    padding-right: 5px;
+    text-align: right;
+  }
 </style>
