@@ -79,7 +79,6 @@
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
-      default-opened
       dense>
       <template v-for="(record, index) in simulatorResult.recordList">
         <div
