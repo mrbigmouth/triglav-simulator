@@ -1,4 +1,5 @@
 import item from 'src/data/item';
+import { i18n } from 'src/boot/i18n';
 
 export default {
   namespaced: true,
@@ -46,6 +47,29 @@ export default {
         state.weapon2 = 0;
       }
       state[key] = value;
+      const defaultBuildList = [
+        state.characterClass,
+        state.exp,
+        state.kills,
+        state.boostAllRecords,
+        state.boostVitalityRecords,
+        state.boostStrengthRecords,
+        state.boostDexteriryRecords,
+        state.boostDefenseRecords,
+        state.weapon1,
+        state.weapon2,
+        state.ring1,
+        state.ring2,
+        state.helm,
+        state.armor,
+        state.gloves,
+        state.boots,
+        state.freshy,
+        state.puppet1,
+        state.puppet2,
+        state.puppet3,
+      ];
+      location.hash = '#/' + encodeURIComponent(JSON.stringify(defaultBuildList));
     },
     adjustTemporaryBuff(state, { key, value }) {
       state.temporaryBuff[key] += value;
@@ -59,7 +83,7 @@ export default {
         const maxValue = value[2] || 0;
         const minValue = value[3] || 0;
         const scaleByNumber = Math.min(state[scaleKey], maxRequired);
-        const scaleResult = Math.round(maxValue * scaleByNumber / maxRequired * 10) / 10;
+        const scaleResult = Math.floor(maxValue * scaleByNumber / maxRequired);
 
         return minValue + scaleResult;
       };
@@ -549,10 +573,26 @@ export default {
       return (specialData) => {
         switch (specialData.type) {
           case 'doubleStrike': {
-            return specialData.value + ' %的機率能攻擊目標兩次.';
+            return i18n.t('special.doubleStrike', {
+              value: specialData.value,
+            });
+          }
+          case 'hitsAddStrength': {
+            return i18n.t('special.hitsAddStrength', {
+              value: specialData.value,
+              trigger: specialData.trigger,
+              duration: specialData.duration,
+            });
           }
           case 'restoresVitalityOnTakenDamage': {
-            return '持續恢復受到傷害的' + specialData.value + '%體力.';
+            return i18n.t('special.restoresVitalityOnTakenDamage', {
+              value: specialData.value,
+            });
+          }
+          case 'restoresVitalityOnKill': {
+            return i18n.t('special.restoresVitalityOnKill', {
+              value: specialData.value,
+            });
           }
         }
       };

@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBuildStore';
 import BuildPanel from './buildPanel/BuildPanel';
 import SimulatorPanel from './simulatorPanel/SimulatorPanel';
 
@@ -82,10 +83,43 @@ export default {
     BuildPanel,
     SimulatorPanel,
   },
+  mixins: [
+    computedPropertiesForBuildStore,
+  ],
   data() {
     return {
       tab: 'build',
     };
+  },
+  mounted() {
+    const pathMatch = this.$route.params.pathMatch;
+    try {
+      const defaultBuildList = JSON.parse(decodeURIComponent(pathMatch.replace('/', '')));
+      if (defaultBuildList && defaultBuildList.length) {
+        this.characterClass = defaultBuildList[0];
+        this.exp = defaultBuildList[1];
+        this.kills = defaultBuildList[2];
+        this.boostAllRecords = defaultBuildList[3];
+        this.boostVitalityRecords = defaultBuildList[4];
+        this.boostStrengthRecords = defaultBuildList[5];
+        this.boostDexteriryRecords = defaultBuildList[6];
+        this.boostDefenseRecords = defaultBuildList[7];
+        this.weapon1 = defaultBuildList[8];
+        this.weapon2 = defaultBuildList[9];
+        this.ring1 = defaultBuildList[10];
+        this.ring2 = defaultBuildList[11];
+        this.helm = defaultBuildList[12];
+        this.armor = defaultBuildList[13];
+        this.gloves = defaultBuildList[14];
+        this.boots = defaultBuildList[15];
+        this.freshy = defaultBuildList[16];
+        this.puppet1 = defaultBuildList[17];
+        this.puppet2 = defaultBuildList[18];
+        this.puppet3 = defaultBuildList[19];
+      }
+    }
+    catch (e) {
+    }
   },
 };
 </script>
