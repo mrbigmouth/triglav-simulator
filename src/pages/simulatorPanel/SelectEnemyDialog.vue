@@ -17,9 +17,13 @@
         <q-select
           v-model="filterLocation"
           label="請選擇區域"
-          :options="locationList"
+          :options="displayLocationOptionList"
+          use-input
+          clearable
+          options-cover
           emit-value
-          map-options />
+          map-options
+          @filter="onSearchLocation" />
         <q-separator />
         <q-btn
           color="positive"
@@ -133,7 +137,7 @@
 </template>
 
 <script>
-import location from 'src/data/location';
+import locationList from 'src/data/location';
 import enemy from 'src/data/enemy';
 import build from 'src/store/modules/build';
 const getHitsPerSecondByAs = build.getters.getHitsPerSecondByAs();
@@ -147,14 +151,17 @@ export default {
     },
   },
   data() {
+    const locationOptionList = locationList.map((location) => {
+      return {
+        label: this.$t('location.' + location),
+        value: location,
+      };
+    });
+
     return {
       filterLocation: '',
-      locationList: location.map((location) => {
-        return {
-          label: this.$t('location.' + location),
-          value: location,
-        };
-      }),
+      locationOptionList,
+      displayLocationOptionList: locationOptionList,
       enemyList: enemy.slice().map((enemyData) => {
         return {
           name: this.$t('enemy.' + enemyData.i18n),
@@ -190,6 +197,23 @@ export default {
     },
   },
   methods: {
+    onSearchLocation(value, update) {
+      if (value) {
+        update(() => {
+          this.displayLocationOptionList = this.locationOptionList.filter((locationOption) => {
+            return (
+              locationOption.label.indexOf(value) !== -1 ||
+              locationOption.value.indexOf(value) !== -1
+            );
+          });
+        });
+      }
+      else {
+        update(() => {
+          this.displayLocationOptionList = this.locationOptionList;
+        });
+      }
+    },
     onAddAll() {
       this.displayEnemyList.forEach((enemyData) => {
         this.$emit('addEnemy', enemyData);

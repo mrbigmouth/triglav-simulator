@@ -46,6 +46,29 @@ export default {
         state.weapon2 = 0;
       }
       state[key] = value;
+      const defaultBuildList = [
+        state.characterClass,
+        state.exp,
+        state.kills,
+        state.boostAllRecords,
+        state.boostVitalityRecords,
+        state.boostStrengthRecords,
+        state.boostDexteriryRecords,
+        state.boostDefenseRecords,
+        state.weapon1,
+        state.weapon2,
+        state.ring1,
+        state.ring2,
+        state.helm,
+        state.armor,
+        state.gloves,
+        state.boots,
+        state.freshy,
+        state.puppet1,
+        state.puppet2,
+        state.puppet3,
+      ];
+      location.hash = '#/' + JSON.stringify(defaultBuildList);
     },
     adjustTemporaryBuff(state, { key, value }) {
       state.temporaryBuff[key] += value;
