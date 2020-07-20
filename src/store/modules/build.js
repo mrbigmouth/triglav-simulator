@@ -68,7 +68,7 @@ export default {
         state.puppet2,
         state.puppet3,
       ];
-      location.hash = '#/' + JSON.stringify(defaultBuildList);
+      location.hash = '#/' + encodeURIComponent(JSON.stringify(defaultBuildList));
     },
     adjustTemporaryBuff(state, { key, value }) {
       state.temporaryBuff[key] += value;
