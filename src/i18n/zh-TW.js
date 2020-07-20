@@ -9,10 +9,21 @@ export default {
   },
   item: {
     none: '無裝備',
-    nightmare: '夜惡夢',
     splendidArmor: '華麗盔甲',
-    hichirikiMeidou: '',
+    brindleArmor: '斑點小丑服',
+    deepblueArmor: '鐵紺皮甲',
+    crimsonShell: '紅蓮甲冑',
+    hauberk: '獨角巨獸',
+    theSilaShroud: '希拉的帷子',
+    nightmare: '夜惡夢',
     trinity: '三面一神',
+    hichirikiMeidou: '篳篥鳴動',
+  },
+  special: {
+    hitsAddStrength: '第{trigger}次攻擊會觸發{value}%力量增益，持續{duration}秒。',
+    doubleStrike: '{value}%的機率能攻擊目標兩次。',
+    restoresVitalityOnTakenDamage: '持續恢復受到傷害的{value}%體力。',
+    restoresVitalityOnKill: '每次擊殺能恢復{value}%體力。',
   },
   location: {
     '1F': '一樓',
