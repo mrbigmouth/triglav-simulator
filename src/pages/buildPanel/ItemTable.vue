@@ -24,6 +24,7 @@
       </thead>
       <slot />
     </table>
+    <q-resize-observer @resize="onWrapperResize" />
   </div>
 </template>
 
@@ -32,32 +33,55 @@ export default {
   name: 'ItemTable',
   data() {
     return {
-      wrapperHeight: '10rem',
-      tableWidth: 'auto',
+      intervalId: null,
+      detectingSize: {
+        windowHeight: window.innerHeight,
+        boundingClientRectTop: 0,
+        boundingClientRectWidth: 0,
+        scrollWidth: 0,
+      },
     };
   },
+  computed: {
+    wrapperHeight() {
+      const detectingSize = this.detectingSize;
+
+      return detectingSize.windowHeight - detectingSize.boundingClientRectTop - 40 + 'px';
+    },
+    tableWidth() {
+      const detectingSize = this.detectingSize;
+      if (detectingSize.scrollWidth + 30 > detectingSize.boundingClientRectWidth) {
+        return 'auto';
+      }
+      else {
+        return '100%';
+      }
+    },
+  },
   mounted() {
-    window.addEventListener('resize', this.rezieByWindowHeight);
-    this.$nextTick(() => {
-      this.rezieByWindowHeight();
-    });
+    this.intervalId = setInterval(this.detectboundingClientRect, 500);
+    this.detectboundingClientRect();
+    window.addEventListener('resize', this.detectWindowHeight);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.rezieByWindowHeight);
+    clearInterval(this.intervalId);
+    window.removeEventListener('resize', this.detectWindowHeight);
   },
   methods: {
-    rezieByWindowHeight() {
+    detectboundingClientRect() {
       const $wrapper = this.$refs.wrapper;
       if ($wrapper) {
         const boundingClientRect = $wrapper.getBoundingClientRect();
-        this.wrapperHeight = window.innerHeight - boundingClientRect.top - 25 + 'px';
-        if ($wrapper.scrollWidth + 30 > boundingClientRect.width) {
-          this.tableWidth = 'auto';
-        }
-        else {
-          this.tableWidth = '100%';
-        }
+        const detectingSize = this.detectingSize;
+        detectingSize.boundingClientRectTop = boundingClientRect.top;
+        detectingSize.boundingClientRectWidth = boundingClientRect.width;
       }
+    },
+    detectWindowHeight() {
+      this.detectingSize.windowHeight = window.innerHeight;
+    },
+    onWrapperResize() {
+      this.detectingSize.scrollWidth = this.$refs.wrapper.scrollWidth;
     },
   },
 };
