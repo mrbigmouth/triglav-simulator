@@ -3,7 +3,7 @@
     <tr>
       <td>
         <img :src="itemData.img" />
-        <div>
+        <div :class="itemData.type">
           {{ $t('item.' + itemData.i18n) }}
         </div>
       </td>
@@ -97,6 +97,18 @@ export default {
 </script>
 
 <style lang="stylus">
+.artifact {
+  color: #aa66fc;
+}
+
+.rare {
+  color: #70c5db;
+}
+
+.common {
+  color: #ffffff;
+}
+
 div.wrapper {
   table {
     tbody {

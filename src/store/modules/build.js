@@ -77,19 +77,19 @@ export default {
   },
   getters: {
     parseScaleValue(state) {
-      return (value = []) => {
+      return (value = [], key = '') => {
         const scaleKey = value[0] || 'exp';
         const maxRequired = value[1] || 0;
         const maxValue = value[2] || 0;
         const minValue = value[3] || 0;
         const scaleByNumber = Math.min(state[scaleKey], maxRequired);
-        const scaleResult = Math.floor(maxValue * scaleByNumber / maxRequired);
+        const scaleResult = maxValue * scaleByNumber / maxRequired;
 
-        return minValue + scaleResult;
+        return minValue + (key === 'sad' ? Math.ceil(scaleResult) : Math.floor(scaleResult));
       };
     },
     parseItemValue(state, getters) {
-      return (value) => {
+      return (value, key) => {
         if (!value) {
           return 0;
         }
@@ -97,19 +97,19 @@ export default {
           return value;
         }
         else if (Array.isArray(value)) {
-          return getters.parseItemValue(getters.parseScaleValue(value));
+          return getters.parseItemValue(getters.parseScaleValue(value, key), key);
         }
         else if (typeof value === 'object') {
           if (value.type) {
             const speicalData = {
               ...value,
-              value: getters.parseItemValue(value.value),
+              value: getters.parseItemValue(value.value, key),
             };
 
             return speicalData;
           }
           else {
-            return getters.parseItemValue(value[state.characterClass]);
+            return getters.parseItemValue(value[state.characterClass], key);
           }
         }
       };
@@ -135,7 +135,7 @@ export default {
           };
         }
 
-        return getters.parseItemValue(itemData[key]);
+        return getters.parseItemValue(itemData[key], key);
       };
     },
     getSlotValue(state, getters) {
@@ -572,25 +572,20 @@ export default {
     getSpecialDescription(state) {
       return (specialData) => {
         switch (specialData.type) {
-          case 'doubleStrike': {
-            return i18n.t('special.doubleStrike', {
-              value: specialData.value,
-            });
-          }
+          case 'killsAddAttackRange':
           case 'hitsAddStrength': {
-            return i18n.t('special.hitsAddStrength', {
+            return i18n.t('special.' + specialData.type, {
               value: specialData.value,
               trigger: specialData.trigger,
               duration: specialData.duration,
             });
           }
-          case 'restoresVitalityOnTakenDamage': {
-            return i18n.t('special.restoresVitalityOnTakenDamage', {
-              value: specialData.value,
-            });
-          }
-          case 'restoresVitalityOnKill': {
-            return i18n.t('special.restoresVitalityOnKill', {
+          case 'doubleStrike':
+          case 'restoresVitalityOnTakenDamage':
+          case 'restoresVitalityOnKill':
+          case 'reduceSadOnKill':
+          default: {
+            return i18n.t('special.' + specialData.type, {
               value: specialData.value,
             });
           }
