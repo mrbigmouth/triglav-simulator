@@ -583,6 +583,7 @@ export default {
     getSpecialDescription(state) {
       return (specialData) => {
         switch (specialData.type) {
+          case 'addStrengthOnTakenDamage':
           case 'killsAddAttackRange':
           case 'hitsAddStrength': {
             return i18n.t('special.' + specialData.type, {
@@ -593,6 +594,8 @@ export default {
           }
           case 'doubleStrike':
           case 'restoresVitalityOnTakenDamage':
+          case 'restoresVitalityOnSpecialAttackKill':
+          case 'restoresVitalityOnDamageReflectionKill':
           case 'restoresVitalityOnKill':
           case 'reduceSadOnKill':
           case 'resetSadOnKill':
