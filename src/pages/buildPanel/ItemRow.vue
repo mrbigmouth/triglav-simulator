@@ -3,9 +3,6 @@
     <tr>
       <td>
         <img :src="itemData.img" />
-        <div :class="itemData.type">
-          {{ $t('item.' + itemData.i18n) }}
-        </div>
       </td>
       <td>
         <colorful-value :value="getValue('minAd')" />
@@ -53,11 +50,27 @@
           :value="getValue('xpg')"
           suffix="%" />
       </td>
+      <td>
+        <q-icon
+          v-if="getValue('special')"
+          name="info"
+          size="sm"
+          color="positive"
+          :title="getSpecialDescription(getValue('special'))" />
+      </td>
     </tr>
-    <tr v-if="itemData.special">
+    <tr v-if="displayName">
+      <td
+        class="name"
+        :class="itemData.type"
+        colspan="14">
+         {{ $t('item.' + itemData.i18n) }}
+      </td>
+    </tr>
+    <tr v-if="displaySpecial && itemData.special">
       <td
         class="special"
-        colspan="13">
+        colspan="14">
         {{ getSpecialDescription(getValue('special')) }}
       </td>
     </tr>
@@ -80,6 +93,14 @@ export default {
     itemData: {
       type: Object,
       required: true,
+    },
+    displayName: {
+      type: Boolean,
+      default: false,
+    },
+    displaySpecial: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -110,6 +131,10 @@ div.wrapper {
   table {
     tbody {
       cursor: pointer;
+
+      td.name {
+        text-align: left;
+      }
 
       td.special {
         text-align: left;

@@ -6,8 +6,19 @@
     <table :style="`width: ${tableWidth};`">
       <thead>
         <tr>
-          <th>
+          <th style="width: 5rem;">
             {{ $t('equipment') }}
+          </th>
+          <th
+            :class="sortable ? 'cursor-pointer' : ''"
+            style="min-width: 6rem;"
+            @click="onClickColumn('dmg')">
+            <div>
+              {{ $t('dmg') }}
+              <q-icon
+                v-if="getSortStatus('dmg')"
+                :name="getSortStatus('dmg') === 'desc' ? 'expand_more' : 'expand_less'" />
+            </div>
           </th>
           <th
             v-for="column in columns"
@@ -48,7 +59,6 @@ export default {
     return {
       intervalId: null,
       columns: [
-        'dmg',
         'as',
         'str',
         'dex',
@@ -60,6 +70,7 @@ export default {
         'voh',
         'dr',
         'xpg',
+        'spe',
       ],
       detectingSize: {
         windowHeight: window.innerHeight,
@@ -176,14 +187,14 @@ div.wrapper {
           i {
             position: absolute;
             top: 5px;
-            right: 0;
+            right: -7px;
           }
         }
       }
     }
 
     th, td {
-      min-width: 6rem;
+      min-width: 4rem;
       padding: 0.5rem;
       text-align: center;
       vertical-align: middle;
