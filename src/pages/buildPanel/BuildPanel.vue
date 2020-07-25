@@ -35,6 +35,9 @@
         step="10000" />
     </div>
     <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-2 col-md-4 offset-lg-3 col-lg-3">
+      <boost-records />
+    </div>
+    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
       <q-input
         v-model.number="kills"
         label="擊殺數"
@@ -42,64 +45,100 @@
         min="0"
         step="100" />
     </div>
-    <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
-      <boost-records />
-    </div>
     <div class="col-xs-12">
+      <div class="text-center">
+        <q-checkbox
+          v-model="displayName"
+          :label="$t('displayName')" />
+        <q-checkbox
+          v-model="displaySpecial"
+          :label="$t('displaySpecial')" />
+      </div>
       <item-table>
         <item-row
-          v-if="characterClass === 'sword'"
           :item-data="item.sword[weapon1]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('sword', 'weapon1')" />
         <item-row
           v-if="characterClass === 'sword'"
           :item-data="item.shield[weapon2]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('shield', 'weapon2')" />
         <item-row
           v-if="characterClass === 'axe'"
           :item-data="item.axe[weapon1]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('axe', 'weapon1')" />
         <item-row
           v-if="characterClass === 'axe'"
           :item-data="item.mantle[weapon2]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('mantle', 'weapon2')" />
         <item-row
           v-if="characterClass === 'dagger'"
           :item-data="item.dagger[weapon1]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('dagger', 'weapon1')" />
         <item-row
           v-if="characterClass === 'dagger'"
           :item-data="item.dagger[weapon2]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('dagger', 'weapon2')" />
         <item-row
           :item-data="item.ring[ring1]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('ring', 'ring1')" />
         <item-row
           :item-data="item.ring[ring2]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('ring', 'ring2')" />
         <item-row
           :item-data="item.helm[helm]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('helm', 'helm')" />
         <item-row
           :item-data="item.armor[armor]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('armor', 'armor')" />
         <item-row
           :item-data="item.gloves[gloves]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('gloves', 'gloves')" />
         <item-row
           :item-data="item.boots[boots]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('boots', 'boots')" />
         <item-row
           :item-data="item.freshy[freshy]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('freshy', 'freshy')" />
         <item-row
           :item-data="item.puppet[puppet1]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('puppet', 'puppet1')" />
         <item-row
           :item-data="item.puppet[puppet2]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('puppet', 'puppet2')" />
         <item-row
           :item-data="item.puppet[puppet3]"
+          :display-name="displayName"
+          :display-special="displaySpecial"
           @click="onSelectItem('puppet', 'puppet3')" />
       </item-table>
     </div>
@@ -133,6 +172,8 @@ export default {
     return {
       item,
       boostStrategy: 'vitality',
+      displayName: false,
+      displaySpecial: false,
       selectItemDialogProps: {
         isShow: false,
         itemType: '',

@@ -1,4 +1,7 @@
 export default {
+  displayName: 'Display equipment\'s name',
+  displaySpecial: 'Display equipment\'s special ability description',
+  searchByName: 'Search by name:',
   sortBy: 'Order by:',
   filterByItemType: 'Filter by type:',
   equipment: 'Equip',
@@ -21,6 +24,7 @@ export default {
   voh: 'VoH',
   dr: 'DR',
   xpg: 'Exp',
+  spe: 'Spe',
   enemy: {
     goblinElite: 'Goblin Elite',
     goblin: 'Goblin',

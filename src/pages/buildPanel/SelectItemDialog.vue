@@ -60,6 +60,23 @@
               :label="$t('artifact')"
               color="accent" />
           </div>
+          <div style="max-width: 20rem;">
+            <q-input
+              v-model="searchText"
+              type="text"
+              :label="$t('searchByName')"
+              clearable
+              standout
+              dense />
+          </div>
+          <div class="text-center">
+            <q-checkbox
+              v-model="displayName"
+              :label="$t('displayName')" />
+            <q-checkbox
+              v-model="displaySpecial"
+              :label="$t('displaySpecial')" />
+          </div>
           <item-table
             :sort-list.sync="sortList"
             sortable>
@@ -67,6 +84,8 @@
               v-for="itemData in itemList"
               :key="itemData.id"
               :item-data="itemData"
+              :display-name="displayName"
+              :display-special="displaySpecial"
               @click="onSelectItem(itemData.id)" />
           </item-table>
         </q-card-section>
@@ -148,6 +167,7 @@ export default {
         'voh',
         'dr',
         'xpg',
+        'spe',
       ],
       sortList: [
         {
@@ -160,6 +180,9 @@ export default {
         'rare',
         'artifact',
       ],
+      searchText: '',
+      displayName: false,
+      displaySpecial: false,
     };
   },
   computed: {
@@ -185,9 +208,10 @@ export default {
       if (!itemList) {
         return [];
       }
+      const searchRegExp = this.searchText ? new RegExp(this.searchText) : /.*/;
       const filter = this.filter;
       const filteredItemList = itemList.filter((itemData) => {
-        return filter.includes(itemData.type);
+        return filter.includes(itemData.type) && searchRegExp.test(this.$t(itemData.i18n));
       });
       const sortList = this.sortList;
       const getItemValue = this.getItemValue;
@@ -235,6 +259,23 @@ export default {
                 const minAd2 = getItemValue(itemData2, 'minAd') + Math.floor(str2 / 2) + dex2;
                 const maxAd2 = getItemValue(itemData2, 'maxAd') + str2;
                 compareValue2 = (minAd2 + Math.max(minAd2, maxAd2)) / 2;
+                break;
+              }
+              case 'spe': {
+                const special1 = getItemValue(itemData1, 'special');
+                const special2 = getItemValue(itemData2, 'special');
+                if (!(special1 && special2)) {
+                  compareValue1 = special1 ? 1 : 0;
+                  compareValue2 = special2 ? 1 : 0;
+                }
+                else if (special1.type === special2.type) {
+                  compareValue1 = special1.value;
+                  compareValue2 = special2.value;
+                }
+                else {
+                  compareValue1 = special1.type;
+                  compareValue2 = special2.type;
+                }
                 break;
               }
               default: {
@@ -286,5 +327,10 @@ export default {
     margin: 0 0.5rem;
     padding: 3px;
     border: 1px solid #ddd;
+  }
+  .q-checkbox__bg {
+    svg {
+      color: black;
+    }
   }
 </style>

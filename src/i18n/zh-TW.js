@@ -1,4 +1,7 @@
 export default {
+  displayName: '顯示裝備名稱',
+  displaySpecial: '顯示裝備特殊能力說明文字',
+  searchByName: '依名稱搜索：',
   sortBy: '排序依據：',
   filterByItemType: '篩選裝備類型：',
   common: '普通',
@@ -24,6 +27,7 @@ export default {
   voh: '吸血',
   dr: '反傷',
   xpg: '經驗',
+  spe: '特殊',
   enemy: {
     goblinElite: '菁英哥布林',
     goblin: '哥布林',
