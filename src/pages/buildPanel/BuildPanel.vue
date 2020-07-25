@@ -49,73 +49,57 @@
       <item-table>
         <item-row
           v-if="characterClass === 'sword'"
-          type="sword"
-          :itemIndex="weapon1"
+          :item-data="item.sword[weapon1]"
           @click="onSelectItem('sword', 'weapon1')" />
         <item-row
           v-if="characterClass === 'sword'"
-          type="shield"
-          :itemIndex="weapon2"
+          :item-data="item.shield[weapon2]"
           @click="onSelectItem('shield', 'weapon2')" />
         <item-row
           v-if="characterClass === 'axe'"
-          type="axe"
-          :itemIndex="weapon1"
+          :item-data="item.axe[weapon1]"
           @click="onSelectItem('axe', 'weapon1')" />
         <item-row
           v-if="characterClass === 'axe'"
-          type="mantle"
-          :itemIndex="weapon2"
+          :item-data="item.mantle[weapon2]"
           @click="onSelectItem('mantle', 'weapon2')" />
         <item-row
           v-if="characterClass === 'dagger'"
-          type="dagger"
-          :itemIndex="weapon1"
+          :item-data="item.dagger[weapon1]"
           @click="onSelectItem('dagger', 'weapon1')" />
         <item-row
           v-if="characterClass === 'dagger'"
-          type="dagger"
-          :itemIndex="weapon2"
+          :item-data="item.dagger[weapon2]"
           @click="onSelectItem('dagger', 'weapon2')" />
         <item-row
-          type="ring"
-          :itemIndex="ring1"
+          :item-data="item.ring[ring1]"
           @click="onSelectItem('ring', 'ring1')" />
         <item-row
-          type="ring"
-          :itemIndex="ring2"
+          :item-data="item.ring[ring2]"
           @click="onSelectItem('ring', 'ring2')" />
         <item-row
-          type="helm"
-          :itemIndex="helm"
+          :item-data="item.helm[helm]"
           @click="onSelectItem('helm', 'helm')" />
         <item-row
-          type="armor"
-          :itemIndex="armor"
+          :item-data="item.armor[armor]"
           @click="onSelectItem('armor', 'armor')" />
         <item-row
-          type="gloves"
-          :itemIndex="gloves"
+          :item-data="item.gloves[gloves]"
           @click="onSelectItem('gloves', 'gloves')" />
         <item-row
-          type="boots"
-          :itemIndex="boots"
+          :item-data="item.boots[boots]"
           @click="onSelectItem('boots', 'boots')" />
         <item-row
-          type="freshy"
-          :itemIndex="freshy"
+          :item-data="item.freshy[freshy]"
           @click="onSelectItem('freshy', 'freshy')" />
         <item-row
-          type="puppet"
-          :itemIndex="puppet1"
+          :item-data="item.puppet[puppet1]"
           @click="onSelectItem('puppet', 'puppet1')" />
         <item-row
-          type="puppet"
-          :itemIndex="puppet2"
+          :item-data="item.puppet[puppet2]"
           @click="onSelectItem('puppet', 'puppet2')" />
         <item-row
-          type="puppet"
-          :itemIndex="puppet3"
+          :item-data="item.puppet[puppet3]"
           @click="onSelectItem('puppet', 'puppet3')" />
       </item-table>
     </div>
@@ -132,6 +116,7 @@ import BoostRecords from './BoostRecords';
 import ItemTable from './ItemTable';
 import ItemRow from './ItemRow';
 import SelectItemDialog from './SelectItemDialog';
+import item from 'src/data/item';
 
 export default {
   name: 'BuildPanel',
@@ -146,6 +131,7 @@ export default {
   ],
   data() {
     return {
+      item,
       boostStrategy: 'vitality',
       selectItemDialogProps: {
         isShow: false,

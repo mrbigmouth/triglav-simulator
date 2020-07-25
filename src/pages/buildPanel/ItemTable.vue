@@ -7,19 +7,20 @@
       <thead>
         <tr>
           <th>
-            裝備
+            {{ $t('equipment') }}
           </th>
-          <th>傷害</th>
-          <th>力量</th>
-          <th>敏捷</th>
-          <th>防禦</th>
-          <th>體力</th>
-          <th>走速</th>
-          <th>攻距</th>
-          <th>特攻</th>
-          <th>吸血</th>
-          <th>反傷</th>
-          <th>經驗</th>
+          <th
+            v-for="column in columns"
+            :key="column"
+            :class="sortable ? 'cursor-pointer' : ''"
+            @click="onClickColumn(column)">
+            <div>
+              {{ $t(column) }}
+              <q-icon
+                v-if="getSortStatus(column)"
+                :name="getSortStatus(column) === 'desc' ? 'expand_more' : 'expand_less'" />
+            </div>
+          </th>
         </tr>
       </thead>
       <slot />
@@ -31,9 +32,35 @@
 <script>
 export default {
   name: 'ItemTable',
+  props: {
+    sortable: {
+      type: Boolean,
+      default: false,
+    },
+    sortList: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       intervalId: null,
+      columns: [
+        'dmg',
+        'as',
+        'str',
+        'dex',
+        'def',
+        'vit',
+        'ws',
+        'ar',
+        'sad',
+        'voh',
+        'dr',
+        'xpg',
+      ],
       detectingSize: {
         windowHeight: window.innerHeight,
         boundingClientRectTop: 0,
@@ -56,6 +83,18 @@ export default {
       else {
         return '100%';
       }
+    },
+    getSortStatus() {
+      return (column) => {
+        const sortStatus = this.sortList.find((sortInfo) => {
+          return sortInfo.by === column;
+        });
+        if (sortStatus) {
+          return sortStatus.dir;
+        }
+
+        return false;
+      };
     },
   },
   mounted() {
@@ -83,6 +122,29 @@ export default {
     onWrapperResize() {
       this.detectingSize.scrollWidth = this.$refs.wrapper.scrollWidth;
     },
+    onClickColumn(column) {
+      if (this.sortable) {
+        const existsSortInfo = this.sortList.find((sortInfo) => {
+          return sortInfo.by === column;
+        });
+        if (existsSortInfo) {
+          this.$emit('update:sortList', [
+            {
+              by: column,
+              dir: existsSortInfo.dir === 'asc' ? 'desc' : 'asc',
+            },
+          ]);
+        }
+        else {
+          this.$emit('update:sortList', [
+            {
+              by: column,
+              dir: 'desc',
+            },
+          ]);
+        }
+      }
+    },
   },
 };
 
@@ -105,11 +167,23 @@ div.wrapper {
         top: 0;
         z-index: 1;
         background: #121212;
+
+        div {
+          width: 100%;
+          height: 100%;
+          position: relative;
+
+          i {
+            position: absolute;
+            top: 5px;
+            right: 0;
+          }
+        }
       }
     }
 
     th, td {
-      min-width: 5rem;
+      min-width: 6rem;
       padding: 0.5rem;
       text-align: center;
       vertical-align: middle;

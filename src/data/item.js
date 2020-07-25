@@ -26,3 +26,9 @@ export const item = {
   puppet,
 };
 export default item;
+
+Object.keys(item).forEach((slot) => {
+  item[slot].forEach((itemData, index) => {
+    itemData.id = index;
+  });
+});
