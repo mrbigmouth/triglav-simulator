@@ -295,6 +295,24 @@ export default [
     },
   },
   {
+    i18n: 'ghoulishness',
+    type: 'artifact',
+    img: 'items/armor_ghoulishness.png',
+    voh: 1,
+    str: {
+      sword: 9,
+      axe: 18,
+      dagger: 4,
+    },
+    def: 28,
+    dex: 6,
+    sad: 10,
+    special: {
+      type: 'resetSadOnKill',
+      value: 10,
+    },
+  },
+  {
     i18n: 'mabouDonfu',
     type: 'artifact',
     img: 'items/armor_mabouDonfu.png',

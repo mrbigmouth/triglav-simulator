@@ -13,6 +13,11 @@
         <colorful-value :value="getValue('maxAd')" />
       </td>
       <td>
+        <colorful-value
+          :value="getValue('as')"
+          reverse-color />
+      </td>
+      <td>
         <colorful-value :value="getValue('str')" />
       </td>
       <td>
@@ -52,7 +57,7 @@
     <tr v-if="itemData.special">
       <td
         class="special"
-        colspan="12">
+        colspan="13">
         {{ getSpecialDescription(getValue('special')) }}
       </td>
     </tr>
@@ -62,7 +67,6 @@
 <script>
 import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBuildStore';
 import ColorfulValue from '../ColorfulValue';
-import item from 'src/data/item';
 
 export default {
   name: 'ItemRow',
@@ -73,19 +77,12 @@ export default {
     computedPropertiesForBuildStore,
   ],
   props: {
-    type: {
-      type: String,
-      default: '',
-    },
-    itemIndex: {
-      type: Number,
-      default: 0,
+    itemData: {
+      type: Object,
+      required: true,
     },
   },
   computed: {
-    itemData() {
-      return item[this.type][this.itemIndex];
-    },
     getValue() {
       return (key) => {
         return this.getItemValue(this.itemData, key);

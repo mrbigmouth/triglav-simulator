@@ -83,9 +83,20 @@ export default {
         const maxValue = value[2] || 0;
         const minValue = value[3] || 0;
         const scaleByNumber = Math.min(state[scaleKey], maxRequired);
-        const scaleResult = maxValue * scaleByNumber / maxRequired;
+        let scaleValue = maxValue * scaleByNumber / maxRequired;
+        switch (key) {
+          case 'as':
+          case 'sad': {
+            scaleValue = Math.ceil(scaleValue);
+            break;
+          }
+          default: {
+            scaleValue = Math.floor(scaleValue);
+            break;
+          }
+        }
 
-        return minValue + (key === 'sad' ? Math.ceil(scaleResult) : Math.floor(scaleResult));
+        return minValue + scaleValue;
       };
     },
     parseItemValue(state, getters) {
@@ -584,6 +595,7 @@ export default {
           case 'restoresVitalityOnTakenDamage':
           case 'restoresVitalityOnKill':
           case 'reduceSadOnKill':
+          case 'resetSadOnKill':
           default: {
             return i18n.t('special.' + specialData.type, {
               value: specialData.value,
