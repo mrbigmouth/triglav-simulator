@@ -1,8 +1,10 @@
 <template>
   <tbody @click="$emit('click')">
-    <tr>
+    <tr :title="$t('item.' + itemData.i18n)">
       <td>
-        <img :src="itemData.img" />
+        <img
+          :class="itemData.type"
+          :src="itemData.img" />
       </td>
       <td>
         <colorful-value :value="getValue('minAd')" />
@@ -119,12 +121,24 @@ export default {
   color: #aa66fc;
 }
 
+img.artifact {
+  border: 1px solid #aa66fc;
+}
+
 .rare {
   color: #70c5db;
 }
 
+img.rare {
+  border: 1px solid #70c5db;
+}
+
 .common {
   color: #ffffff;
+}
+
+img.common {
+  border: 1px solid #ffffff;
 }
 
 div.wrapper {

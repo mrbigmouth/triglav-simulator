@@ -77,30 +77,20 @@ export default {
   },
   getters: {
     parseScaleValue(state) {
-      return (value = [], key = '') => {
+      return (value = []) => {
         const scaleKey = value[0] || 'exp';
         const maxRequired = value[1] || 0;
         const maxValue = value[2] || 0;
         const minValue = value[3] || 0;
         const scaleByNumber = Math.min(state[scaleKey], maxRequired);
         let scaleValue = maxValue * scaleByNumber / maxRequired;
-        switch (key) {
-          case 'as':
-          case 'sad': {
-            scaleValue = Math.ceil(scaleValue);
-            break;
-          }
-          default: {
-            scaleValue = Math.floor(scaleValue);
-            break;
-          }
-        }
+        scaleValue = scaleValue > 0 ? Math.floor(scaleValue) : Math.ceil(scaleValue);
 
         return minValue + scaleValue;
       };
     },
     parseItemValue(state, getters) {
-      return (value, key) => {
+      return (value) => {
         if (!value) {
           return 0;
         }
@@ -108,19 +98,19 @@ export default {
           return value;
         }
         else if (Array.isArray(value)) {
-          return getters.parseItemValue(getters.parseScaleValue(value, key), key);
+          return getters.parseItemValue(getters.parseScaleValue(value));
         }
         else if (typeof value === 'object') {
           if (value.type) {
             const speicalData = {
               ...value,
-              value: getters.parseItemValue(value.value, key),
+              value: getters.parseItemValue(value.value),
             };
 
             return speicalData;
           }
           else {
-            return getters.parseItemValue(value[state.characterClass], key);
+            return getters.parseItemValue(value[state.characterClass]);
           }
         }
       };
@@ -146,7 +136,7 @@ export default {
           };
         }
 
-        return getters.parseItemValue(itemData[key], key);
+        return getters.parseItemValue(itemData[key]);
       };
     },
     getSlotValue(state, getters) {
@@ -584,7 +574,10 @@ export default {
       return (specialData) => {
         switch (specialData.type) {
           case 'addStrengthOnTakenDamage':
+          case 'addVitalityOnTakenDamage':
           case 'killsAddAttackRange':
+          case 'killsAddAttackSpeed':
+          case 'hitsAddDefense':
           case 'hitsAddStrength': {
             return i18n.t('special.' + specialData.type, {
               value: specialData.value,
@@ -592,6 +585,7 @@ export default {
               duration: specialData.duration,
             });
           }
+          case 'throwAttack':
           case 'doubleStrike':
           case 'restoresVitalityOnTakenDamage':
           case 'restoresVitalityOnSpecialAttackKill':
