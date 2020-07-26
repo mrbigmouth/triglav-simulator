@@ -574,6 +574,7 @@ export default {
       return (specialData) => {
         switch (specialData.type) {
           case 'addStrengthOnTakenDamage':
+          case 'addVitalityOnTakenDamage':
           case 'killsAddAttackRange':
           case 'killsAddAttackSpeed':
           case 'hitsAddDefense':

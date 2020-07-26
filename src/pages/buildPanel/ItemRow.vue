@@ -1,6 +1,6 @@
 <template>
   <tbody @click="$emit('click')">
-    <tr>
+    <tr :title="$t('item.' + itemData.i18n)">
       <td>
         <img
           :class="itemData.type"
