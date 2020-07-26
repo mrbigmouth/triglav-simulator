@@ -573,8 +573,13 @@ export default {
     getSpecialDescription(state) {
       return (specialData) => {
         switch (specialData.type) {
+          case 'splashAttack': {
+            return i18n.$t('special.splashAttack');
+          }
+          case 'addVoHOnTakenDamage':
           case 'addStrengthOnTakenDamage':
           case 'addVitalityOnTakenDamage':
+          case 'addDamageReflectionOnTakenDamage':
           case 'killsAddAttackRange':
           case 'killsAddAttackSpeed':
           case 'hitsAddDefense':
