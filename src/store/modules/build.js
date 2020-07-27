@@ -582,6 +582,7 @@ export default {
           case 'addDamageReflectionOnTakenDamage':
           case 'killsAddAttackRange':
           case 'killsAddAttackSpeed':
+          case 'hitsAddWalkSpeed':
           case 'hitsAddDefense':
           case 'hitsAddStrength': {
             return i18n.t('special.' + specialData.type, {
