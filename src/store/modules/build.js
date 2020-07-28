@@ -582,6 +582,7 @@ export default {
           case 'addDamageReflectionOnTakenDamage':
           case 'killsAddAttackRange':
           case 'killsAddAttackSpeed':
+          case 'killsAddWalkSpeed':
           case 'hitsAddWalkSpeed':
           case 'hitsAddDefense':
           case 'hitsAddStrength': {
@@ -591,6 +592,7 @@ export default {
               duration: specialData.duration,
             });
           }
+          case 'lightningStrike':
           case 'throwAttack':
           case 'doubleStrike':
           case 'restoresVitalityOnTakenDamage':
