@@ -56,6 +56,7 @@
       </div>
       <item-table>
         <item-row
+          v-if="characterClass === 'sword'"
           :item-data="item.sword[weapon1]"
           :display-name="displayName"
           :display-special="displaySpecial"
