@@ -577,6 +577,7 @@ export default {
             return i18n.$t('special.splashAttack');
           }
           case 'triggerNoDelayOnTakenDamage':
+          case 'hitsTriggerNoDelay':
           case 'killsTriggerNoDelay': {
             return i18n.$t('special.' + specialData.type, {
               value: specialData.value,
@@ -591,6 +592,7 @@ export default {
           case 'killsAddAttackRange':
           case 'killsAddAttackSpeed':
           case 'killsAddWalkSpeed':
+          case 'hitsAddAttackSpeed':
           case 'hitsAddWalkSpeed':
           case 'hitsAddDefense':
           case 'hitsAddStrength': {
