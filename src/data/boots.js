@@ -33,7 +33,7 @@ export default [
     },
   },
   {
-    i18n: 'bootsCloudwalker',
+    i18n: 'cloudwalker',
     type: 'rare',
     img: 'items/boots_cloudwalker.png',
     ar: ['exp', 100000, 20],
@@ -255,5 +255,11 @@ export default [
     def: 4,
     ws: 3,
     sad: ['kills', 24000, 10],
+  },
+  {
+    i18n: 'usedHighSocks',
+    type: 'common',
+    img: 'items/boots_usedHighSocks.png',
+    ws: 5,
   },
 ];

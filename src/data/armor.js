@@ -487,4 +487,11 @@ export default [
     img: 'items/armor_1.png',
     def: 4,
   },
+  {
+    i18n: 'uglyChristmasSweater',
+    type: 'common',
+    img: 'items/armor_uglyChristmasSweater.png',
+    def: 5,
+    vit: 50,
+  },
 ];

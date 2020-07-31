@@ -783,4 +783,10 @@ export default [
     dex: 12,
     ws: -3,
   },
+  {
+    i18n: 'chickenHead',
+    type: 'common',
+    img: 'items/helm_chickenHead.png',
+    dr: 100,
+  },
 ];
