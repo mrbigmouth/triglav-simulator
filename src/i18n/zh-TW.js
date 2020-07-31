@@ -349,6 +349,7 @@ export default {
     killsAddAttackSpeed: '擊殺{trigger}個敵人會觸發{value}%攻擊速度增益，持續{duration}秒。',
     lightningStrike: '攻擊時，{value}%的機率對周圍敵人造成雷擊。',
     throwAttack: '攻擊時，{value}%的機率對周圍敵人投擲道具。',
+    specialThrowAttack: '攻擊或特攻時，{value}%的機率對周圍敵人投擲道具。',
     doubleStrike: '{value}%的機率能攻擊目標兩次。',
     restoresVitalityOnTakenDamage: '持續恢復受到傷害的{value}%體力。',
     restoresVitalityOnKill: '每次擊殺能恢復{value}%體力。',

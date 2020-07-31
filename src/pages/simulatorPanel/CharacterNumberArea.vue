@@ -183,12 +183,10 @@
       <div class="card">
         <q-card-section>
           <template v-if="playerSpecialAbilityList.length > 0">
-            <div
+            <special-ability-description
               v-for="(speicalData, index) in playerSpecialAbilityList"
               :key="index"
-              style="color: #9fd900;">
-              {{ getSpecialDescription(speicalData) }}
-            </div>
+              :special-data="speicalData" />
           </template>
           <template v-else>
             無
@@ -201,12 +199,16 @@
 
 <script>
 import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBuildStore';
+import SpecialAbilityDescription from './SpecialAbilityDescription';
 
 export default {
   name: 'CharacterNumberArea',
   mixins: [
     computedPropertiesForBuildStore,
   ],
+  components: {
+    SpecialAbilityDescription,
+  },
   computed: {
     vitPercentage() {
       return (num1, num2) => {

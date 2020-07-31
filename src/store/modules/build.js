@@ -29,12 +29,12 @@ export default {
         str: 0,
         vit: 0,
         def: 0,
-        dex: 0,
         voh: 0,
         dr: 0,
+        ar: 0,
+        as: 0,
         sad: 0,
-        sa: 0,
-        doubleStrike: 0,
+        ws: 0,
         throwAttack: 0,
         specialThrowAttack: 0,
       },
@@ -251,6 +251,21 @@ export default {
         }
       };
     },
+    getCharacterOriginValue(state, getters) {
+      return (key) => {
+        const characterValue = (
+          getters.getTotalItemValue(key) +
+          getters.getCharacterBasicValue(key) +
+          getters.getBoostValue(key)
+        );
+
+        if (key === 'sad') {
+          return characterValue;
+        }
+
+        return Math.max(0, characterValue);
+      };
+    },
     getCharacterValue(state, getters) {
       return (key) => {
         const characterValue = (
@@ -356,7 +371,7 @@ export default {
         attackerDex: getters.playerDex,
         defenderDef: 0,
         doubleStrike: getters.playerDoubleStrike,
-        throwAttack: state.temporaryBuff.throwAttack,
+        throwAttack: state.temporaryBuff.throwAttack + state.temporaryBuff.specialThrowAttack,
       });
     },
     getPlayerExpectDamagePerHit(state, getters) {
@@ -367,7 +382,7 @@ export default {
           attackerDex: getters.playerDex,
           defenderDef: enemyDef,
           doubleStrike: getters.playerDoubleStrike,
-          throwAttack: state.temporaryBuff.throwAttack,
+          throwAttack: state.temporaryBuff.throwAttack + state.temporaryBuff.specialThrowAttack,
         });
       };
     },
@@ -406,7 +421,7 @@ export default {
         defenderDex: 0,
         defenderDef: 0,
         doubleStrike: getters.playerDoubleStrike,
-        throwAttack: state.temporaryBuff.throwAttack,
+        throwAttack: state.temporaryBuff.throwAttack + state.temporaryBuff.specialThrowAttack,
         attackerVoh: getters.playerVoh,
         defenderDr: 0,
       });
@@ -421,7 +436,7 @@ export default {
           defenderDex: enemyDex,
           defenderDef: enemyDef,
           doubleStrike: getters.playerDoubleStrike,
-          throwAttack: state.temporaryBuff.throwAttack,
+          throwAttack: state.temporaryBuff.throwAttack + state.temporaryBuff.specialThrowAttack,
           attackerVoh: getters.playerVoh,
           defenderDr: enemyDr,
         });
@@ -497,7 +512,7 @@ export default {
           attackerDex: getters.playerDex,
           defenderDef: defenderDef,
           doubleStrike: getters.playerDoubleStrike,
-          throwAttack: state.temporaryBuff.throwAttack,
+          throwAttack: state.temporaryBuff.throwAttack + state.temporaryBuff.specialThrowAttack,
           hitsPerSecond: getters.playerHitsPerSecond,
         });
       };
@@ -603,6 +618,7 @@ export default {
             });
           }
           case 'lightningStrike':
+          case 'specialThrowAttack':
           case 'throwAttack':
           case 'doubleStrike':
           case 'restoresVitalityOnTakenDamage':

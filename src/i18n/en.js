@@ -360,6 +360,7 @@ export default {
     killsAddAttackSpeed: 'Killing {trigger} enemies triggers {value}% Attack Speed for {duration} sec.',
     doubleStrike: '{value}% chance to attack the target twice.',
     throwAttack: 'When attacking, {value}% chance to throw a item to nearby enemy.',
+    specialThrowAttack: 'When attacking or special attacking, {value}% chance to throw a item to nearby enemy.',
     lightningStrike: 'When attacking, {value}% chance to lightning strike to a nearby enemy.',
     restoresVitalityOnTakenDamage: 'Restores Vitality over time by {value}% of damage you\'ve taken.',
     restoresVitalityOnKill: 'Restores {value}% of Vitality each time kill.',
