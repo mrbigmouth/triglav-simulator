@@ -12,12 +12,12 @@
           <th
             :class="sortable ? 'cursor-pointer' : ''"
             style="min-width: 6rem;"
-            @click="onClickColumn('dmg')">
+            @click="onClickColumn('avgDmg')">
             <div>
               {{ $t('dmg') }}
               <q-icon
-                v-if="getSortStatus('dmg')"
-                :name="getSortStatus('dmg') === 'desc' ? 'expand_more' : 'expand_less'" />
+                v-if="getSortStatus('avgDmg')"
+                :name="getSortStatus('avgDmg') === 'desc' ? 'expand_more' : 'expand_less'" />
             </div>
           </th>
           <th

@@ -59,6 +59,7 @@ export default {
     martialMonkeysBlade: '武猿之刃',
     fangedOrochi: '詛咒魔蛇',
     theAvenger: '復仇者',
+    haku: '狛',
     boneHarvest: '骸骨收成',
     heavyWeather: '荒天',
     mistral: '西北風',

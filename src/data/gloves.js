@@ -102,17 +102,6 @@ export default [
     ws: 4,
   },
   {
-    i18n: 'measureForMeasure',
-    type: 'rare',
-    img: 'items/gloves_measureForMeasure.png',
-    dr: 30,
-    as: -1,
-    str: ['exp', 100000, 10],
-    def: ['kills', 15000, -15, 5],
-    vit: ['exp', 150000, 25],
-    ws: 4,
-  },
-  {
     i18n: 'fairyFellersMasterStroke',
     type: 'rare',
     img: 'items/gloves_fairyFellersMasterStroke.png',
