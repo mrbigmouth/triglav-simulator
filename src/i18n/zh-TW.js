@@ -55,6 +55,7 @@ export default {
     fangedOrochi: '詛咒魔蛇',
     theAvenger: '復仇者',
     boneHarvest: '骸骨收成',
+    heavyWeather: '荒天',
     mistral: '西北風',
     obsidianBlade: '黑曜石劍',
     silverEdgeOfDhampir: '半吸血鬼的銀刃',
