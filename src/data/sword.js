@@ -159,7 +159,7 @@ export default [
     ar: ['exp', 200000, 20],
     dex: -5,
     vit: 22,
-    sad: ['exp', 480000, -20],
+    sad: ['exp', 480000, 20],
     special: {
       type: 'doubleStrike',
       value: 8,
