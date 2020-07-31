@@ -264,7 +264,7 @@ export default [
     dex: 11,
     ws: 3,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: {
         sword: 50,
         axe: 50,

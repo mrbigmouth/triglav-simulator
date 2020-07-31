@@ -1157,7 +1157,7 @@ export default [
     vit: ['kills', 300000, 50],
     sad: -4,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 50,
     },
   },
