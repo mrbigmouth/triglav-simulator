@@ -15,8 +15,13 @@ export default {
     goblin: 'ゴブリン',
     gnoll: 'ノール',
     greenSlime: 'グリーンスライム',
+    giantScarab: 'スカラベ',
     goblinMage: 'ゴブリンメイジ',
     roper: 'ローパー',
+    skeleton: 'スケルトン',
+    kobold: 'コボルド',
+    wraith: 'レイス',
+    mage: 'メイジ',
   },
   item: {
     none: 'None',

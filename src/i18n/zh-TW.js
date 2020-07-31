@@ -33,8 +33,13 @@ export default {
     goblin: '哥布林',
     gnoll: '諾爾',
     greenSlime: '綠史萊姆',
+    giantScarab: '巨大甲蟲',
     goblinMage: '哥布林法師',
     roper: '觸手怪',
+    skeleton: '骷髏',
+    kobold: '寇伯',
+    wraith: '惡靈',
+    mage: '法師',
   },
   item: {
     none: '無裝備',

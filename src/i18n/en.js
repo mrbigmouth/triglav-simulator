@@ -30,8 +30,13 @@ export default {
     goblin: 'Goblin',
     gnoll: 'Gnoll',
     greenSlime: 'Green Slime',
+    giantScarab: 'Giant Scarab',
     goblinMage: 'Goblin Mage',
     roper: 'Roper',
+    skeleton: 'Skeleton',
+    kobold: 'Kobold',
+    wraith: 'Wraith',
+    mage: 'Mage',
   },
   item: {
     none: 'None',
