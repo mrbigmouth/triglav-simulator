@@ -369,18 +369,6 @@ export default [
     sad: -4,
   },
   {
-    i18n: 'passionGraceAndFire',
-    type: 'rare',
-    img: 'items/ring_passionGraceAndFire.png',
-    voh: 2,
-    as: -1,
-    ar: ['exp', 60000, 12],
-    str: -10,
-    dex: ['kills', 4000, 4],
-    ws: -3,
-    sad: -4,
-  },
-  {
     i18n: 'theShootingStar',
     type: 'rare',
     img: 'items/ring_theShootingStar.png',
