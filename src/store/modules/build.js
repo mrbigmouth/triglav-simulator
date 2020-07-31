@@ -574,12 +574,12 @@ export default {
       return (specialData) => {
         switch (specialData.type) {
           case 'splashAttack': {
-            return i18n.$t('special.splashAttack');
+            return i18n.t('special.splashAttack');
           }
           case 'triggerNoDelayOnTakenDamage':
           case 'hitsTriggerNoDelay':
           case 'killsTriggerNoDelay': {
-            return i18n.$t('special.' + specialData.type, {
+            return i18n.t('special.' + specialData.type, {
               value: specialData.value,
               trigger: specialData.trigger,
             });
