@@ -27,7 +27,7 @@
           @click.prevent="$emit('delete')" />
       </q-item-section>
     </q-item>
-    <q-separator style="margin-bottom: 0;" />
+    <q-separator style="margin-bottom: 0; min-width: 100%;" />
     <q-expansion-item
       label="模擬結果"
       class="shadow-1 overflow-hidden"
