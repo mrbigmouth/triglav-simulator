@@ -329,7 +329,7 @@ export default [
     maxAd: 36,
     as: ['kills', 10000, -2],
     ar: -5,
-    def: ['exp', 140000, 7],
+    dex: ['exp', 140000, 7],
     ws: 2,
     special: {
       type: 'doubleStrike',

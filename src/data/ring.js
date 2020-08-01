@@ -336,7 +336,7 @@ export default [
     i18n: 'vapor',
     type: 'rare',
     img: 'items/ring_vapor.png',
-    as: {
+    ar: {
       sword: 11,
       axe: 17,
       dagger: 7,
@@ -953,9 +953,9 @@ export default [
     vit: ['exp', 100000, 10],
     sad: ['exp', 270000, 45, -15],
     special: {
-      type: 'killsAddAttackSpeed',
-      value: 120,
-      trigger: 15,
+      type: 'hitsAddDefense',
+      value: 110,
+      trigger: 50,
       duration: 12,
     },
   },
@@ -1046,10 +1046,10 @@ export default [
     vit: ['exp', 100000, 20],
     sad: ['exp', 270000, 45, -15],
     special: {
-      type: 'killsAddAttackSpeed',
-      value: 120,
-      trigger: 15,
-      duration: 12,
+      type: 'addStrengthOnTakenDamage',
+      value: 130,
+      trigger: 90,
+      duration: 15,
     },
   },
   {

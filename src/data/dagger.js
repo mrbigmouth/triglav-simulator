@@ -125,7 +125,7 @@ export default [
     maxAd: 16,
     ar: 1,
     str: ['kills', 7000, 14],
-    def: 6,
+    dex: 6,
     vit: ['kills', 15000, -15],
   },
   {
