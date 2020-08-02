@@ -121,7 +121,6 @@ export default [
     dr: 66,
     ar: 6,
     dex: ['exp', 160000, 16],
-    def: 2,
     vit: 16,
     special: {
       type: 'addDamageReflectionOnTakenDamage',

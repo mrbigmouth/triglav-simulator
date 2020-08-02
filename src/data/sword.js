@@ -53,7 +53,7 @@ export default [
     maxAd: 14,
     ar: 3,
     dex: 5,
-    sad: ['kills', 2000, 40],
+    vit: ['kills', 2000, 40],
     special: {
       type: 'restoresVitalityOnKill',
       value: 4,
@@ -125,7 +125,7 @@ export default [
     minAd: 20,
     maxAd: 35,
     as: 2,
-    ar: 15,
+    ar: 14,
     str: ['kills', 10000, 25],
     def: 2,
     vit: ['kills', 15000, -15],

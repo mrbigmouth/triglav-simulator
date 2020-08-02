@@ -200,7 +200,7 @@ export default [
     type: 'artifact',
     img: 'items/boots_spikedCarapace.png',
     dr: 50,
-    def: 10,
+    dex: 10,
     vit: 28,
     sad: -3,
   },
