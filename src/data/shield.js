@@ -168,7 +168,7 @@ export default [
     i18n: 'hallowedGuardian',
     type: 'artifact',
     img: 'items/shield_hallowedGuardian.png',
-    dr: ['exp', 100000, 10],
+    def: ['exp', 100000, 10],
     dex: 10,
     vit: ['kills', 35000, 35],
     ws: -4,
