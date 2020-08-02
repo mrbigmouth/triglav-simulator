@@ -357,7 +357,7 @@ export default {
         throwAttack,
       }) => {
         const effectiveDef = Math.max(0, defenderDef - attackerDex);
-        const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDef);
+        const expectDamagePerHit = Math.max(1, (minAd + maxAd) / 2 - effectiveDef);
         const doubleStrikeAdjust = (doubleStrike + 100);
         const throwAttackAdjust = (throwAttack + 100);
 
@@ -401,7 +401,7 @@ export default {
       }) => {
         const effectiveDefenderDef = Math.max(0, defenderDef - attackerDex);
         const effectiveAttackerDef = Math.max(0, defenderDex - attackerDef);
-        const expectDamagePerHit = Math.max(0, (minAd + maxAd) / 2 - effectiveDefenderDef);
+        const expectDamagePerHit = Math.max(1, (minAd + maxAd) / 2 - effectiveDefenderDef);
         const doubleStrikeAdjust = (doubleStrike + 100);
         const damagePerHitNothrowAttack = Math.round(expectDamagePerHit * doubleStrikeAdjust / 100);
         const healingPerHit = Math.round(damagePerHitNothrowAttack * attackerVoh / 100);
