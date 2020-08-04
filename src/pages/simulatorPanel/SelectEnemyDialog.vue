@@ -4,7 +4,7 @@
     persistent
     full-height>
     <q-card>
-      <q-bar style="position: sticky; top: 0;">
+      <q-bar style="position: sticky; top: 0; z-index: 3; background-color: #333;">
         <div>選擇模擬敵方</div>
         <q-space />
         <q-btn
