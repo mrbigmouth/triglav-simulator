@@ -121,6 +121,46 @@ import ItemTable from './ItemTable';
 import ItemRow from './ItemRow';
 import item from 'src/data/item';
 
+const cacheData = {
+  showAddSortDialog: false,
+  sortOptionList: [
+    'minDmg',
+    'minDmgStrDex',
+    'maxDmg',
+    'maxDmgStr',
+    'avgDmg',
+    'avgDmgStr',
+    'avgDmgStrDex',
+    'dmg',
+    'as',
+    'str',
+    'dex',
+    'def',
+    'vit',
+    'ws',
+    'ar',
+    'sad',
+    'voh',
+    'dr',
+    'xpg',
+    'spe',
+  ],
+  sortList: [
+    {
+      by: 'avgDmgStrDex',
+      dir: 'desc',
+    },
+  ],
+  filter: [
+    'none',
+    'rare',
+    'artifact',
+  ],
+  searchText: '',
+  displayName: false,
+  displaySpecial: false,
+};
+
 export default {
   name: 'SelectItemDialog',
   components: {
@@ -145,45 +185,7 @@ export default {
     computedPropertiesForBuildStore,
   ],
   data() {
-    return {
-      showAddSortDialog: false,
-      sortOptionList: [
-        'minDmg',
-        'minDmgStrDex',
-        'maxDmg',
-        'maxDmgStr',
-        'avgDmg',
-        'avgDmgStr',
-        'avgDmgStrDex',
-        'dmg',
-        'as',
-        'str',
-        'dex',
-        'def',
-        'vit',
-        'ws',
-        'ar',
-        'sad',
-        'voh',
-        'dr',
-        'xpg',
-        'spe',
-      ],
-      sortList: [
-        {
-          by: 'avgDmgStrDex',
-          dir: 'desc',
-        },
-      ],
-      filter: [
-        'none',
-        'rare',
-        'artifact',
-      ],
-      searchText: '',
-      displayName: false,
-      displaySpecial: false,
-    };
+    return cacheData;
   },
   computed: {
     proxyIsShow: {
