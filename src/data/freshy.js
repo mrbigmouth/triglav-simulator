@@ -56,7 +56,7 @@ export default [
     i18n: 'cottonCandy',
     type: 'common',
     img: 'items/freshy_cottonCandy.png',
-    dr: 50,
+    dr: 80,
     xpg: 10,
   },
   {
