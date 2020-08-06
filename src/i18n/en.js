@@ -544,6 +544,7 @@ export default {
     'UW6-poison': 'Underworld 7 - Poison Quest',
     'UW7': 'Underworld 7 - Mook room',
     'UW8': 'Underworld 8',
+    'UW8-hell': 'Underworld 8 - Hell Event',
     'ND1': 'Night Dreamer 1 - Entrance',
     'ND2': 'Night Dreamer 2 - Prison',
     'ND3': 'Night Dreamer 3 - Vampire lord',
