@@ -1023,8 +1023,10 @@ export default [
   {
     i18n: 'ogreMage',
     location: [
+      '9F-egg',
       '27F',
-      '28F',
+      '28F-egg',
+      '34F-egg',
       '42F',
       '42F-mirror',
       '44F',
@@ -1072,8 +1074,10 @@ export default [
   {
     i18n: 'gargoyle',
     location: [
-      '28F',
+      '9F-egg',
+      '28F-egg',
       '34F',
+      '34F-egg',
       '43F',
       '47F',
       'UW8-hell',
@@ -1116,7 +1120,9 @@ export default [
   {
     i18n: 'lavaSpawn',
     location: [
-      '28F',
+      '9F-egg',
+      '28F-egg',
+      '34F-egg',
       '43F',
       '44F',
       'UW8-hell',
@@ -1136,7 +1142,9 @@ export default [
   {
     i18n: 'lavaGolem',
     location: [
-      '28F',
+      '9F-egg',
+      '28F-egg',
+      '34F-egg',
       '43F',
       '44F',
       'UW8-hell',
@@ -1156,7 +1164,9 @@ export default [
   {
     i18n: 'ogreBerserker',
     location: [
-      '28F',
+      '9F-egg',
+      '28F-egg',
+      '34F-egg',
       '43F',
       '44F',
       'UW8-hell',
@@ -1301,9 +1311,11 @@ export default [
   {
     i18n: 'fatmanLord',
     location: [
+      '9F-egg',
       '11F',
       '23F',
-      '28F',
+      '28F-egg',
+      '34F-egg',
       '38F-fat',
       '42F-mirror',
       '46F',
@@ -1577,6 +1589,7 @@ export default [
     i18n: 'kwaisei',
     location: [
       '6F',
+      '9F-egg',
       '12F',
       '12F-crazy',
       '14F-eretica',
@@ -1587,9 +1600,10 @@ export default [
       '26F',
       '27F',
       '27F-scarab',
-      '28F',
+      '28F-egg',
       '32F',
       '34F',
+      '34F-egg',
       '36F-tyrant',
       '37F',
       '41F',
