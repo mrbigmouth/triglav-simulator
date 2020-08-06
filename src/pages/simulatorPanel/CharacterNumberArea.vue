@@ -212,7 +212,7 @@ export default {
   computed: {
     vitPercentage() {
       return (num1, num2) => {
-        return Math.round(num1 / this.getCharacterValue('vit') * 100) / 100;
+        return Math.round(num1 / this.getCharacterValue('vit') * 1000) / 10;
       };
     },
   },
