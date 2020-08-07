@@ -276,7 +276,7 @@ export default [
     ws: 4,
     special: {
       type: 'restoresVitalityOnKill',
-      value: 2,
+      value: 3,
     },
   },
   {
