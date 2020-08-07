@@ -40,16 +40,7 @@ export default [
     i18n: 'candyApple',
     type: 'common',
     img: 'items/freshy_candyApple.png',
-    special: {
-      type: 'restoresVitalityOnTakenDamage',
-      value: 10,
-    },
-  },
-  {
-    i18n: 'candyApple',
-    type: 'common',
-    img: 'items/freshy_candyApple.png',
-    ar: 8,
+    ar: 12,
     xpg: 10,
   },
   {
@@ -63,14 +54,14 @@ export default [
     i18n: 'shavedIce',
     type: 'common',
     img: 'items/freshy_shavedIce.png',
-    voh: 1,
+    voh: 2,
     xpg: 10,
   },
   {
     i18n: 'skeweredBug',
     type: 'common',
     img: 'items/freshy_skeweredBug.png',
-    sad: -2,
+    sad: -3,
     xpg: 10,
   },
   {

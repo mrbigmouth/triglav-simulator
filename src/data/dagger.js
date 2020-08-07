@@ -380,7 +380,7 @@ export default [
     maxAd: 12,
     ar: ['kills', 6000, -6],
     str: ['kills', 6000, 6],
-    def: 1,
+    def: 2,
     sad: -3,
     special: {
       type: 'restoresVitalityOnTakenDamage',
