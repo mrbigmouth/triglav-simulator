@@ -8,18 +8,18 @@
     <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-2 col-md-4 offset-lg-3 col-lg-3">
       <q-select
         v-model="characterClass"
-        label="腳色職業"
+        :label="$t('characterClass')"
         :options="[
           {
-            label: '劍系大師',
+            label: $t('swordMaster'),
             value: 'sword',
           },
           {
-            label: '斧系大師',
+            label: $t('axeMaster'),
             value: 'axe',
           },
           {
-            label: '匕首大師',
+            label: $t('daggerMaster'),
             value: 'dagger',
           },
         ]"
@@ -29,7 +29,7 @@
     <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
       <q-input
         v-model.number="exp"
-        label="經驗值"
+        :label="$t('experience')"
         type="number"
         min="0"
         step="10000" />
@@ -40,7 +40,7 @@
     <div class="col-xs-12 offset-sm-2 col-sm-8 offset-md-0 col-md-4 offset-lg-0 col-lg-3">
       <q-input
         v-model.number="kills"
-        label="擊殺數"
+        :label="$t('kills')"
         type="number"
         min="0"
         step="100" />
@@ -49,7 +49,7 @@
       <div class="text-center">
         <q-checkbox
           v-model="displayName"
-          :label="$t('displayName')" />
+          :label="$t('displayEquipmentName')" />
         <q-checkbox
           v-model="displaySpecial"
           :label="$t('displaySpecial')" />

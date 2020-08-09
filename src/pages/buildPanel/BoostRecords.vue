@@ -3,7 +3,7 @@
     <div
       class="col-6"
       style="font-size: 0.8rem;">
-      強化藥水使用紀錄：
+      {{ $t('boostRecords') }}
     </div>
     <div class="col-6">
       <q-btn-toggle
@@ -12,23 +12,23 @@
         size="sm"
         :options="[
           {
-            label: '全體力',
+            label: $t('allVitality'),
             value: 'vitality',
           },
           {
-            label: '全力量',
+            label: $t('allStrength'),
             value: 'strength',
           },
           {
-            label: '全敏捷',
+            label: $t('allDexterity'),
             value: 'dexteriry',
           },
           {
-            label: '全防禦',
+            label: $t('allDefense'),
             value: 'defense',
           },
           {
-            label: '自定義',
+            label: $t('custom'),
             value: 'custom',
           },
         ]"
@@ -39,7 +39,9 @@
       persistent>
       <q-card>
         <q-bar>
-          <div>自定義強化藥水使用紀錄</div>
+          <div>
+            {{ $t('customBoostRecords') }}
+          </div>
 
           <q-space />
 
@@ -52,38 +54,38 @@
         <q-card-section>
           <q-input
             v-model.number="boostAllRecords"
-            label="萬靈密藥(全屬性)使用次數"
+            :label="$t('nostrumRecord')"
             type="number"
             min="0"
             step="1" />
           <q-input
             v-model.number="boostVitalityRecords"
-            label="長生靈丹(體力)使用次數"
+            :label="$t('elixirRecord')"
             type="number"
             min="0"
             step="1" />
           <q-input
             v-model.number="boostStrengthRecords"
-            label="滋王丸藥(力量)使用次數"
+            :label="$t('gioganRecord')"
             type="number"
             min="0"
             step="1" />
           <q-input
             v-model.number="boostDexteriryRecords"
-            label="玉液瓊漿(敏捷)使用次數"
+            :label="$t('necterRecord')"
             type="number"
             min="0"
             step="1" />
           <q-input
             v-model.number="boostDefenseRecords"
-            label="九頭蛇釀(防禦)使用次數"
+            :label="$t('hydrabrewRecord')"
             type="number"
             min="0"
             step="1" />
         </q-card-section>
         <q-card-actions align="right">
           <q-btn
-            label="確定"
+            :label="$t('confirm')"
             color="primary"
             v-close-popup />
         </q-card-actions>

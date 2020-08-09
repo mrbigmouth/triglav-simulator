@@ -2,7 +2,7 @@
   <div class="row q-col-gutter-md">
     <div
       class="col-xs-12 col-sm-shrink"
-      style="min-width: 15rem;">
+      style="min-width: 17rem;">
       <character-number-area />
     </div>
     <div class="col">

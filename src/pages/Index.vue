@@ -14,10 +14,10 @@
               narrow-indicator>
               <q-tab
                 name="build"
-                label="配置" />
+                :label="$t('build')" />
               <q-tab
                 name="simulator"
-                label="模擬" />
+                :label="$t('simulator')" />
               <q-btn-dropdown
                 style="width: 20rem;"
                 align="right"
@@ -25,28 +25,49 @@
                 stretch
                 flat>
                 <template v-slot:label>
-                  <div class="row items-end no-wrap justify-end">
+                  <div
+                    class="row items-end no-wrap justify-end"
+                    style="text-transform: none;">
                     <q-icon name="language" />
-                    繁體中文
+                    <span v-if="$i18n.locale === 'js'">
+                      日本語
+                    </span>
+                    <span v-else-if="$i18n.locale === 'en'">
+                      English
+                    </span>
+                    <span v-else-if="$i18n.locale === 'zh-TW'">
+                      繁體中文
+                    </span>
+                    <span v-else-if="$i18n.locale === 'zh-CN'">
+                      简体中文
+                    </span>
                   </div>
                 </template>
                 <q-list>
-                  <q-item clickable>
+                  <q-item
+                    clickable
+                    @click="onChangeLanguage('ja')">
                     <q-item-section align="right">
                       日本語
                     </q-item-section>
                   </q-item>
-                  <q-item clickable>
+                  <q-item
+                    clickable
+                    @click="onChangeLanguage('en')">
                     <q-item-section align="right">
                       English
                     </q-item-section>
                   </q-item>
-                  <q-item clickable>
+                  <q-item
+                    clickable
+                    @click="onChangeLanguage('zh-TW')">
                     <q-item-section align="right">
                       繁體中文
                     </q-item-section>
                   </q-item>
-                  <q-item clickable>
+                  <q-item
+                    clickable
+                    @click="onChangeLanguage('zh-CN')">
                     <q-item-section align="right">
                       简体中文
                     </q-item-section>
@@ -120,6 +141,12 @@ export default {
     }
     catch (e) {
     }
+  },
+  methods: {
+    onChangeLanguage(language) {
+      this.$i18n.locale = language;
+      localStorage.setItem('defaultUseLanguage', language);
+    },
   },
 };
 </script>
