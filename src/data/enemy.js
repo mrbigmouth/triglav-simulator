@@ -3151,7 +3151,7 @@ export default [
     location: [
       '14F-eretica',
     ],
-    img: 'enemy/werewolf.gif',
+    img: 'enemy/warg.gif',
     minAd: 10,
     maxAd: 18,
     as: 20,
@@ -3425,6 +3425,22 @@ export default [
     voh: 0,
     dr: 5,
     xp: 300,
+  },
+  {
+    i18n: 'seryiVolk',
+    location: [
+      'TB-grass',
+    ],
+    img: 'enemy/warg.gif',
+    minAd: 12,
+    maxAd: 25,
+    as: 20,
+    def: 65,
+    dex: 58,
+    vit: 2600,
+    voh: 10,
+    dr: 0,
+    xp: 200,
   },
   {
     i18n: 'deepPurpleSlimeness',
