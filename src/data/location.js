@@ -51,6 +51,7 @@ export default [
   '42F',
   '42F-mirror',
   '43F',
+  '43F-doppelganger',
   '44F',
   // '45F',
   '46F',
