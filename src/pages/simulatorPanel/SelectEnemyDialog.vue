@@ -5,7 +5,9 @@
     full-height>
     <q-card>
       <q-bar style="position: sticky; top: 0; z-index: 3; background-color: #333;">
-        <div>選擇模擬敵方</div>
+        <div>
+          {{ $t('selectSimulateEnemy') }}
+        </div>
         <q-space />
         <q-btn
           icon="close"
@@ -16,7 +18,7 @@
       <q-card-section>
         <q-select
           v-model="filterLocation"
-          label="請選擇區域"
+          :label="$t('pleaseSelectArea')"
           :options="displayLocationOptionList"
           use-input
           clearable
@@ -28,7 +30,7 @@
         <q-btn
           color="positive"
           class="full-width"
-          label="加入以下全部"
+          :label="$t('addAllBelow')"
           @click="onAddAll" />
         <q-separator />
         <template v-for="(enemyData, index) in displayEnemyList">
@@ -41,33 +43,33 @@
             <div class="col">
               <q-input
                 v-model="enemyData.name"
-                label="名稱"
+                :label="$t('displayName')"
                 type="text"
                 dense />
               <q-input
                 v-model.number="enemyData.minAd"
-                label="最小傷害"
+                :label="$t('minimumDamage')"
                 type="number"
                 min="0"
                 step="1"
                 dense />
               <q-input
                 v-model.number="enemyData.maxAd"
-                label="最大傷害"
+                :label="$t('maximumDamage')"
                 type="number"
                 min="0"
                 step="1"
                 dense />
               <q-input
                 v-model.number="enemyData.hitsPerSecond"
-                label="每秒攻擊數"
+                :label="$t('hitsPerSecond')"
                 type="number"
                 min="0"
                 step="0.1"
                 dense />
               <q-input
                 v-model.number="enemyData.dex"
-                label="敏捷"
+                :label="$t('dexterity')"
                 type="number"
                 min="0"
                 step="1"
@@ -76,7 +78,7 @@
             <div class="col">
               <q-input
                 v-model.number="enemyData.voh"
-                label="吸血"
+                :label="$t('voh')"
                 type="number"
                 min="0"
                 step="1"
@@ -87,7 +89,7 @@
               </q-input>
               <q-input
                 v-model.number="enemyData.dr"
-                label="反傷"
+                :label="$t('damageReflection')"
                 type="number"
                 min="0"
                 step="1"
@@ -98,14 +100,14 @@
               </q-input>
               <q-input
                 v-model.number="enemyData.def"
-                label="防禦"
+                :label="$t('defense')"
                 type="number"
                 min="0"
                 step="1"
                 dense />
               <q-input
                 v-model.number="enemyData.vit"
-                label="體力"
+                :label="$t('vitality')"
                 type="number"
                 min="1"
                 step="1"
@@ -113,7 +115,7 @@
                 dense />
               <q-input
                 v-model.number="enemyData.healingPerSecond"
-                label="每秒回血"
+                :label="$t('regeneratePerSecond')"
                 type="number"
                 min="0"
                 step="1"

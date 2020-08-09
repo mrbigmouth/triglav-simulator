@@ -14,13 +14,13 @@
           {{ enemyData.name }}
         </q-item-label>
         <q-item-label caption>
-          戰鬥模擬結果
+          {{ $t('simulateResult') }}
         </q-item-label>
       </q-item-section>
       <q-item-section side>
         <q-btn
           icon="delete_forever"
-          title="刪除此模擬"
+          :title="$t('removeThisSimulator')"
           color="negative"
           flat
           dense
@@ -29,22 +29,27 @@
     </q-item>
     <q-separator style="margin-bottom: 0; min-width: 100%;" />
     <q-expansion-item
-      label="模擬結果"
+      :label="$t('battleResult')"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       default-opened
       dense>
       <div class="row">
-        <span class="col attribute">戰鬥時間：</span>
+        <span class="col attribute">
+          {{ $t('battleTime') }}：
+        </span>
         <span class="col number">
-          {{ simulatorResult.secondPass }}秒
+          {{ simulatorResult.secondPass }}
+          {{ $t('sec') }}
         </span>
       </div>
       <div
         v-if="simulatorResult.enemyVit"
         class="row">
-        <span class="col attribute">敵方殘餘：</span>
+        <span class="col attribute">
+          {{ $t('enemyLeft') }}：
+        </span>
         <span class="col number">
           {{ simulatorResult.enemyVit }}
           (
@@ -53,7 +58,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">承受損傷：</span>
+        <span class="col attribute">
+          {{ $t('takenDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorResult.playerLossVit }}
           (
@@ -62,20 +69,24 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">攻擊次數：</span>
+        <span class="col attribute">
+          {{ $t('attackTimes') }}：
+        </span>
         <span class="col number">
           {{ simulatorResult.playerHits }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">特攻次數：</span>
+        <span class="col attribute">
+          {{ $t('sATimes') }}：
+        </span>
         <span class="col number">
           {{ simulatorResult.playerSaHits }}
         </span>
       </div>
     </q-expansion-item>
     <q-expansion-item
-      label="模擬歷程"
+      :label="$t('simulateProcess')"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
@@ -84,15 +95,20 @@
         <div
           :key="`time_${index}`"
           class="row">
-          <span class="col attribute">時間：</span>
+          <span class="col attribute">
+            {{ $t('time') }}：
+          </span>
           <span class="col number">
-            {{ record.time }}秒
+            {{ record.time }}
+            {{ $t('sec') }}
           </span>
         </div>
         <div
           :key="`event_${index}`"
           class="row">
-          <span class="col attribute">事件：</span>
+          <span class="col attribute">
+            {{ $t('event') }}：
+          </span>
           <span class="col number">
             {{ parseRecordAction(record.event) }}
           </span>
@@ -100,7 +116,9 @@
         <div
           :key="`enemy_${index}`"
           class="row">
-          <span class="col attribute">敵方殘血：</span>
+          <span class="col attribute">
+            {{ $t('enemyLeft') }}：
+          </span>
           <span class="col number">
             {{ record.enemyVit }}
             (
@@ -111,7 +129,9 @@
         <div
           :key="`player_${index}`"
           class="row">
-          <span class="col attribute">我方損傷：</span>
+          <span class="col attribute">
+            {{ $t('takenDamage') }}：
+          </span>
           <span class="col number">
             {{ record.playerLossVit }}
             (
@@ -123,13 +143,15 @@
       </template>
     </q-expansion-item>
     <q-expansion-item
-      label="普攻數值"
+      :label="$t('attackSimulateResults')"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <div class="row">
-        <span class="col attribute">每秒傷害：</span>
+        <span class="col attribute">
+          {{ $t('damagePerSecond') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerExpectDamagePerSecond }}
           (
@@ -138,7 +160,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">期望傷害：</span>
+        <span class="col attribute">
+          {{ $t('expectDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerExpectDamagePerHit }}
           (
@@ -147,7 +171,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最小傷害：</span>
+        <span class="col attribute">
+          {{ $t('minimumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerMinAd }}
           (
@@ -156,7 +182,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最大傷害：</span>
+        <span class="col attribute">
+          {{ $t('maximumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerMaxAd }}
           (
@@ -165,7 +193,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">反饋生命：</span>
+        <span class="col attribute">
+          {{ $t('attackFeedback') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerExpectFeedbackPerHit }}
           (
@@ -174,32 +204,32 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col attribute">
+          {{ $t('hitsPerSecond') }}：
+        </span>
         <span class="col number">
           {{ playerHitsPerSecond }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">雙擊機率：</span>
-        <span class="col number">
-          {{ playerDoubleStrike }}%
+        <span class="col attribute">
+          {{ $t('throwChance') }}：
         </span>
-      </div>
-      <div class="row">
-        <span class="col attribute">投擲機率：</span>
         <span class="col number">
           {{ temporaryBuff.throwAttack }}%
         </span>
       </div>
     </q-expansion-item>
     <q-expansion-item
-      label="特攻數值"
+      :label="$t('specialAttackSimulateResults')"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <div class="row">
-        <span class="col attribute">期望傷害：</span>
+        <span class="col attribute">
+          {{ $t('expectDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerSaExpectDamagePerHit }}
           (
@@ -208,7 +238,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最小傷害：</span>
+        <span class="col attribute">
+          {{ $t('minimumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerSaMinAd }}
           (
@@ -217,7 +249,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最大傷害：</span>
+        <span class="col attribute">
+          {{ $t('maximumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerSaMaxAd }}
           (
@@ -226,7 +260,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">反饋生命：</span>
+        <span class="col attribute">
+          {{ $t('attackFeedback') }}：
+        </span>
         <span class="col number">
           {{ simulatorPlayerSaExpectFeedbackPerHit }}
           (
@@ -235,20 +271,24 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">投擲機率：</span>
+        <span class="col attribute">
+          {{ $t('throwChance') }}：
+        </span>
         <span class="col number">
           {{ temporaryBuff.specialThrowAttack }}%
         </span>
       </div>
     </q-expansion-item>
     <q-expansion-item
-      label="敵方攻擊"
+      :label="$t('enemyAttackSimulateResults')"
       class="shadow-1 overflow-hidden"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <div class="row">
-        <span class="col attribute">每秒傷害：</span>
+        <span class="col attribute">
+          {{ $t('damagePerSecond') }}：
+        </span>
         <span class="col number">
           {{ simulatorEnemyExpectDamagePerSecond }}
           (
@@ -257,7 +297,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">期望傷害：</span>
+        <span class="col attribute">
+          {{ $t('expectDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorEnemyExpectDamagePerHit }}
           (
@@ -266,7 +308,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最小傷害：</span>
+        <span class="col attribute">
+          {{ $t('minimumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorEnemyMinAd }}
           (
@@ -275,7 +319,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最大傷害：</span>
+        <span class="col attribute">
+          {{ $t('maximumDamage') }}：
+        </span>
         <span class="col number">
           {{ simulatorEnemyMaxAd }}
           (
@@ -284,7 +330,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">反饋生命：</span>
+        <span class="col attribute">
+          {{ $t('attackFeedback') }}：
+        </span>
         <span class="col number">
           {{ simulatorEnemyExpectFeedbackPerHit }}
           (
@@ -293,7 +341,9 @@
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col attribute">
+          {{ $t('hitsPerSecond') }}：
+        </span>
         <span class="col number">
           {{ enemyData.hitsPerSecond }}
         </span>
@@ -306,59 +356,77 @@
       dense>
       <template v-slot:header>
         <q-item-section>
-          敵方數值
+          {{ $t('enemyValue') }}：
         </q-item-section>
       </template>
       <div class="row">
-        <span class="col attribute">最小傷害：</span>
+        <span class="col attribute">
+          {{ $t('minimumDamage') }}：
+        </span>
         <span class="col number">
           {{ enemyData.minAd }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">最大傷害：</span>
+        <span class="col attribute">
+          {{ $t('maximumDamage') }}：
+        </span>
         <span class="col number">
           {{ enemyData.maxAd }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">每秒攻擊數：</span>
+        <span class="col attribute">
+          {{ $t('hitsPerSecond') }}：
+        </span>
         <span class="col number">
           {{ enemyData.hitsPerSecond }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">敏捷：</span>
+        <span class="col attribute">
+          {{ $t('dexterity') }}：
+        </span>
         <span class="col number">
           {{ enemyData.dex }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">吸血：</span>
+        <span class="col attribute">
+          {{ $t('voh') }}：
+        </span>
         <span class="col number">
           {{ enemyData.voh }}%
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">反傷：</span>
+        <span class="col attribute">
+          {{ $t('damageReflection') }}：
+        </span>
         <span class="col number">
           {{ enemyData.dr }}%
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">防禦：</span>
+        <span class="col attribute">
+          {{ $t('defense') }}：
+        </span>
         <span class="col number">
           {{ enemyData.def }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">體力：</span>
+        <span class="col attribute">
+          {{ $t('vitality') }}：
+        </span>
         <span class="col number">
           {{ enemyData.vit }}
         </span>
       </div>
       <div class="row">
-        <span class="col attribute">每秒回血：</span>
+        <span class="col attribute">
+          {{ $t('regeneratePerSecond') }}：
+        </span>
         <span class="col number">
           {{ enemyData.healingPerSecond }}
         </span>
@@ -568,16 +636,16 @@ export default {
       return (event) => {
         switch (event) {
           case 'enemyHealing': {
-            return '敵方再生';
+            return this.$t('enemyRegenerate');
           }
           case 'normalAttack': {
-            return '我方攻擊';
+            return this.$t('playerAttack');
           }
           case 'specialAttack': {
-            return '我方特攻';
+            return this.$t('playerSpecialAttack');
           }
           case 'enemyAttack': {
-            return '敵方攻擊';
+            return this.$t('enemyAttack');
           }
         }
       };

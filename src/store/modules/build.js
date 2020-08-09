@@ -340,7 +340,7 @@ export default {
       const result = [];
       slotList.forEach((slot) => {
         const speicalData = getters.getSlotValue(slot, 'special');
-        if (speicalData && speicalData.type !== 'doubleStrike') {
+        if (speicalData) {
           result.push(speicalData);
         }
       });

@@ -72,7 +72,7 @@
           <div class="text-center">
             <q-checkbox
               v-model="displayName"
-              :label="$t('displayName')" />
+              :label="$t('displayEquipmentName')" />
             <q-checkbox
               v-model="displaySpecial"
               :label="$t('displaySpecial')" />

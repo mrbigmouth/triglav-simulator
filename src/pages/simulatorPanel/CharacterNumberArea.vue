@@ -3,7 +3,7 @@
     <q-expansion-item
       class="shadow-1 overflow-hidden"
       style="border-radius: 1rem;"
-      label="普通攻擊"
+      :label="$t('normalAttack')"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       default-opened
@@ -11,31 +11,41 @@
       <q-card>
         <q-card-section>
           <div class="row">
-            <span class="col attribute">每秒傷害：</span>
+            <span class="col attribute">
+              {{ $t('damagePerSecond') }}：
+            </span>
             <span class="col number">
               {{ playerDamagePerSecond }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">期望傷害：</span>
+            <span class="col attribute">
+              {{ $t('expectDamage') }}：
+            </span>
             <span class="col number">
               {{ playerExpectDamagePerHit }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">最小傷害：</span>
+            <span class="col attribute">
+              {{ $t('minimumDamage') }}：
+            </span>
             <span class="col number">
               {{ playerMinAd }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">最大傷害：</span>
+            <span class="col attribute">
+              {{ $t('maximumDamage') }}：
+            </span>
             <span class="col number">
               {{ playerMaxAd }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">預期吸血量：</span>
+            <span class="col attribute">
+              {{ $t('expectVitalityOnHit') }}：
+            </span>
             <span class="col number">
               {{ playerExpectFeedbackPerHit }}
               (
@@ -45,22 +55,11 @@
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">攻擊速度：</span>
-            <span class="col number">
-              {{ playerAs }}
+            <span class="col attribute">
+              {{ $t('hitsPerSecond') }}：
             </span>
-          </div>
-          <div class="row">
-            <span class="col attribute">每秒攻擊數：</span>
             <span class="col number">
               {{ playerHitsPerSecond }}
-            </span>
-          </div>
-          <div class="row">
-            <span class="col attribute">雙擊機率：</span>
-            <span class="col number">
-              {{ playerDoubleStrike }}
-              %
             </span>
           </div>
         </q-card-section>
@@ -69,32 +68,40 @@
     <q-expansion-item
       class="shadow-1 overflow-hidden"
       style="border-radius: 1rem;"
-      label="特殊攻擊"
+      :label="$t('specialAttack')"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <q-card>
         <q-card-section>
           <div class="row">
-            <span class="col attribute">期望傷害：</span>
+            <span class="col attribute">
+              {{ $t('expectDamage') }}：
+            </span>
             <span class="col number">
               {{ playerSaExpectDamage }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">最小傷害：</span>
+            <span class="col attribute">
+              {{ $t('minimumDamage') }}：
+            </span>
             <span class="col number">
               {{ playerSaMinAd }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">最大傷害：</span>
+            <span class="col attribute">
+              {{ $t('maximumDamage') }}：
+            </span>
             <span class="col number">
               {{ playerSaMaxAd }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">預期吸血量：</span>
+            <span class="col attribute">
+              {{ $t('expectVitalityOnHit') }}：
+            </span>
             <span class="col number">
               {{ playerSaExpectFeedbackPerHit }}
               (
@@ -104,13 +111,17 @@
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">特攻延遲：</span>
+            <span class="col attribute">
+              {{ $t('specialAttackDelay') }}：
+            </span>
             <span class="col number">
               {{ playerSad }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">傷害反彈：</span>
+            <span class="col attribute">
+              {{ $t('damageReflection') }}：
+            </span>
             <span class="col number">
               {{ playerDr }}
             </span>
@@ -121,50 +132,81 @@
     <q-expansion-item
       class="shadow-1 overflow-hidden"
       style="border-radius: 1rem;"
-      label="其他數值"
+      :label="$t('basicValue')"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
       <q-card>
         <q-card-section>
           <div class="row">
-            <span class="col attribute">力量：</span>
+            <span class="col attribute">
+              {{ $t('strength') }}：
+            </span>
             <span class="col number">
               {{ playerStr }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">敏捷：</span>
+            <span class="col attribute">
+              {{ $t('dexterity') }}：
+            </span>
             <span class="col number">
               {{ playerDex }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">體力：</span>
+            <span class="col attribute">
+              {{ $t('vitality') }}：
+            </span>
             <span class="col number">
               {{ playerVit }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">防禦：</span>
+            <span class="col attribute">
+              {{ $t('defense') }}：
+            </span>
             <span class="col number">
               {{ playerDef }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">攻擊距離：</span>
+            <span class="col attribute">
+              {{ $t('attackSpeed') }}：
+            </span>
+            <span class="col number">
+              {{ playerAs }}
+            </span>
+          </div>
+          <div class="row">
+            <span class="col attribute">
+              {{ $t('doubleStrikeChange') }}：
+            </span>
+            <span class="col number">
+              {{ playerDoubleStrike }}
+              %
+            </span>
+          </div>
+          <div class="row">
+            <span class="col attribute">
+              {{ $t('attackRange') }}：
+            </span>
             <span class="col number">
               {{ playerAr }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">移動速度：</span>
+            <span class="col attribute">
+              {{ $t('walkSpeed') }}：
+            </span>
             <span class="col number">
               {{ playerWs }}
             </span>
           </div>
           <div class="row">
-            <span class="col attribute">經驗加成：</span>
+            <span class="col attribute">
+              {{ $t('experienceGain') }}：
+            </span>
             <span class="col number">
               {{ playerXpg }}
               %
@@ -176,7 +218,7 @@
     <q-expansion-item
       class="shadow-1 overflow-hidden"
       style="border-radius: 1rem;"
-      label="特殊能力"
+      :label="$t('specialAbility')"
       header-class="bg-primary text-white"
       expand-icon-class="text-white"
       dense>
@@ -189,7 +231,7 @@
               :special-data="speicalData" />
           </template>
           <template v-else>
-            無
+            {{ $t('none') }}
           </template>
         </q-card-section>
       </div>
@@ -222,7 +264,7 @@ export default {
 <style lang="stylus">
 .attribute {
   display: inline-block
-  min-width: 8rem;
+  min-width: 10rem;
   text-align: right;
 }
 .number {

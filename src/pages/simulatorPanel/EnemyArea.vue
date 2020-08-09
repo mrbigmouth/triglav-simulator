@@ -1,6 +1,6 @@
 <template>
   <q-expansion-item
-    label="模擬戰鬥"
+    :label="$t('battleSimulator')"
     class="shadow-1 overflow-hidden"
     style="border-radius: 1rem;"
     header-class="bg-primary text-white"
@@ -21,14 +21,14 @@
           class="q-mx-sm"
           icon="queue_play_next"
           color="primary"
-          label="新增敵方模擬"
+          :label="$t('addSimulateEnemy')"
           @click="showSelectEnemyDialog = true;" />
         <q-btn
           v-if="simulatorEnemyList.length > 0"
           class="q-mx-sm"
           icon="delete_forever"
           color="negative"
-          label="移除所有模擬"
+          :label="$t('removeAllSimulateEnemy')"
           @click="simulatorEnemyList.splice(0);" />
       </div>
     </div>
