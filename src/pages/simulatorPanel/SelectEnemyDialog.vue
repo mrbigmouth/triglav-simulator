@@ -164,7 +164,19 @@ export default {
       filterLocation: '',
       locationOptionList,
       displayLocationOptionList: locationOptionList,
-      enemyList: enemy.slice().map((enemyData) => {
+    };
+  },
+  computed: {
+    proxyIsShow: {
+      get() {
+        return this.isShow;
+      },
+      set(isShow) {
+        this.$emit('update:isShow', isShow);
+      },
+    },
+    enemyList() {
+      return enemy.slice().map((enemyData) => {
         return {
           name: this.$t('enemy.' + enemyData.i18n),
           location: enemyData.location,
@@ -179,17 +191,7 @@ export default {
           dr: enemyData.dr || 0,
           healingPerSecond: enemyData.healingPerSecond || 0,
         };
-      }),
-    };
-  },
-  computed: {
-    proxyIsShow: {
-      get() {
-        return this.isShow;
-      },
-      set(isShow) {
-        this.$emit('update:isShow', isShow);
-      },
+      });
     },
     displayEnemyList() {
       const filterLocation = this.filterLocation;

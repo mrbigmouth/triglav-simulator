@@ -168,8 +168,10 @@ export default {
     biggums: 'ビッガム',
     fatmanUltima: 'ファットマンウルティマ',
     seirei: 'セイレイ',
-    seryiVolk: '灰色狼',
     deepPurpleSlimeness: 'ディープパープルスライムネス',
+    kwaigor: '怪豪',
+    carrionBloom: '腐肉花車',
+    seryiVolk: '灰色狼',
   },
   item: {
     none: 'None',

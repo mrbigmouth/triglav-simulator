@@ -253,9 +253,10 @@ export default {
     biggums: 'Biggums',
     fatmanUltima: 'Fatman Ultima',
     seirei: 'Seirei',
+    deepPurpleSlimeness: 'Deep Purple Slimeness',
+    kwaigor: 'Kwaigor',
     carrionBloom: 'Carrion Bloom',
     seryiVolk: 'Seryi Volk',
-    deepPurpleSlimeness: 'Deep Purple Slimeness',
   },
   item: {
     none: 'None',
