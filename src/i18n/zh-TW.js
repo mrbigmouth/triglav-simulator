@@ -235,9 +235,10 @@ export default {
     biggums: '大巨胖',
     fatmanUltima: '終末胖胖',
     seirei: '黃泉',
+    deepPurpleSlimeness: '深紫史萊姆王',
+    kwaigor: '怪豪',
     carrionBloom: '腐肉王花',
     seryiVolk: '灰狼',
-    deepPurpleSlimeness: '深紫史萊姆王',
   },
   item: {
     none: '無裝備',
