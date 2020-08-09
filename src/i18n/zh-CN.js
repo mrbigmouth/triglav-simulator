@@ -50,6 +50,7 @@ export default {
   dr: '反伤',
   xpg: '经验',
   spe: '特殊',
+  total: '总计',
   normalAttack: '普通攻击',
   damagePerSecond: '每秒伤害',
   expectDamage: '期望伤害',

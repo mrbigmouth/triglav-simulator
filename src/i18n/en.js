@@ -46,6 +46,7 @@ export default {
   dr: 'DR',
   xpg: 'Exp',
   spe: 'Spe',
+  total: 'Total',
   normalAttack: 'Normal Attack',
   damagePerSecond: 'Damage / Sec',
   expectDamage: 'Expect Dmg',
