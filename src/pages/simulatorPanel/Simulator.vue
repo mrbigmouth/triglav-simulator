@@ -5,7 +5,7 @@
     bordered>
     <q-item>
       <q-item-section avatar>
-        <q-avatar>
+        <q-avatar square>
           <img :src="enemyData.img" />
         </q-avatar>
       </q-item-section>
