@@ -234,7 +234,7 @@ export default [
     ar: 4,
     str: {
       sword: 12,
-      axe: 16,
+      axe: 19,
       dagger: 8,
     },
     dex: -5,

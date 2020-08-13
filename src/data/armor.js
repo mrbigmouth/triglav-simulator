@@ -267,16 +267,16 @@ export default [
     as: 1,
     ar: 4,
     str: {
-      sword: ['kills', 56000, 14],
-      axe: ['kills', 100000, 25],
-      dagger: ['kills', 32000, 8],
+      sword: ['kills', 42000, 14],
+      axe: ['kills', 75000, 25],
+      dagger: ['kills', 24000, 8],
     },
     def: ['kills', 30000, 30],
     vit: -29,
     ws: 4,
     special: {
       type: 'restoresVitalityOnKill',
-      value: 3,
+      value: 2,
     },
   },
   {
@@ -359,17 +359,18 @@ export default [
     },
     minAd: 10,
     maxAd: 12,
+    ar: {
+      sword: 8,
+      axe: 12,
+      dagger: 6,
+    },
     str: {
-      sword: ['exp', 99000, 10],
-      axe: ['exp', 100000, 15],
+      sword: ['exp', 100000, 10],
+      axe: ['exp', 99000, 15],
       dagger: ['exp', 100000, 5],
     },
     dex: 12,
-    vit: [
-      'exp',
-      100000,
-      50,
-    ],
+    vit: ['exp', 100000, 50],
     ws: {
       sword: 5,
       axe: 6,
