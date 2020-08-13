@@ -255,6 +255,7 @@ export default {
     ki4Balefire: 'Ki-4 烈火',
     interceptor: '拦截者',
     orochi: '魔蛇',
+    smashingPumpkins: '碎南瓜',
     martialMonkeysBlade: '武猿之刃',
     fangedOrochi: '诅咒魔蛇',
     theAvenger: '复仇者',

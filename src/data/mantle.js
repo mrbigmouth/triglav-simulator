@@ -176,9 +176,9 @@ export default [
     type: 'artifact',
     img: 'items/mantle_wildhide.png',
     voh: 2,
-    str: ['kills', 60000, 15],
+    str: ['kills', 30000, 15],
     dex: 7,
-    vit: ['kills', 66000, 33],
+    vit: ['kills', 49500, 33],
     ws: 3,
     special: {
       type: 'doubleStrike',
