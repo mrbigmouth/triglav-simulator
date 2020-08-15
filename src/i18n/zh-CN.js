@@ -196,7 +196,7 @@ export default {
     moldervine: '腐肉花瓣',
     ghostlyWarg: '幽灵的座狼',
     fireSpirit: '鬼火',
-    soulBattery: 'Soul Battery',
+    soulBattery: '灵魂充能',
     kwaisei: '怪齐',
     theHarvester: '收割者',
     madTheSwine: '狂暴猪王',
