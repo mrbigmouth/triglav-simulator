@@ -2490,7 +2490,7 @@ export default [
     voh: 0,
     dr: 0,
     xp: 5,
-  },  
+  },
   {
     i18n: 'inferno',
     location: [

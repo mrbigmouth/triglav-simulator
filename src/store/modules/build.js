@@ -26,15 +26,14 @@ export default {
       puppet2: 0,
       puppet3: 0,
       temporaryBuff: {
-        str: 0,
-        vit: 0,
-        def: 0,
-        voh: 0,
-        dr: 0,
-        ar: 0,
-        as: 0,
-        sad: 0,
-        ws: 0,
+        str: [],
+        vit: [],
+        def: [],
+        voh: [],
+        dr: [],
+        ar: [],
+        as: [],
+        ws: [],
         throwAttack: 0,
         specialThrowAttack: 0,
       },
@@ -71,8 +70,13 @@ export default {
       ];
       location.hash = '#/' + encodeURIComponent(JSON.stringify(defaultBuildList));
     },
-    adjustTemporaryBuff(state, { key, value }) {
-      state.temporaryBuff[key] += value;
+    addTemporaryBuff(state, { key, value }) {
+      state.temporaryBuff[key].push(value);
+    },
+    removeTemporaryBuff(state, { key, value }) {
+      const buffList = state.temporaryBuff[key];
+      const removeIndex = buffList.indexOf(value);
+      buffList.splice(removeIndex, 1);
     },
   },
   getters: {
@@ -251,35 +255,42 @@ export default {
         }
       };
     },
-    getCharacterOriginValue(state, getters) {
+    getCharacterValue(state, getters) {
       return (key) => {
-        const characterValue = (
+        let characterValue = (
           getters.getTotalItemValue(key) +
           getters.getCharacterBasicValue(key) +
           getters.getBoostValue(key)
         );
 
-        if (key === 'sad') {
-          return characterValue;
+        switch (key) {
+          case 'sad': {
+            return characterValue;
+          }
+          case 'as': {
+            state.temporaryBuff[key].forEach((buffValue) => {
+              characterValue -= Math.floor(characterValue * (buffValue - 100) / 100);
+            });
+
+            return Math.max(1, characterValue);
+          }
+          case 'str':
+          case 'vit':
+          case 'def':
+          case 'voh':
+          case 'dr':
+          case 'ar':
+          case 'ws': {
+            state.temporaryBuff[key].forEach((buffValue) => {
+              characterValue = Math.floor(characterValue * buffValue / 100);
+            });
+
+            return Math.max(0, characterValue);
+          }
+          default: {
+            return Math.max(0, characterValue);
+          }
         }
-
-        return Math.max(0, characterValue);
-      };
-    },
-    getCharacterValue(state, getters) {
-      return (key) => {
-        const characterValue = (
-          getters.getTotalItemValue(key) +
-          getters.getCharacterBasicValue(key) +
-          getters.getBoostValue(key) +
-          (state.temporaryBuff[key] || 0)
-        );
-
-        if (key === 'sad') {
-          return characterValue;
-        }
-
-        return Math.max(0, characterValue);
       };
     },
     playerMinAd(state, getters) {

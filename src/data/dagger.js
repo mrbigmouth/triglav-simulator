@@ -42,7 +42,7 @@ export default [
     vit: ['exp', 2000, 10],
     sad: -3,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 35,
     },
   },
@@ -69,7 +69,7 @@ export default [
     dex: ['kills', 2000, 10],
     vit: -15,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 35,
     },
   },
@@ -219,7 +219,7 @@ export default [
     ws: 2,
     xpg: 6,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 35,
     },
   },
@@ -310,7 +310,7 @@ export default [
     vit: -19,
     ws: 2,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 30,
     },
   },
