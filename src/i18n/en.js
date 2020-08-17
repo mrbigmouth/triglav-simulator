@@ -211,6 +211,7 @@ export default {
     jei: 'Jei',
     prisonGuard: 'Prison Guard',
     silverDragoon: 'Silver Dragoon',
+    bisco: 'Bisco',
     inferno: 'Inferno',
     golrug: 'Golrug',
     theHarvester: 'The Harvester',

@@ -87,41 +87,23 @@ export default {
 
       return '';
     },
-    adjustValue() {
-      if (this.canBeToggle) {
-        const value = this.specialData.value;
-        const adjustKey = this.adjustKey;
-        switch (adjustKey) {
-          case 'throwAttack': {
-            return value;
-          }
-          case 'as': {
-            return -1 * this.getCharacterOriginValue(adjustKey) * (value - 100) / 100;
-          }
-          default: {
-            return Math.floor(this.getCharacterOriginValue(adjustKey) * (value - 100) / 100);
-          }
-        }
-      }
-
-      return 0;
-    },
   },
   methods: {
     ...mapMutations('build', [
-      'adjustTemporaryBuff',
+      'addTemporaryBuff',
+      'removeTemporaryBuff',
     ]),
     onToggle(checked) {
       if (checked) {
-        this.adjustTemporaryBuff({
+        this.addTemporaryBuff({
           key: this.adjustKey,
-          value: this.adjustValue,
+          value: this.specialData.value,
         });
       }
       else {
-        this.adjustTemporaryBuff({
+        this.removeTemporaryBuff({
           key: this.adjustKey,
-          value: this.adjustValue * -1,
+          value: this.specialData.value,
         });
       }
     },

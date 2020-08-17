@@ -576,7 +576,7 @@ export default [
     vit: 17,
     xpg: 17,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: {
         sword: 40,
         axe: 60,
@@ -649,7 +649,7 @@ export default [
     vit: 33,
     ws: 2,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 20,
     },
   },
@@ -704,7 +704,7 @@ export default [
     sad: 3,
     xpg: 20,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: {
         sword: 30,
         axe: 50,

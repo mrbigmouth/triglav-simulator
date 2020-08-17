@@ -68,7 +68,7 @@ export default [
     ar: 10,
     ws: 4,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 100,
     },
   },
@@ -196,7 +196,7 @@ export default [
     ws: 2,
     xpg: 6,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 100,
     },
   },

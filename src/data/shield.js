@@ -45,7 +45,7 @@ export default [
     dex: -2,
     ws: 4,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 60,
     },
   },
@@ -146,7 +146,7 @@ export default [
     ws: 4,
     sad: 2,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 60,
     },
   },

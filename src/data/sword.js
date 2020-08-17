@@ -40,7 +40,7 @@ export default [
     def: -2,
     dex: 12,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 60,
     },
   },
@@ -208,7 +208,7 @@ export default [
     ws: 2,
     xpg: 6,
     special: {
-      type: 'throwAttack',
+      type: 'specialThrowAttack',
       value: 60,
     },
   },
