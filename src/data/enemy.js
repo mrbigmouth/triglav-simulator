@@ -2475,6 +2475,23 @@ export default [
     xp: 20,
   },
   {
+    i18n: 'bisco',
+    location: [
+      '28F',
+      '28F-egg',
+    ],
+    img: 'enemy/bisco.gif',
+    minAd: 6,
+    maxAd: 8,
+    as: 40,
+    def: 10,
+    dex: 999,
+    vit: 200,
+    voh: 0,
+    dr: 0,
+    xp: 5,
+  },  
+  {
     i18n: 'inferno',
     location: [
       '28F',

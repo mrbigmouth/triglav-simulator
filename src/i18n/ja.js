@@ -125,6 +125,7 @@ export default {
     jei: '黒騎士JEI',
     prisonGuard: 'プリズンガード',
     silverDragoon: 'シルバードラグーン',
+    bisco: 'ビスコ',
     inferno: 'インフェルノ',
     golrug: 'ゴルルグ',
     theHarvester: 'ハーベスター',
