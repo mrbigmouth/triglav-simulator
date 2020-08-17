@@ -141,6 +141,60 @@
           :display-name="displayName"
           :display-special="displaySpecial"
           @click="onSelectItem('puppet', 'puppet3')" />
+        <tfoot @click="$emit('click')">
+          <tr>
+            <td>
+              {{ $t('total') }}
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('minAd')" />
+              ~
+              <colorful-value :value="getTotalItemValue('maxAd')" />
+            </td>
+            <td>
+              <colorful-value
+                :value="getTotalItemValue('as')"
+                reverse-color />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('str')" />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('dex')" />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('def')" />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('vit')" />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('ws')" />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('ar')" />
+            </td>
+            <td>
+              <colorful-value
+                :value="getTotalItemValue('sad')"
+                reverse-color />
+            </td>
+            <td>
+              <colorful-value :value="getTotalItemValue('voh')" />
+            </td>
+            <td>
+              <colorful-value
+                :value="getTotalItemValue('dr')"
+                suffix="%" />
+            </td>
+            <td>
+              <colorful-value
+                :value="getTotalItemValue('xpg')"
+                suffix="%" />
+            </td>
+            <td />
+          </tr>
+        </tfoot>
       </item-table>
     </div>
     <select-item-dialog
@@ -155,6 +209,7 @@ import computedPropertiesForBuildStore from 'src/mixins/computedPropertiesForBui
 import BoostRecords from './BoostRecords';
 import ItemTable from './ItemTable';
 import ItemRow from './ItemRow';
+import ColorfulValue from '../ColorfulValue';
 import SelectItemDialog from './SelectItemDialog';
 import item from 'src/data/item';
 
@@ -164,6 +219,7 @@ export default {
     BoostRecords,
     ItemTable,
     ItemRow,
+    ColorfulValue,
     SelectItemDialog,
   },
   mixins: [
