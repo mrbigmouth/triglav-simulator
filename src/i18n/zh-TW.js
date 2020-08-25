@@ -320,7 +320,7 @@ export default {
     jetBlackNight: '漆黑之夜',
     cloakOfShadows: '暗影斗篷',
     mourningCloak: '哀悼披風',
-    wildhide: '獸皮',
+    wildhide: '困獸猶鬥',
     splendidDagger: '華麗匕首',
     sharktooth: '鯊齒利刃',
     soulflayer: '刈靈死神',
