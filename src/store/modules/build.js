@@ -550,7 +550,7 @@ export default {
           minAd: getters.playerSaMinAd,
           maxAd: getters.playerSaMaxAd,
           attackerDex: getters.playerDex,
-          defenderDef: 0,
+          defenderDef: enemyDef,
           doubleStrike: 0,
           throwAttack: state.temporaryBuff.specialThrowAttack,
         });
