@@ -851,8 +851,8 @@ export default [
     type: 'artifact',
     img: 'items/ring_trinityRed.png',
     voh: {
-      sword: 5,
-      axe: 3,
+      sword: 3,
+      axe: 5,
       dagger: 2,
     },
     str: {
@@ -870,8 +870,8 @@ export default [
     type: 'artifact',
     img: 'items/ring_trinityRed.png',
     voh: {
-      sword: 5,
-      axe: 3,
+      sword: 3,
+      axe: 5,
       dagger: 2,
     },
     str: {
@@ -893,8 +893,8 @@ export default [
     type: 'artifact',
     img: 'items/ring_trinityRed.png',
     voh: {
-      sword: 5,
-      axe: 3,
+      sword: 3,
+      axe: 5,
       dagger: 2,
     },
     str: {
@@ -916,8 +916,8 @@ export default [
     type: 'artifact',
     img: 'items/ring_trinityRed.png',
     voh: {
-      sword: 5,
-      axe: 3,
+      sword: 3,
+      axe: 5,
       dagger: 2,
     },
     str: {
@@ -939,8 +939,8 @@ export default [
     type: 'artifact',
     img: 'items/ring_trinityRed.png',
     voh: {
-      sword: 5,
-      axe: 3,
+      sword: 3,
+      axe: 5,
       dagger: 2,
     },
     str: {
