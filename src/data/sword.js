@@ -308,7 +308,7 @@ export default [
     dr: 70,
     minAd: 28,
     maxAd: 35,
-    as: ['exp', 2000, 2],
+    as: ['exp', 100000, 2],
     str: ['kills', 300000, 30],
     dex: 8,
     ws: 3,

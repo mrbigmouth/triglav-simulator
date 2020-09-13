@@ -16,8 +16,12 @@ export default [
     img: 'items/mantle_robeOfStrength.png',
     ar: 5,
     str: ['kills', 9000, 30],
-    dex: ['kills', 5000, -5],
+    dex: ['kills', 10000, -10],
     ws: 4,
+    special: {
+      type: 'specialThrowAttack',
+      value: 100,
+    },
   },
   {
     i18n: 'elvenMantle',
@@ -163,8 +167,8 @@ export default [
     img: 'items/mantle_mourningCloak.png',
     dr: 60,
     ar: 10,
-    def: ['exp', 60000, 6],
-    vit: 39,
+    def: 6,
+    vit: ['kills', 39000, 39],
     ws: 4,
     special: {
       type: 'restoresVitalityOnTakenDamage',
