@@ -55,6 +55,7 @@ export default [
     as: -1,
     ar: 2,
     vit: -10,
+    ws: 3,
     sad: -5,
   },
   {
@@ -138,6 +139,7 @@ export default [
     ar: ['kills', 1000, -10],
     str: ['exp', 50000, 10],
     vit: ['exp', 70000, 35],
+    ws: 2,
     sad: -2,
     special: {
       type: 'restoresVitalityOnKill',
@@ -169,7 +171,7 @@ export default [
     ar: 2,
     str: -8,
     dex: ['exp', 48000, 12],
-    ws: -1,
+    ws: 2,
     sad: -2,
   },
   {

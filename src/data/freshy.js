@@ -120,7 +120,7 @@ export default [
     i18n: 'jellyBeans',
     type: 'common',
     img: 'items/freshy_jellyBeans.png',
-    xpg: 50,
+    xpg: 100,
   },
   {
     i18n: 'broiledTentacle',

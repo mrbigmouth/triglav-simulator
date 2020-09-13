@@ -224,7 +224,7 @@ export default [
     vit: -15,
     ws: ['kills', 1000, 10],
     sad: -3,
-    xpg: 10,
+    xpg: 15,
   },
   {
     i18n: 'seryiVolk',
